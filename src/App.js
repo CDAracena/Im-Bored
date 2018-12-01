@@ -1,28 +1,45 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import  {withStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import SvgIcon from '@material-ui/core/SvgIcon';
+import {Favorites} from './utils/svg_icons'
+import { connect } from 'react-redux';
+import RecreationGrid from './components/ReacreationGrid'
+
+const styles = {
+  root: {
+    flexGrow: 1
+  },
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 20,
+  },
+}
 
 class App extends Component {
-  render() {
+  render(){
+    const { classes } = this.props
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div className="app-container">
+        <div className={classes.root}>
+          <AppBar position='sticky' color='primary'>
+            <Toolbar>
+              <Typography variant='h6' color='secondary'>
+                I'm Bored...
+              </Typography>
+                <IconButton className={classes.menButton} color="secondary">
+                  <SvgIcon color="secondary"> <path d={Favorites}/> </SvgIcon>
+                </IconButton>
+            </Toolbar>
+          </AppBar>
+          <RecreationGrid/>
+        </div>
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default withStyles(styles)(App);
