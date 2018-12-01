@@ -6,6 +6,10 @@ import orange from '@material-ui/core/colors/orange';
 import grey from '@material-ui/core/colors/grey';
 import { MuiThemeProvider } from '@material-ui/core/styles'
 import { createStore } from "redux"
+import {Provider} from 'react-redux';
+import store from './store'
+
+
 const theme = createMuiTheme({
   palette: {
     primary: orange,
@@ -14,5 +18,5 @@ const theme = createMuiTheme({
 })
 
 ReactDOM.render(<MuiThemeProvider theme={theme}>
-  <App/> </MuiThemeProvider>
+  <Provider store={store}><App/></Provider></MuiThemeProvider>
   , document.querySelector("#root"));
