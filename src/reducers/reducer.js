@@ -1,3 +1,8 @@
+import {
+  SELECTED_CATEGORY
+}
+from '../actions/actions';
+
 //Favorites is the array for the list of the users favorites
 //fetching API Data set to true if api call is sent and response is good
 // received api data after fetching, status 200 ok.
@@ -15,6 +20,10 @@ const initialState = {
 
 const reducer = (state=initialState, action) => {
   switch(action.type){
+    case 'SELECTED_CATEGORY':
+    return Object.assign({}, state, {
+      currentCategory: action.category
+    })
     default:
     return state;
   }
