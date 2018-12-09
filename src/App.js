@@ -21,7 +21,7 @@ const styles = {
 
 class App extends Component {
   state = {
-      
+
   }
 
   render(){
@@ -34,7 +34,7 @@ class App extends Component {
               <Typography variant='h6' color='secondary'>
                 I'm Bored...
               </Typography>
-                <IconButton className={classes.menButton} color="secondary">
+                <IconButton className={classes.menuButton} color="secondary">
                   <SvgIcon color="secondary"> <path d={Favorites}/> </SvgIcon>
                 </IconButton>
             </Toolbar>
