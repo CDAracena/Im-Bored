@@ -23,9 +23,10 @@ const styles = theme => ({
 
 class RecreationGrid extends Component {
 
+
   setAndFetchData = (e) => {
-    this.props.setCategory(e.target.dataset.category)
-    this.props.getApiData(e.target.dataset.category)
+    this.props.setCategory(e.currentTarget.dataset.category)
+    this.props.getApiData(e.currentTarget.dataset.category)
   }
   render(){
   const { classes, setCategory, currentCategory, getApiData } = this.props

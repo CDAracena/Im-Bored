@@ -9,8 +9,9 @@ export const fetchApiData = (recreationType) => {
     dispatch(fetchingApiData())
      return fetchBoredData(recreationType)
     .then(data => {
-      dispatch(receivedApiData(data))
-      console.log(data)
+      if (data) {
+        dispatch(receivedApiData(data))
+      }
     })
     .catch(err => console.log(err))
   }
