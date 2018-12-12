@@ -7,7 +7,9 @@ import IconButton from '@material-ui/core/IconButton';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import {Favorites} from './utils/svg_icons'
 import { connect } from 'react-redux';
-import RecreationGrid from './components/ReacreationGrid'
+import RecreationGrid from './components/ReacreationGrid';
+import History from '@material-ui/icons/History';
+import RecreationModal from './components/Modal'
 
 const styles = {
   root: {
@@ -21,7 +23,7 @@ const styles = {
 
 class App extends Component {
   state = {
-
+    openModal: false
   }
 
   render(){
@@ -37,9 +39,13 @@ class App extends Component {
                 <IconButton className={classes.menuButton} color="secondary">
                   <SvgIcon color="secondary"> <path d={Favorites}/> </SvgIcon>
                 </IconButton>
+                <IconButton className={classes.menuButton} color="secondary">
+                  <History/>
+                </IconButton>
             </Toolbar>
           </AppBar>
           <RecreationGrid/>
+          <RecreationModal/>
         </div>
       </div>
     )

@@ -23,7 +23,6 @@ const styles = theme => ({
 
 class RecreationGrid extends Component {
 
-
   setAndFetchData = (e) => {
     this.props.setCategory(e.currentTarget.dataset.category)
     this.props.getApiData(e.currentTarget.dataset.category)
@@ -46,7 +45,7 @@ class RecreationGrid extends Component {
           <GridListTile className={classes.gridListTile}>
             <img src="http://www.circ.biz/wp-content/uploads/2014/12/1406-sands-jacksonhole-whitewater-1972-circ.jpg" alt="recreation"/>
             <GridListTileBar title='Recreational' subtitle="Who doesn't like having fun?" actionIcon={
-              <IconButton color="primary" data-category="recreation"  onClick={(e) => this.setAndFetchData(e)}> <SvgIcon> <path d={BikeRide}/> </SvgIcon> </IconButton>
+              <IconButton color="primary" data-category="recreational"  onClick={(e) => this.setAndFetchData(e)}> <SvgIcon> <path d={BikeRide}/> </SvgIcon> </IconButton>
             }></GridListTileBar>
           </GridListTile>
           <GridListTile className={classes.gridListTile}>

@@ -10,6 +10,7 @@ from '../actions/actions';
 
 const initialState = {
   favorites: [],
+  history: [],
   fetchingApiData: false,
   receivedApiData: false,
   apiData: {},
@@ -31,7 +32,8 @@ const reducer = (state=initialState, action) => {
     return Object.assign({}, state, {
       fetchingApiData: false,
       apiData: action.data,
-      receivedApiData: true
+      receivedApiData: true,
+      history: [...state.history, action.data]
     })
     default:
     return state;
