@@ -1,7 +1,9 @@
 import {
   SELECTED_CATEGORY,
   FETCHING_API_DATA,
-  RECEIVED_API_DATA
+  RECEIVED_API_DATA,
+  OPEN_MODAL,
+  CLOSE_MODAL
 }
 from '../actions/actions';
 
@@ -15,6 +17,7 @@ const initialState = {
   receivedApiData: false,
   apiData: {},
   currentCategory: false,
+  modalStatus: false
 
 }
 
@@ -34,6 +37,14 @@ const reducer = (state=initialState, action) => {
       apiData: action.data,
       receivedApiData: true,
       history: [...state.history, action.data]
+    })
+    case 'OPEN_MODAL':
+    return Object.assign({}, state, {
+      modalStatus: true
+    })
+    case 'CLOSE_MODAL':
+    return Object.assign({}, state, {
+      modalStatus: false
     })
     default:
     return state;
