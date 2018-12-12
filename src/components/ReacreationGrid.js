@@ -9,7 +9,7 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import IconButton from '@material-ui/core/IconButton';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import {Education, BikeRide, Social, Diy, Charity, Cook, Spa, Music, Work} from '../utils/svg_icons'
-import { selectCategory, fetchApiData } from '../actions/actions';
+import { selectCategory, fetchApiData, openModal, closeModal } from '../actions/actions';
 
 
 const styles = theme => ({
@@ -26,9 +26,10 @@ class RecreationGrid extends Component {
   setAndFetchData = (e) => {
     this.props.setCategory(e.currentTarget.dataset.category)
     this.props.getApiData(e.currentTarget.dataset.category)
+    this.props.openModal();
   }
   render(){
-  const { classes, setCategory, currentCategory, getApiData } = this.props
+  const { classes, setCategory, currentCategory, getApiData, openModal, closeModal } = this.props
     return (
       <div className={classes.root}>
         <GridList cellheight={180} className={classes.gridList}>
@@ -107,7 +108,9 @@ const mapStateToProps = ({currentCategory, apiData, favorites}) => {
 const mapDispatchToProps = dispatch => {
   return {
     setCategory: (category) => dispatch(selectCategory(category)),
-    getApiData: (recreationType) => dispatch(fetchApiData(recreationType))
+    getApiData: (recreationType) => dispatch(fetchApiData(recreationType)),
+    openModal: () => dispatch(openModal()),
+    closeModal: () => dispatch(closeModal())
   }
 }
 

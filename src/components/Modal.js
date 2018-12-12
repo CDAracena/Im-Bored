@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button'
+import Person from '@material-ui/icons/Person'
 
 
 function rand() {
@@ -44,24 +45,37 @@ class RecreationModal extends React.Component {
   }
 
 
+  renderParticipants = (participantCount) => {
+    let iconArray = [];
+    for (let i = 0; i < participantCount; i++) {
+      iconArray.push(i);
+    }
+    return(
+      <Fragment>
+        {iconArray.map(icon => <Person color="primary" key={icon}/>)}
+      </Fragment>
+    )
+
+  }
+
 render(){
-  const {classes} = this.props
+  const {classes, apiData, modalStatus} = this.props
+  console.log(apiData.participants)
   return (
     <div>
-    <Typography gutterBottom>Click to get the full Modal experience!</Typography>
-    <Button onClick={this.handleOpen}>Open Modal</Button>
+    <Button onClick={this.handleOpen }>Open Modal</Button>
     <Modal
       aria-labelledby="simple-modal-title"
       aria-describedby="simple-modal-description"
-      open={this.state.open}
+      open={this.state.open || modalStatus}
       onClose={this.handleClose}
     >
       <div style={getModalStyle()} className={classes.paper}>
         <Typography variant="h6" id="modal-title">
-          Text in a modal
+          {apiData.activity}
         </Typography>
         <Typography variant="subtitle1" id="simple-modal-description">
-          Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+          Partipants {this.renderParticipants(apiData.participants)}
         </Typography>
         <Modal />
       </div>
@@ -72,4 +86,16 @@ render(){
 
 }
 
-export default withStyles(styles)(RecreationModal)
+const mapStateToProps = ({ apiData, modalStatus }) => {
+  return {
+    apiData,
+    modalStatus
+  }
+}
+
+const mapDispatchToProps = dispatch =>{
+  return;
+}
+
+
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(RecreationModal))
