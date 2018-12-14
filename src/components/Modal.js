@@ -7,7 +7,9 @@ import Button from '@material-ui/core/Button'
 import Person from '@material-ui/icons/Person'
 import Close from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
-import {closeModal} from '../actions/actions';
+import {closeModal, addToFavorites} from '../actions/actions';
+import Favorite from '@material-ui/icons/Favorite';
+
 
 
 function rand() {
@@ -54,7 +56,7 @@ class RecreationModal extends React.Component {
 
 
 render(){
-  const {classes, apiData, modalStatus, closeModal} = this.props
+  const {classes, apiData, modalStatus, closeModal, addToFavorites} = this.props
   return (
     <div>
     <Modal
@@ -70,6 +72,7 @@ render(){
         <Typography variant="subtitle1" id="simple-modal-description">
           Partipants {this.renderParticipants(apiData.participants)}
         </Typography>
+        <IconButton color="primary" onClick={ () => addToFavorites(apiData)}> <Favorite/> </IconButton>
         <Modal />
       </div>
     </Modal>
@@ -88,7 +91,8 @@ const mapStateToProps = ({ apiData, modalStatus }) => {
 
 const mapDispatchToProps = dispatch =>{
   return {
-    closeModal: () => dispatch(closeModal())
+    closeModal: () => dispatch(closeModal()),
+    addToFavorites: (data) => dispatch(addToFavorites(data))
   }
 }
 

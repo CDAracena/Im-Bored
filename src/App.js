@@ -9,7 +9,8 @@ import {Favorites} from './utils/svg_icons'
 import { connect } from 'react-redux';
 import RecreationGrid from './components/ReacreationGrid';
 import History from '@material-ui/icons/History';
-import RecreationModal from './components/Modal'
+import RecreationModal from './components/Modal';
+import LeftDrawer from './components/Drawer'
 
 const styles = {
   root: {
@@ -22,9 +23,6 @@ const styles = {
 }
 
 class App extends Component {
-  state = {
-    openModal: false
-  }
 
   render(){
     const { classes } = this.props
@@ -46,6 +44,7 @@ class App extends Component {
           </AppBar>
           <RecreationGrid/>
           <RecreationModal/>
+          <LeftDrawer/>
         </div>
       </div>
     )
