@@ -5,6 +5,9 @@ import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button'
 import Person from '@material-ui/icons/Person'
+import Close from '@material-ui/icons/Close';
+import IconButton from '@material-ui/core/IconButton';
+import {closeModal} from '../actions/actions';
 
 
 function rand() {
@@ -34,16 +37,7 @@ const styles = theme => ({
 
 class RecreationModal extends React.Component {
   state = {
-    open: false
   }
-
-  handleOpen = () => {
-    this.setState({open: true})
-  }
-  handleClose = () => {
-    this.setState({open: false})
-  }
-
 
   renderParticipants = (participantCount) => {
     let iconArray = [];
@@ -55,22 +49,21 @@ class RecreationModal extends React.Component {
         {iconArray.map(icon => <Person color="primary" key={icon}/>)}
       </Fragment>
     )
-
   }
 
+
+
 render(){
-  const {classes, apiData, modalStatus} = this.props
-  console.log(apiData.participants)
+  const {classes, apiData, modalStatus, closeModal} = this.props
   return (
     <div>
-    <Button onClick={this.handleOpen }>Open Modal</Button>
     <Modal
       aria-labelledby="simple-modal-title"
       aria-describedby="simple-modal-description"
-      open={this.state.open || modalStatus}
-      onClose={this.handleClose}
-    >
+      open={modalStatus}
+      onClose={closeModal}>
       <div style={getModalStyle()} className={classes.paper}>
+        <span style={{float: 'right'}}><IconButton color="primary" onClick={closeModal}> <Close/> </IconButton></span>
         <Typography variant="h6" id="modal-title">
           {apiData.activity}
         </Typography>
@@ -94,7 +87,9 @@ const mapStateToProps = ({ apiData, modalStatus }) => {
 }
 
 const mapDispatchToProps = dispatch =>{
-  return;
+  return {
+    closeModal: () => dispatch(closeModal())
+  }
 }
 
 
