@@ -3,12 +3,13 @@ import {
   FETCHING_API_DATA,
   RECEIVED_API_DATA,
   OPEN_MODAL,
-  CLOSE_MODAL
+  CLOSE_MODAL,
+  ADD_TO_FAVORITES
 }
 from '../actions/actions';
 
-//Favorites is the array for the list of the users favorites
 
+//creation actions for drawer - status and type. favorites / history 
 
 const initialState = {
   favorites: [],
@@ -17,7 +18,9 @@ const initialState = {
   receivedApiData: false,
   apiData: {},
   currentCategory: false,
-  modalStatus: false
+  modalStatus: false,
+  drawerOpen: false,
+  drawerType: ''
 
 }
 
@@ -46,6 +49,14 @@ const reducer = (state=initialState, action) => {
     return Object.assign({}, state, {
       modalStatus: false
     })
+    case 'ADD_TO_FAVORITES':
+      if(!state.favorites.includes(action.data)) {
+      return Object.assign({}, state, {
+        favorites: [...state.favorites, action.data]
+      })
+    } else {
+      return state;
+    }
     default:
     return state;
   }
