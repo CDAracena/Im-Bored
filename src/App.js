@@ -10,34 +10,38 @@ import { connect } from 'react-redux';
 import RecreationGrid from './components/ReacreationGrid';
 import History from '@material-ui/icons/History';
 import RecreationModal from './components/Modal';
-import LeftDrawer from './components/Drawer'
+import LeftDrawer from './components/Drawer';
+import {openDrawer, closeDrawer} from './actions/actions';
 
-const styles = {
+const styles = (theme) => ({
   root: {
     flexGrow: 1
   },
   menuButton: {
     marginLeft: -12,
-    marginRight: 20,
+    marginRight: 20
   },
-}
+  textColor: {
+    color: theme.palette.secondary.dark
+  }
+})
 
 class App extends Component {
 
   render(){
-    const { classes } = this.props
+    const { classes, openLeftDrawer, closeLeftDrawer } = this.props
     return (
       <div className="app-container">
         <div className={classes.root}>
           <AppBar position='sticky' color='primary'>
             <Toolbar>
-              <Typography variant='h6' color='secondary'>
+              <Typography variant='h6' className={classes.textColor}>
                 I'm Bored...
               </Typography>
-                <IconButton className={classes.menuButton} color="secondary">
-                  <SvgIcon color="secondary"> <path d={Favorites}/> </SvgIcon>
+                <IconButton className={classes.textColor} onClick={openLeftDrawer}>
+                  <SvgIcon className={classes.textColor}> <path d={Favorites}/> </SvgIcon>
                 </IconButton>
-                <IconButton className={classes.menuButton} color="secondary">
+                <IconButton className={classes.textColor} color="secondary" onClick={openLeftDrawer}>
                   <History/>
                 </IconButton>
             </Toolbar>
@@ -51,4 +55,18 @@ class App extends Component {
   }
 }
 
-export default withStyles(styles)(App);
+const mapStateToProps = ({drawerType, drawerOpen}) => {
+  return {
+    drawerType,
+    drawerOpen
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    openLeftDrawer: () => dispatch(openDrawer()),
+    closeLeftDrawer: () => dispatch(closeDrawer())
+  }
+}
+
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(App))

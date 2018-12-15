@@ -6,6 +6,8 @@ export const RECEIVED_API_DATA = "RECEIVED_API_DATA";
 export const OPEN_MODAL = "OPEN_MODAL";
 export const CLOSE_MODAL = "CLOSE_MODAL";
 export const ADD_TO_FAVORITES = "ADD_TO_FAVORITES";
+export const OPEN_DRAWER = "OPEN_DRAWER";
+export const CLOSE_DRAWER = "CLOSE_DRAWER"
 
 export const fetchApiData = (recreationType) => {
   return (dispatch) => {
@@ -47,4 +49,12 @@ export const closeModal = () => ({
 export const addToFavorites = (data) => ({
   type: ADD_TO_FAVORITES,
   data
+})
+
+export const openDrawer = () => ({
+  type: OPEN_DRAWER
+})
+
+export const closeDrawer = () => ({
+  type: CLOSE_DRAWER
 })

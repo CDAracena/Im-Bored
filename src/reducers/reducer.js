@@ -4,12 +4,14 @@ import {
   RECEIVED_API_DATA,
   OPEN_MODAL,
   CLOSE_MODAL,
-  ADD_TO_FAVORITES
+  ADD_TO_FAVORITES,
+  OPEN_DRAWER,
+  CLOSER_DRAWER
 }
 from '../actions/actions';
 
 
-//creation actions for drawer - status and type. favorites / history 
+//creation actions for drawer - status and type. favorites / history
 
 const initialState = {
   favorites: [],
@@ -57,6 +59,14 @@ const reducer = (state=initialState, action) => {
     } else {
       return state;
     }
+    case 'OPEN_DRAWER':
+    return Object.assign({}, state, {
+      drawerOpen: true
+    })
+    case 'CLOSE_DRAWER':
+    return Object.assign({}, state, {
+      drawerOpen: false
+    })
     default:
     return state;
   }
