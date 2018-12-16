@@ -10,6 +10,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import { closeDrawer } from '../actions/actions';
 
 const styles = (theme) => ({
   list: {
@@ -25,23 +26,23 @@ const styles = (theme) => ({
 });
 
 class LeftDrawer extends React.Component {
-  state = {
-    left: false,
-  };
 
-  toggleDrawer = (side, open) => () => {
-    this.setState({
-      [side]: open,
-    });
-  };
+renderSideListType = (type) => {
+  switch(type) {
+    case 'favorites':
+    return this.props.favorites;
+    case 'history':
+    return this.props.history;
+  }
+}
 
   render() {
     const { classes, favorites, history, drawerOpen, drawerType } = this.props;
     const sideList = (
       <div className={classes.drawer}>
         <List>
-          {history.map((item, index) => (
-            <ListItem button  key={index}>
+          {drawerType && this.renderSideListType(drawerType).map((item, index) => (
+            <ListItem button key={index}>
               <ListItemText primary={item.activity}/>
             </ListItem>
           ))}
@@ -50,16 +51,10 @@ class LeftDrawer extends React.Component {
       </div>
     );
 
-
     return (
       <div>
-        <Drawer open={drawerOpen} onClose={this.toggleDrawer('left', false)}>
-          <div
-            tabIndex={0}
-            role="button"
-            onClick={this.toggleDrawer('left', false)}
-            onKeyDown={this.toggleDrawer('left', false)}
-          >
+        <Drawer open={drawerOpen} onClose={this.props.closeLeftDrawer}>
+          <div>
             {sideList}
           </div>
         </Drawer>
@@ -79,7 +74,9 @@ const mapStateToProps = ({apiData, favorites, history, drawerOpen, drawerType}) 
 }
 
 const mapDispatchToProps = dispatch => {
-  return {}
+  return {
+    closeLeftDrawer: () => dispatch(closeDrawer())
+  }
 }
 
 
