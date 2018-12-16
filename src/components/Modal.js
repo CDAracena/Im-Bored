@@ -53,10 +53,14 @@ class RecreationModal extends React.Component {
     )
   }
 
-
+addDataToFavorites = (data) => {
+  const {addToFavorites, closeModal} = this.props;
+  addToFavorites(data);
+  closeModal()
+}
 
 render(){
-  const {classes, apiData, modalStatus, closeModal, addToFavorites} = this.props
+  const {classes, apiData, modalStatus, closeModal} = this.props
   return (
     <div>
     <Modal
@@ -72,7 +76,7 @@ render(){
         <Typography variant="subtitle1" id="simple-modal-description">
           Partipants {this.renderParticipants(apiData.participants)}
         </Typography>
-        <IconButton color="primary" onClick={ () => addToFavorites(apiData)}> <Favorite/> </IconButton>
+        <IconButton color="primary" onClick={() => this.addDataToFavorites(apiData)}> <Favorite/> </IconButton>
         <Modal />
       </div>
     </Modal>
