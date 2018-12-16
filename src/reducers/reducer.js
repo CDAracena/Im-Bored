@@ -7,7 +7,8 @@ import {
   ADD_TO_FAVORITES,
   OPEN_DRAWER,
   CLOSER_DRAWER,
-  SET_DRAWER_TYPE
+  SET_DRAWER_TYPE,
+  DELETE_FROM_FAVORITES
 }
 from '../actions/actions';
 
@@ -23,7 +24,8 @@ const initialState = {
   currentCategory: '',
   modalStatus: false,
   drawerOpen: false,
-  drawerType: ''
+  drawerType: '',
+  deleting: ''
 
 }
 
@@ -73,6 +75,11 @@ const reducer = (state=initialState, action) => {
     return Object.assign({}, state, {
       drawerOpen: false,
       drawerType: ''
+    })
+    case 'DELETE_FROM_FAVORITES':
+    return Object.assign({}, state, {
+      deleting: action.favItem.key,
+      favorites: state.favorites.filter(item => item.key !== action.favItem.key)
     })
     default:
     return state;

@@ -9,6 +9,7 @@ export const ADD_TO_FAVORITES = "ADD_TO_FAVORITES";
 export const OPEN_DRAWER = "OPEN_DRAWER";
 export const CLOSE_DRAWER = "CLOSE_DRAWER";
 export const SET_DRAWER_TYPE = "SET_DRAWER_TYPE";
+export const DELETE_FROM_FAVORITES = "DELETE_FROM_FAVORITES"
 
 export const fetchApiData = (recreationType) => {
   return (dispatch) => {
@@ -70,4 +71,9 @@ export const setDrawerType = (drawerType) => ({
 
 export const closeDrawer = () => ({
   type: CLOSE_DRAWER
+})
+
+export const deleteFromFavorites = (favItem) => ({
+  type: DELETE_FROM_FAVORITES,
+  favItem
 })
