@@ -7,7 +7,8 @@ export const OPEN_MODAL = "OPEN_MODAL";
 export const CLOSE_MODAL = "CLOSE_MODAL";
 export const ADD_TO_FAVORITES = "ADD_TO_FAVORITES";
 export const OPEN_DRAWER = "OPEN_DRAWER";
-export const CLOSE_DRAWER = "CLOSE_DRAWER"
+export const CLOSE_DRAWER = "CLOSE_DRAWER";
+export const SET_DRAWER_TYPE = "SET_DRAWER_TYPE";
 
 export const fetchApiData = (recreationType) => {
   return (dispatch) => {
@@ -19,6 +20,13 @@ export const fetchApiData = (recreationType) => {
       }
     })
     .catch(err => console.log(err))
+  }
+}
+
+export const setAndOpenDrawer = (drawType) => {
+  return (dispatch) => {
+    dispatch(setDrawerType(drawType))
+    dispatch(openDrawer())
   }
 }
 
@@ -53,6 +61,11 @@ export const addToFavorites = (data) => ({
 
 export const openDrawer = () => ({
   type: OPEN_DRAWER
+})
+
+export const setDrawerType = (drawerType) => ({
+  type: SET_DRAWER_TYPE,
+  drawerType
 })
 
 export const closeDrawer = () => ({

@@ -11,7 +11,7 @@ import RecreationGrid from './components/ReacreationGrid';
 import History from '@material-ui/icons/History';
 import RecreationModal from './components/Modal';
 import LeftDrawer from './components/Drawer';
-import {openDrawer, closeDrawer} from './actions/actions';
+import {closeDrawer, setAndOpenDrawer} from './actions/actions';
 
 const styles = (theme) => ({
   root: {
@@ -38,10 +38,10 @@ class App extends Component {
               <Typography variant='h6' className={classes.textColor}>
                 I'm Bored...
               </Typography>
-                <IconButton className={classes.textColor} onClick={openLeftDrawer}>
+                <IconButton className={classes.textColor} onClick={() => openLeftDrawer('favorites')}>
                   <SvgIcon className={classes.textColor}> <path d={Favorites}/> </SvgIcon>
                 </IconButton>
-                <IconButton className={classes.textColor} color="secondary" onClick={openLeftDrawer}>
+                <IconButton className={classes.textColor} color="secondary" onClick={() => openLeftDrawer('history')}>
                   <History/>
                 </IconButton>
             </Toolbar>
@@ -64,8 +64,8 @@ const mapStateToProps = ({drawerType, drawerOpen}) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    openLeftDrawer: () => dispatch(openDrawer()),
-    closeLeftDrawer: () => dispatch(closeDrawer())
+    closeLeftDrawer: () => dispatch(closeDrawer()),
+    openLeftDrawer: (drawerType) => dispatch(setAndOpenDrawer(drawerType))
   }
 }
 
