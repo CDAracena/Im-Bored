@@ -24,6 +24,9 @@ const styles = (theme) => ({
   },
   drawer: {
     backgroundColor: theme.palette.primary
+  },
+  trashCan: {
+    color: '#C3423F'
   }
 
 });
@@ -46,11 +49,11 @@ class LeftDrawer extends React.Component {
         {
           drawerType && this.renderSideListType(drawerType).map((item, index) => (<ListItem button="button" key={index}>
             <ListItemText primary={item.activity}/>
-            <ListItemSecondaryAction>
-              <IconButton onClick={()=> deleteItem(item)}>
+          {  drawerType === 'favorites' && <ListItemSecondaryAction>
+              <IconButton onClick={()=> deleteItem(item)} className={classes.trashCan}>
                 <Delete/>
               </IconButton>
-            </ListItemSecondaryAction>
+            </ListItemSecondaryAction>}
           </ListItem>))
         }
       </List>
