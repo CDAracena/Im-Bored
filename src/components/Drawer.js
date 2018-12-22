@@ -18,6 +18,8 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import SvgIcon from '@material-ui/core/SvgIcon';
+import Input from '@material-ui/core/Input';
+
 import {Education, BikeRide, Social, Diy, Charity, Cook, Spa, Music, Work} from '../utils/svg_icons';
 
 
@@ -33,6 +35,16 @@ const styles = (theme) => ({
   },
   trashCan: {
     color: '#C3423F'
+  },
+  paperAnchorLeft: {
+    backgroundColor: theme.palette.secondary.dark,
+    opacity: 0.9
+  },
+  divider: {
+    backgroundColor: theme.palette.primary.light
+  },
+  drawerText: {
+    color: theme.palette.primary.light
   }
 
 });
@@ -49,6 +61,16 @@ class LeftDrawer extends React.Component {
 {type: 'relaxation', icon: Spa},
 {type: 'music', icon: Music},
 {type: 'busywork', icon: Work}],
+  education: true,
+  recreational: true,
+  social: true,
+  charity: true,
+  diy: true,
+  relaxation: true,
+  music: true,
+  busywork: true,
+  cooking: true,
+  searchInput: ''
 
       }
 
@@ -61,17 +83,26 @@ class LeftDrawer extends React.Component {
     }
   }
 
-  filterChoice = (choice) => {
-    console.log(choice)
+  toggleChoice = (choice) => {
+    this.setState({[choice]: !this.state[choice]})
   }
+
+  setSearchInput = (e) => {
+    this.setState({searchInput: e.target.value})
+  }
+
+  //have to set this.state.searchInput only to each specific drawer type. History search input only works for history / vice- versa
+  // history items should not display heart if already on favorites... or maybe change icon color if already on favorites.
+
+  filterChoice = (item) => this.state[item.type] === true
 
   render() {
     const {classes, drawerOpen, drawerType, deleteItem, addToFavorites} = this.props;
     const sideList = (<div className={classes.drawer}>
       <List>
         {
-          drawerType && this.renderSideListType(drawerType).map((item, index) => (<ListItem button="button" key={index}>
-            <ListItemText primary={item.activity}/>
+          drawerType && this.renderSideListType(drawerType).filter(this.filterChoice).map((item, index) => (<ListItem button={true} key={index}>
+            <ListItemText primary={item.activity} classes={{primary: classes.drawerText}}/>
             <ListItemSecondaryAction>
               <IconButton onClick={ drawerType === 'favorites' ? ()=> deleteItem(item) : ()=> addToFavorites(item)} className={classes.trashCan}>
               {drawerType === 'favorites' ?  <Delete/> : <Favorite/>}
@@ -86,15 +117,20 @@ class LeftDrawer extends React.Component {
       <Divider/>
     </div>);
 
-    return (<div>
-      <Drawer open={drawerOpen} onClose={this.props.closeLeftDrawer}>
+    return (<div >
+      <Drawer open={drawerOpen} onClose={this.props.closeLeftDrawer} anchor='left' classes={{paper : classes.paperAnchorLeft}}>
         <div>
           <Grid container justify='center' alignItems='center'>
-            <Typography color="primary"> Filter </Typography>
-                {this.state.filterChoices.map((choice, idx) => <Grid>
-                  <IconButton color="primary" onClick={() => this.filterChoice(choice.type)}> <SvgIcon> <path d={choice.icon}/> </SvgIcon> </IconButton>
+            <Typography color="primary"> Filter: </Typography>
+                {this.state.filterChoices.map((choice, idx) => <Grid item key={idx}>
+                  <IconButton color={this.state[choice.type] ? 'primary' : 'secondary'} onClick={() => this.toggleChoice(choice.type)}>
+                    <SvgIcon> <path d={choice.icon}/> </SvgIcon> </IconButton>
                  </Grid> )}
           </Grid>
+          <Grid container justify="center">
+            <Input placeholder="search" margin="dense" onChange={this.setSearchInput}/>
+          </Grid>
+          <Divider className={classes.divider} variant="middle"/>
           {sideList}
         </div>
       </Drawer>

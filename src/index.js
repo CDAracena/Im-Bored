@@ -13,7 +13,9 @@ import store from './store'
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#FF9800'
+      light: orange[200],
+      main: '#FF9800',
+      dark: orange[800]
     },
     secondary: {
       light:'#E0E0E0',
