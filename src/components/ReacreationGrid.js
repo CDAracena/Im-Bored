@@ -58,7 +58,7 @@ class RecreationGrid extends Component {
           <GridListTile className={classes.gridListTile}>
             <img src="https://as2.ftcdn.net/jpg/01/67/42/53/500_F_167425391_gMIWP09RF61mh8c43wgZcKP6qKsSqHLM.jpg" alt="do it yourself"/>
             <GridListTileBar title='DIY' subtitle="Do It Yourself!" actionIcon={
-              <IconButton color="primary" data-category="do it yourself"  onClick={(e) => this.setAndFetchData(e)}> <SvgIcon> <path d={Diy}/> </SvgIcon> </IconButton>
+              <IconButton color="primary" data-category="diy"  onClick={(e) => this.setAndFetchData(e)}> <SvgIcon> <path d={Diy}/> </SvgIcon> </IconButton>
             }></GridListTileBar>
           </GridListTile>
           <GridListTile className={classes.gridListTile}>
