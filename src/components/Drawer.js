@@ -45,6 +45,12 @@ const styles = (theme) => ({
   },
   drawerText: {
     color: theme.palette.primary.light
+  },
+  notInFavorites: {
+    color: theme.palette.secondary.main
+  },
+  inputText: {
+    color: theme.palette.primary.light
   }
 
 });
@@ -71,7 +77,12 @@ class LeftDrawer extends React.Component {
   busywork: true,
   cooking: true,
   searchInput: ''
+      }
 
+      componentDidUpdate(prevProps) {
+        if (prevProps.drawerOpen !== this.props.drawerOpen) {
+          this.setState({searchInput: ''})
+        }
       }
 
   renderSideListType = (type) => {
@@ -88,11 +99,13 @@ class LeftDrawer extends React.Component {
   }
 
   setSearchInput = (e) => {
-    this.setState({searchInput: e.target.value})
+      this.setState({searchInput: e.target.value})
   }
 
-  //have to set this.state.searchInput only to each specific drawer type. History search input only works for history / vice- versa
-  // history items should not display heart if already on favorites... or maybe change icon color if already on favorites.
+
+
+searchFilter = item => item.activity.toLowerCase().includes(this.state.searchInput.toLowerCase()) || item.type.toLowerCase().includes(this.state.searchInput.toLowerCase())
+
 
   filterChoice = (item) => this.state[item.type] === true
 
@@ -101,10 +114,10 @@ class LeftDrawer extends React.Component {
     const sideList = (<div className={classes.drawer}>
       <List>
         {
-          drawerType && this.renderSideListType(drawerType).filter(this.filterChoice).map((item, index) => (<ListItem button={true} key={index}>
+          drawerType && this.renderSideListType(drawerType).filter(this.filterChoice).filter(this.searchFilter).map((item, index) => (<ListItem button={true} key={index}>
             <ListItemText primary={item.activity} classes={{primary: classes.drawerText}}/>
             <ListItemSecondaryAction>
-              <IconButton onClick={ drawerType === 'favorites' ? ()=> deleteItem(item) : ()=> addToFavorites(item)} className={classes.trashCan}>
+              <IconButton onClick={ drawerType === 'favorites' ? ()=> deleteItem(item) : ()=> addToFavorites(item)} className={this.props.favorites.includes(item) ? classes.trashCan : classes.notInFavorites}>
               {drawerType === 'favorites' ?  <Delete/> : <Favorite/>}
               </IconButton>
             </ListItemSecondaryAction>
@@ -128,7 +141,7 @@ class LeftDrawer extends React.Component {
                  </Grid> )}
           </Grid>
           <Grid container justify="center">
-            <Input placeholder="search" margin="dense" onChange={this.setSearchInput}/>
+            <Input placeholder="search" margin="dense" onChange={this.setSearchInput} classes={{input: classes.inputText}}/>
           </Grid>
           <Divider className={classes.divider} variant="middle"/>
           {sideList}
