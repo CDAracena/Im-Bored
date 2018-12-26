@@ -58,25 +58,26 @@ const styles = (theme) => ({
 class LeftDrawer extends React.Component {
   state = {
     filterChoices:[
-{type: 'education', icon: Education},
-{type: 'recreational', icon: BikeRide},
-{type:'social', icon: Social},
-{type: 'diy', icon: Diy},
-{type: 'charity', icon:Charity},
-{type: 'cooking', icon: Cook},
-{type: 'relaxation', icon: Spa},
-{type: 'music', icon: Music},
-{type: 'busywork', icon: Work}],
-  education: true,
-  recreational: true,
-  social: true,
-  charity: true,
-  diy: true,
-  relaxation: true,
-  music: true,
-  busywork: true,
-  cooking: true,
-  searchInput: ''
+    {type: 'education', icon: Education},
+    {type: 'recreational', icon: BikeRide},
+    {type:'social', icon: Social},
+    {type: 'diy', icon: Diy},
+    {type: 'charity', icon:Charity},
+    {type: 'cooking', icon: Cook},
+    {type: 'relaxation', icon: Spa},
+    {type: 'music', icon: Music},
+    {type: 'busywork', icon: Work}
+  ],
+      education: true,
+      recreational: true,
+      social: true,
+      charity: true,
+      diy: true,
+      relaxation: true,
+      music: true,
+      busywork: true,
+      cooking: true,
+      searchInput: ''
       }
 
       componentDidUpdate(prevProps) {
@@ -106,7 +107,6 @@ class LeftDrawer extends React.Component {
 
 searchFilter = item => item.activity.toLowerCase().includes(this.state.searchInput.toLowerCase()) || item.type.toLowerCase().includes(this.state.searchInput.toLowerCase())
 
-
   filterChoice = (item) => this.state[item.type] === true
 
   render() {
@@ -114,7 +114,7 @@ searchFilter = item => item.activity.toLowerCase().includes(this.state.searchInp
     const sideList = (<div className={classes.drawer}>
       <List>
         {
-          drawerType && this.renderSideListType(drawerType).filter(this.filterChoice).filter(this.searchFilter).map((item, index) => (<ListItem button={true} key={index}>
+          drawerType && this.props[drawerType].length > 0 ? this.renderSideListType(drawerType).filter(this.filterChoice).filter(this.searchFilter).map((item, index) => (<ListItem button={true} key={index}>
             <ListItemText primary={item.activity} classes={{primary: classes.drawerText}}/>
             <ListItemSecondaryAction>
               <IconButton onClick={ drawerType === 'favorites' ? ()=> deleteItem(item) : ()=> addToFavorites(item)} className={this.props.favorites.includes(item) ? classes.trashCan : classes.notInFavorites}>
@@ -125,6 +125,10 @@ searchFilter = item => item.activity.toLowerCase().includes(this.state.searchInp
               {item.link && <ListItem button component="a" href={`${item.link}`}> <ListItemText primary={item.link}/> </ListItem>}
             </List>
           </ListItem>))
+          :
+          <ListItem>
+          <ListItemText primary={`You currently have no boring antidotes in ${drawerType}`} classes={{primary: classes.notInFavorites}}/>
+        </ListItem>
         }
       </List>
       <Divider/>
