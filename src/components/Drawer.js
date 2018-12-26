@@ -12,13 +12,15 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import {closeDrawer, deleteFromFavorites, addToFavorites} from '../actions/actions';
 import Delete from '@material-ui/icons/Delete';
-import Favorite from '@material-ui/icons/Favorite'
+import Favorite from '@material-ui/icons/Favorite';
+import Search from '@material-ui/icons/Search';
 import IconButton from '@material-ui/core/IconButton';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import Input from '@material-ui/core/Input';
+import InputAdornment from '@material-ui/core/InputAdornment';
 
 import {Education, BikeRide, Social, Diy, Charity, Cook, Spa, Music, Work} from '../utils/svg_icons';
 
@@ -51,6 +53,9 @@ const styles = (theme) => ({
   },
   inputText: {
     color: theme.palette.primary.light
+  },
+  inputField: {
+    marginBottom: '5px'
   }
 
 });
@@ -145,7 +150,15 @@ searchFilter = item => item.activity.toLowerCase().includes(this.state.searchInp
                  </Grid> )}
           </Grid>
           <Grid container justify="center">
-            <Input placeholder="search" margin="dense" onChange={this.setSearchInput} classes={{input: classes.inputText}}/>
+            <Input placeholder="search"
+              margin="dense"
+              onChange={this.setSearchInput}
+              classes={{input: classes.inputText}}
+              className={classes.inputField}
+              startAdornment= {
+                <InputAdornment position="start" variant="outlined" classes={{positionStart: classes.drawerText}}> <Search/></InputAdornment>
+              }
+            />
           </Grid>
           <Divider className={classes.divider} variant="middle"/>
           {sideList}
