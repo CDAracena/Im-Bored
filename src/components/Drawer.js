@@ -14,6 +14,7 @@ import {closeDrawer, deleteFromFavorites, addToFavorites} from '../actions/actio
 import Delete from '@material-ui/icons/Delete';
 import Favorite from '@material-ui/icons/Favorite';
 import Search from '@material-ui/icons/Search';
+import ChevronLeft from '@material-ui/icons/ChevronLeft';
 import IconButton from '@material-ui/core/IconButton';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import Grid from '@material-ui/core/Grid';
@@ -141,6 +142,16 @@ searchFilter = item => item.activity.toLowerCase().includes(this.state.searchInp
 
     return (<div >
       <Drawer open={drawerOpen} onClose={this.props.closeLeftDrawer} anchor='left' classes={{paper : classes.paperAnchorLeft}}>
+        <Grid container justify="space-between" alignItems="center">
+          <Grid item>
+            <Typography variant="h5" color="primary">{drawerType}</Typography>
+          </Grid>
+          <Grid item>
+        <IconButton color="primary" onClick={this.props.closeLeftDrawer}>
+          <ChevronLeft/>
+        </IconButton>
+      </Grid>
+      </Grid>
         <div>
           <Grid container justify='center' alignItems='center'>
             <Typography color="primary"> Filter: </Typography>
