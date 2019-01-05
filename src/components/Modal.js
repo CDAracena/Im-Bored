@@ -11,14 +11,9 @@ import {closeModal, addToFavorites} from '../actions/actions';
 import Favorite from '@material-ui/icons/Favorite';
 
 
-
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
-
 function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
+  const top = 50
+  const left = 50
 
   return {
     top: `${top}%`,
@@ -34,6 +29,9 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,
+    '@media (max-width:500px)': {
+      width: '80%'
+    }
   },
 });
 
@@ -67,7 +65,8 @@ render(){
       aria-labelledby="simple-modal-title"
       aria-describedby="simple-modal-description"
       open={modalStatus}
-      onClose={closeModal}>
+      onClose={closeModal}
+      className="modalContainer">
       <div style={getModalStyle()} className={classes.paper}>
         <span style={{float: 'right'}}><IconButton color="primary" onClick={closeModal}> <Close/> </IconButton></span>
         <Typography variant="h6" id="modal-title">
