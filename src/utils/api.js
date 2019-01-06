@@ -1,7 +1,7 @@
 export const fetchBoredData = (recreationType) => {
   let apiDataLink;
   if (recreationType === "random"){
-    apiDataLink = 'http://www.boredapi.com/api/activity/'
+    apiDataLink = 'https://www.boredapi.com/api/activity/'
   } else {
     apiDataLink = `https://www.boredapi.com/api/activity?type=${recreationType}`
   }
