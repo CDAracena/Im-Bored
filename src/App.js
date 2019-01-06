@@ -12,6 +12,7 @@ import History from '@material-ui/icons/History';
 import RecreationModal from './components/Modal';
 import LeftDrawer from './components/Drawer';
 import {closeDrawer, setAndOpenDrawer} from './actions/actions';
+import { Scrollbars } from 'react-custom-scrollbars';
 
 const styles = (theme) => ({
   root: {

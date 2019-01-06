@@ -1,5 +1,11 @@
 export const fetchBoredData = (recreationType) => {
-  return fetch(`https://www.boredapi.com/api/activity?type=${recreationType}`)
+  let apiDataLink;
+  if (recreationType === "random"){
+    apiDataLink = 'http://www.boredapi.com/api/activity/'
+  } else {
+    apiDataLink = `https://www.boredapi.com/api/activity?type=${recreationType}`
+  }
+  return fetch(apiDataLink)
   .then(response => response.json())
   .catch(err => console.log(err))
 }
