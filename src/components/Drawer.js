@@ -22,6 +22,8 @@ import Typography from '@material-ui/core/Typography';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import Input from '@material-ui/core/Input';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import { Scrollbars } from 'react-custom-scrollbars';
+
 
 import {Education, BikeRide, Social, Diy, Charity, Cook, Spa, Music, Work} from '../utils/svg_icons';
 
@@ -57,6 +59,9 @@ const styles = (theme) => ({
   },
   inputField: {
     marginBottom: '5px'
+  },
+  thumbVertical: {
+    backgroundColor: theme.palette.primary.main
   }
 
 });
@@ -109,6 +114,11 @@ class LeftDrawer extends React.Component {
       this.setState({searchInput: e.target.value})
   }
 
+redirect = (item) => {
+  if (item.link) {
+    window.open(item.link, '_blank')
+  }
+}
 
 
 searchFilter = item => item.activity.toLowerCase().includes(this.state.searchInput.toLowerCase()) || item.type.toLowerCase().includes(this.state.searchInput.toLowerCase())
@@ -117,34 +127,50 @@ searchFilter = item => item.activity.toLowerCase().includes(this.state.searchInp
 
   render() {
     const {classes, drawerOpen, drawerType, deleteItem, addToFavorites} = this.props;
-    const sideList = (<div className={classes.drawer}>
+    const sideList = (
+      <div className={classes.drawer}>
+
       <List>
+          <Scrollbars autoHeight={true}
+            autoHeightMin={100}
+            autoHeightMax={600}
+            autoHide={true}
+            autoHideTimeout={1000}
+            autoHideDuration={200}
+            renderThumbVertical={props => <div {...props} className={classes.thumbVertical}/>}
+            >
+
         {
           drawerType && this.props[drawerType].length > 0 ? this.renderSideListType(drawerType).filter(this.filterChoice).filter(this.searchFilter).map((item, index) => (<ListItem button={true} key={index}>
-            <ListItemText primary={item.activity} classes={{primary: classes.drawerText}}/>
+            <ListItemText primary={item.activity} classes={{primary: classes.drawerText}} onClick={() => this.redirect(item)}/>
             <ListItemSecondaryAction>
               <IconButton onClick={ drawerType === 'favorites' ? ()=> deleteItem(item) : ()=> addToFavorites(item)} className={this.props.favorites.includes(item) ? classes.trashCan : classes.notInFavorites}>
               {drawerType === 'favorites' ?  <Delete/> : <Favorite/>}
               </IconButton>
             </ListItemSecondaryAction>
-            <List>
-              {item.link && <ListItem button component="a" href={`${item.link}`}> <ListItemText primary={item.link}/> </ListItem>}
-            </List>
           </ListItem>))
           :
           <ListItem>
           <ListItemText primary={`You currently have no boring antidotes in ${drawerType}`} classes={{primary: classes.notInFavorites}}/>
         </ListItem>
         }
+        </Scrollbars>
       </List>
-      <Divider/>
-    </div>);
 
-    return (<div >
+      <Divider/>
+    </div>
+
+    );
+
+    return (
+
+      <div>
+
       <Drawer open={drawerOpen} onClose={this.props.closeLeftDrawer} anchor='left' classes={{paper : classes.paperAnchorLeft}}>
-        <Grid container justify="space-between" alignItems="center">
+
+        <Grid container justify="space-between" alignItems="center" style={{paddingTop: '15px'}}>
           <Grid item>
-            <Typography variant="h5" color="primary" style={{paddingLeft: '15px'}}>{drawerType}</Typography>
+            <Typography variant="h5" color="primary" style={{paddingLeft: '15px'}}>{drawerType.toUpperCase()}</Typography>
           </Grid>
           <Grid item>
         <IconButton color="primary" onClick={this.props.closeLeftDrawer}>
@@ -174,8 +200,12 @@ searchFilter = item => item.activity.toLowerCase().includes(this.state.searchInp
           <Divider className={classes.divider} variant="middle"/>
           {sideList}
         </div>
+
       </Drawer>
-    </div>);
+
+    </div>
+
+  );
   }
 }
 

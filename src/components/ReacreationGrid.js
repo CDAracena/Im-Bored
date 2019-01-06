@@ -8,7 +8,7 @@ import GridListTileBar from '@material-ui/core/GridListTileBar';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import IconButton from '@material-ui/core/IconButton';
 import SvgIcon from '@material-ui/core/SvgIcon';
-import {Education, BikeRide, Social, Diy, Charity, Cook, Spa, Music, Work} from '../utils/svg_icons'
+import {Education, BikeRide, Social, Diy, Charity, Cook, Spa, Music, Work, Random} from '../utils/svg_icons'
 import { selectCategory, fetchApiData, openModal, closeModal } from '../actions/actions';
 
 
@@ -89,6 +89,12 @@ class RecreationGrid extends Component {
             <img src="https://freedesignfile.com/upload/2018/07/busy-work-Stock-Photo-03.jpg" alt="busywork"/>
             <GridListTileBar title='Busywork' subtitle="Get up off that coach NOW" actionIcon={
               <IconButton color="primary" data-category="busywork"  onClick={(e) => this.setAndFetchData(e)}> <SvgIcon> <path d={Work}/> </SvgIcon> </IconButton>
+            }></GridListTileBar>
+          </GridListTile>
+          <GridListTile className={classes.gridListTile}>
+            <img src="https://www.outinperth.com/wp-content/uploads/2014/09/Random-FB-BANNER.jpg" alt="random"/>
+            <GridListTileBar title='Random' subtitle="Get a random activity" actionIcon={
+              <IconButton color="primary" data-category="random"  onClick={(e) => this.setAndFetchData(e)}> <SvgIcon> <path d={Random}/> </SvgIcon> </IconButton>
             }></GridListTileBar>
           </GridListTile>
         </GridList>
