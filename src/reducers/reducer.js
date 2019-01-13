@@ -8,7 +8,8 @@ import {
   OPEN_DRAWER,
   CLOSER_DRAWER,
   SET_DRAWER_TYPE,
-  DELETE_FROM_FAVORITES
+  DELETE_FROM_FAVORITES,
+  ADD_TO_HISTORY
 }
 from '../actions/actions';
 
@@ -44,8 +45,12 @@ const reducer = (state=initialState, action) => {
       fetchingApiData: false,
       apiData: action.data,
       receivedApiData: true,
+    })
+    case 'ADD_TO_HISTORY':
+    return Object.assign({}, state, {
       history: [...state.history, action.data]
     })
+
     case 'OPEN_MODAL':
     return Object.assign({}, state, {
       modalStatus: true
@@ -53,16 +58,13 @@ const reducer = (state=initialState, action) => {
     case 'CLOSE_MODAL':
     return Object.assign({}, state, {
       modalStatus: false,
-      currentCategory: ''
+      currentCategory: '',
+      receivedApiData: false
     })
     case 'ADD_TO_FAVORITES':
-      if(!state.favorites.includes(action.data)) {
       return Object.assign({}, state, {
-        favorites: [...state.favorites, action.data]
-      })
-    } else {
-      return state;
-    }
+      favorites: [...state.favorites, action.data]
+    })
     case 'OPEN_DRAWER':
     return Object.assign({}, state, {
       drawerOpen: true

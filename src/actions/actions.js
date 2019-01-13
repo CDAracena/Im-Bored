@@ -9,7 +9,9 @@ export const ADD_TO_FAVORITES = "ADD_TO_FAVORITES";
 export const OPEN_DRAWER = "OPEN_DRAWER";
 export const CLOSE_DRAWER = "CLOSE_DRAWER";
 export const SET_DRAWER_TYPE = "SET_DRAWER_TYPE";
-export const DELETE_FROM_FAVORITES = "DELETE_FROM_FAVORITES"
+export const DELETE_FROM_FAVORITES = "DELETE_FROM_FAVORITES";
+export const ADD_TO_HISTORY = "ADD_TO_HISTORY";
+
 
 export const fetchApiData = (recreationType) => {
   return (dispatch) => {
@@ -18,6 +20,7 @@ export const fetchApiData = (recreationType) => {
     .then(data => {
       if (data) {
         dispatch(receivedApiData(data))
+
       }
     })
     .catch(err => console.log(err))
@@ -44,6 +47,11 @@ export const fetchingApiData = () => ({
 
 export const receivedApiData = (data) => ({
   type: RECEIVED_API_DATA,
+  data
+})
+
+export const addToHistory = (data) => ({
+  type: ADD_TO_HISTORY,
   data
 })
 

@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button'
 import Person from '@material-ui/icons/Person'
 import Close from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
-import {closeModal, addToFavorites} from '../actions/actions';
+import {closeModal, addToFavorites, addToHistory} from '../actions/actions';
 import Favorite from '@material-ui/icons/Favorite';
 import Grid from '@material-ui/core/Grid';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -54,9 +54,21 @@ class RecreationModal extends React.Component {
   }
 
 addDataToFavorites = (data) => {
-  const {addToFavorites, closeModal} = this.props;
-  addToFavorites(data);
+  const {addToFavorites, closeModal, favorites} = this.props;
+  const duplicate = favorites.find(item => item.key === data.key)
+  if (!duplicate){
+    addToFavorites(data);
+  }
   closeModal()
+}
+
+componentDidUpdate(prevProps) {
+    if (this.props.apiData !== prevProps.apiData && this.props.receivedApiData) {
+      const duplicate = this.props.history.find(item => item.key === this.props.apiData.key)
+      if (!duplicate) {
+        this.props.addToHistory(this.props.apiData)
+      }
+  }
 }
 
 render(){
@@ -96,17 +108,21 @@ render(){
 
 }
 
-const mapStateToProps = ({ apiData, modalStatus }) => {
+const mapStateToProps = ({ apiData, modalStatus, favorites, receivedApiData, history }) => {
   return {
     apiData,
-    modalStatus
+    modalStatus,
+    favorites,
+    receivedApiData,
+    history
   }
 }
 
 const mapDispatchToProps = dispatch =>{
   return {
     closeModal: () => dispatch(closeModal()),
-    addToFavorites: (data) => dispatch(addToFavorites(data))
+    addToFavorites: (data) => dispatch(addToFavorites(data)),
+    addToHistory: (data) => dispatch(addToHistory(data))
   }
 }
 
