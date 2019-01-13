@@ -9,6 +9,7 @@ import Close from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import {closeModal, addToFavorites} from '../actions/actions';
 import Favorite from '@material-ui/icons/Favorite';
+import Grid from '@material-ui/core/Grid'
 
 
 function getModalStyle() {
@@ -45,9 +46,9 @@ class RecreationModal extends React.Component {
       iconArray.push(i);
     }
     return(
-      <Fragment>
+      <Grid item>
         {iconArray.map(icon => <Person color="primary" key={icon}/>)}
-      </Fragment>
+      </Grid>
     )
   }
 
@@ -72,9 +73,16 @@ render(){
         <Typography variant="h6" id="modal-title">
           {apiData.activity}
         </Typography>
+        <Grid container
+          alignItems="center"
+          direction="row">
+        <Grid item>
         <Typography variant="subtitle1" id="simple-modal-description">
-          Partipants {this.renderParticipants(apiData.participants)}
+          Partipants:
         </Typography>
+        </Grid>
+        {this.renderParticipants(apiData.participants)}
+        </Grid>
         <IconButton color="primary" onClick={() => this.addDataToFavorites(apiData)}> <Favorite/> </IconButton>
         <Modal />
       </div>
