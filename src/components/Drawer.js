@@ -191,9 +191,7 @@ searchFilter = item => item.activity.toLowerCase().includes(this.state.searchInp
     return (
 
       <div>
-
       <Drawer open={drawerOpen} onClose={this.props.closeLeftDrawer} anchor='left' classes={{paper : classes.paperAnchorLeft}}>
-
         <Grid container justify="space-between" alignItems="center" style={{paddingTop: '15px'}}>
           <Grid item>
             <Typography variant="h5" color="primary" style={{paddingLeft: '15px'}}>{drawerType.toUpperCase()}</Typography>
@@ -226,9 +224,7 @@ searchFilter = item => item.activity.toLowerCase().includes(this.state.searchInp
           <Divider className={classes.divider} variant="middle"/>
           {sideList}
         </div>
-
       </Drawer>
-
     </div>
 
   );
