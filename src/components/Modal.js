@@ -9,7 +9,8 @@ import Close from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import {closeModal, addToFavorites} from '../actions/actions';
 import Favorite from '@material-ui/icons/Favorite';
-import Grid from '@material-ui/core/Grid'
+import Grid from '@material-ui/core/Grid';
+import Tooltip from '@material-ui/core/Tooltip';
 
 
 function getModalStyle() {
@@ -83,7 +84,9 @@ render(){
         </Grid>
         {this.renderParticipants(apiData.participants)}
         </Grid>
+        <Tooltip title="Add to favorites">
         <IconButton color="primary" onClick={() => this.addDataToFavorites(apiData)}> <Favorite/> </IconButton>
+        </Tooltip>
         <Modal />
       </div>
     </Modal>
