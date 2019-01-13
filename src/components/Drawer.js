@@ -22,6 +22,7 @@ import Typography from '@material-ui/core/Typography';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import Input from '@material-ui/core/Input';
 import Link from '@material-ui/icons/Link';
+import Tooltip from '@material-ui/core/Tooltip';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { Scrollbars } from 'react-custom-scrollbars';
 
@@ -127,10 +128,12 @@ primaryTextRender = (apiItem) => {
       return (
         <Fragment>
         {apiItem.activity}
-        <span> 
+        <span>
+        <Tooltip title="Link" placement="right">
         <IconButton className={classes.drawerText} onClick={() => this.redirect(apiItem)}>
         <Link/>
         </IconButton>
+        </Tooltip>
         </span>
         </Fragment>
       )
@@ -163,13 +166,12 @@ searchFilter = item => item.activity.toLowerCase().includes(this.state.searchInp
             autoHideDuration={200}
             renderThumbVertical={props => <div {...props} className={classes.thumbVertical}/>}
             >
-
         {
           drawerType && this.props[drawerType].length > 0 ? this.renderSideListType(drawerType).filter(this.filterChoice).filter(this.searchFilter).map((item, index) => (<ListItem button={true} key={index}>
             <ListItemText primary={this.primaryTextRender(item)} classes={{primary: classes.drawerText}} onClick={() => this.redirect(item)} />
             <ListItemSecondaryAction>
               <IconButton onClick={ drawerType === 'favorites' ? ()=> deleteItem(item) : ()=> addToFavorites(item)} className={this.props.favorites.includes(item) ? classes.trashCan : classes.notInFavorites}>
-              {drawerType === 'favorites' ?  <Delete/> : <Favorite/>}
+              {drawerType === 'favorites' ? <Delete/> : <Favorite/>}
               </IconButton>
             </ListItemSecondaryAction>
           </ListItem>))
