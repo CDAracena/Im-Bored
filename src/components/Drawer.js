@@ -21,6 +21,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import Input from '@material-ui/core/Input';
+import Link from '@material-ui/icons/Link';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { Scrollbars } from 'react-custom-scrollbars';
 
@@ -120,6 +121,29 @@ redirect = (item) => {
   }
 }
 
+primaryTextRender = (apiItem) => {
+  const {classes} = this.props;
+  if (apiItem.activity && apiItem.link) {
+      return (
+        <Fragment>
+        {apiItem.activity}
+        <span> 
+        <IconButton className={classes.drawerText} onClick={() => this.redirect(apiItem)}>
+        <Link/>
+        </IconButton>
+        </span>
+        </Fragment>
+      )
+    } else {
+      return (
+        <Fragment>
+        {apiItem.activity}
+        </Fragment>
+      )
+    }
+  }
+
+
 
 searchFilter = item => item.activity.toLowerCase().includes(this.state.searchInput.toLowerCase()) || item.type.toLowerCase().includes(this.state.searchInput.toLowerCase())
 
@@ -142,7 +166,7 @@ searchFilter = item => item.activity.toLowerCase().includes(this.state.searchInp
 
         {
           drawerType && this.props[drawerType].length > 0 ? this.renderSideListType(drawerType).filter(this.filterChoice).filter(this.searchFilter).map((item, index) => (<ListItem button={true} key={index}>
-            <ListItemText primary={item.activity} classes={{primary: classes.drawerText}} onClick={() => this.redirect(item)}/>
+            <ListItemText primary={this.primaryTextRender(item)} classes={{primary: classes.drawerText}} onClick={() => this.redirect(item)} />
             <ListItemSecondaryAction>
               <IconButton onClick={ drawerType === 'favorites' ? ()=> deleteItem(item) : ()=> addToFavorites(item)} className={this.props.favorites.includes(item) ? classes.trashCan : classes.notInFavorites}>
               {drawerType === 'favorites' ?  <Delete/> : <Favorite/>}
