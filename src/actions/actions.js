@@ -11,6 +11,8 @@ export const CLOSE_DRAWER = "CLOSE_DRAWER";
 export const SET_DRAWER_TYPE = "SET_DRAWER_TYPE";
 export const DELETE_FROM_FAVORITES = "DELETE_FROM_FAVORITES";
 export const ADD_TO_HISTORY = "ADD_TO_HISTORY";
+export const OPEN_SUGGESTION_BOX = "OPEN_SUGGESTION_BOX";
+export const CLOSE_SUGGESTION_BOX = "CLOSE_SUGGESTION_BOX"
 
 
 export const fetchApiData = (recreationType) => {
@@ -84,4 +86,12 @@ export const closeDrawer = () => ({
 export const deleteFromFavorites = (favItem) => ({
   type: DELETE_FROM_FAVORITES,
   favItem
+})
+
+export const openSuggestionBox = () => ({
+  type: OPEN_SUGGESTION_BOX
+})
+
+export const closeSuggestBox = () => ({
+  type: CLOSE_SUGGESTION_BOX
 })

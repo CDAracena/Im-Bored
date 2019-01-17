@@ -11,8 +11,11 @@ import RecreationGrid from './components/ReacreationGrid';
 import History from '@material-ui/icons/History';
 import RecreationModal from './components/Modal';
 import LeftDrawer from './components/Drawer';
-import {closeDrawer, setAndOpenDrawer} from './actions/actions';
+import {closeDrawer, setAndOpenDrawer, openSuggestionBox} from './actions/actions';
 import { Scrollbars } from 'react-custom-scrollbars';
+import Tooltip from '@material-ui/core/Tooltip';
+import LocalPostOffice from '@material-ui/icons/LocalPostOffice'
+import SuggestionModal from './components/SuggestionModal';
 
 const styles = (theme) => ({
   root: {
@@ -30,7 +33,7 @@ const styles = (theme) => ({
 class App extends Component {
 
   render(){
-    const { classes, openLeftDrawer, closeLeftDrawer } = this.props
+    const { classes, openLeftDrawer, closeLeftDrawer, openSuggestion, openSuggestBox } = this.props
     return (
       <div className="app-container">
         <div className={classes.root}>
@@ -39,16 +42,26 @@ class App extends Component {
               <Typography variant='h6' className={classes.textColor}>
                 I'm Bored...
               </Typography>
+              <Tooltip title="Favorites">
                 <IconButton className={classes.textColor} onClick={() => openLeftDrawer('favorites')}>
                   <SvgIcon className={classes.textColor}> <path d={Favorites}/> </SvgIcon>
                 </IconButton>
+              </Tooltip>
+              <Tooltip title="History">
                 <IconButton className={classes.textColor} color="secondary" onClick={() => openLeftDrawer('history')}>
                   <History/>
                 </IconButton>
+              </Tooltip>
+              <Tooltip title="Suggest New Activity">
+              <IconButton className={classes.textColor} onClick={openSuggestion}>
+                <LocalPostOffice/>
+              </IconButton>
+              </Tooltip>
             </Toolbar>
           </AppBar>
           <RecreationGrid/>
           <RecreationModal/>
+          {openSuggestBox ? <SuggestionModal/> : ''}
           <LeftDrawer/>
         </div>
       </div>
@@ -56,17 +69,21 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = ({drawerType, drawerOpen}) => {
+const mapStateToProps = state => {
+  const {drawerType, drawerOpen} = state.core
+  const { openSuggestBox} = state.suggestion
   return {
     drawerType,
-    drawerOpen
+    drawerOpen,
+    openSuggestBox
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     closeLeftDrawer: () => dispatch(closeDrawer()),
-    openLeftDrawer: (drawerType) => dispatch(setAndOpenDrawer(drawerType))
+    openLeftDrawer: (drawerType) => dispatch(setAndOpenDrawer(drawerType)),
+    openSuggestion: () => dispatch(openSuggestionBox())
   }
 }
 

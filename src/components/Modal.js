@@ -108,7 +108,8 @@ render(){
 
 }
 
-const mapStateToProps = ({ apiData, modalStatus, favorites, receivedApiData, history }) => {
+const mapStateToProps = state => {
+  const {apiData, modalStatus, favorites, receivedApiData, history} = state.core
   return {
     apiData,
     modalStatus,
