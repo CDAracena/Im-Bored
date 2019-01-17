@@ -1,6 +1,7 @@
 import {
   OPEN_SUGGESTION_BOX,
-  CLOSE_SUGGESTION_BOX
+  CLOSE_SUGGESTION_BOX,
+  USER_CREATING_NEW_ACTIVITY
 } from '../actions/actions'
 
 const initialState = {
@@ -25,9 +26,15 @@ const suggestion = (state = initialState, action) => {
     });
     case 'CLOSE_SUGGESTION_BOX':
     return Object.assign({}, state, {
-      openSuggestBox: false
+      openSuggestBox: false,
+      activity: {},
+      typing: false,
+      submitted: false
     })
-
+    case 'USER_CREATING_NEW_ACTIVITY':
+    return Object.assign({}, state, {
+      typing: true
+    })
     default:
     return state;
   }
