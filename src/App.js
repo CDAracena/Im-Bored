@@ -17,6 +17,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import LocalPostOffice from '@material-ui/icons/LocalPostOffice'
 import SuggestionModal from './components/SuggestionModal';
 
+
 const styles = (theme) => ({
   root: {
     flexGrow: 1
@@ -33,7 +34,7 @@ const styles = (theme) => ({
 class App extends Component {
 
   render(){
-    const { classes, openLeftDrawer, closeLeftDrawer, openSuggestion, openSuggestBox } = this.props
+    const { classes, openLeftDrawer, closeLeftDrawer, openSuggestion, openSuggestBox, modalStatus } = this.props
     return (
       <div className="app-container">
         <div className={classes.root}>
@@ -61,7 +62,7 @@ class App extends Component {
           </AppBar>
           <RecreationGrid/>
           <RecreationModal/>
-          {openSuggestBox ? <SuggestionModal/> : ''}
+          <SuggestionModal/>
           <LeftDrawer/>
         </div>
       </div>
@@ -69,13 +70,14 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  const {drawerType, drawerOpen} = state.core
+const mapStateToProps = (state) => {
+  const {drawerType, drawerOpen, modalStatus} = state.core
   const { openSuggestBox} = state.suggestion
   return {
     drawerType,
     drawerOpen,
-    openSuggestBox
+    openSuggestBox,
+    modalStatus
   }
 }
 

@@ -12,7 +12,8 @@ export const SET_DRAWER_TYPE = "SET_DRAWER_TYPE";
 export const DELETE_FROM_FAVORITES = "DELETE_FROM_FAVORITES";
 export const ADD_TO_HISTORY = "ADD_TO_HISTORY";
 export const OPEN_SUGGESTION_BOX = "OPEN_SUGGESTION_BOX";
-export const CLOSE_SUGGESTION_BOX = "CLOSE_SUGGESTION_BOX"
+export const CLOSE_SUGGESTION_BOX = "CLOSE_SUGGESTION_BOX";
+export const USER_CREATING_NEW_ACTIVITY = "USER_CREATING_NEW_ACTIVITY";
 
 
 export const fetchApiData = (recreationType) => {
@@ -94,4 +95,8 @@ export const openSuggestionBox = () => ({
 
 export const closeSuggestBox = () => ({
   type: CLOSE_SUGGESTION_BOX
+})
+
+export const creatingActivity = () => ({
+  type: USER_CREATING_NEW_ACTIVITY
 })

@@ -238,8 +238,7 @@ const mapStateToProps = state => {
     favorites,
     history,
     drawerOpen,
-    drawerType
-  }
+    drawerType}
 }
 
 const mapDispatchToProps = dispatch => {
