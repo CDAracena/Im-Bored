@@ -12,6 +12,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
+import Input from '@material-ui/core/Input';
 import MenuItem from '@material-ui/core/MenuItem';
 
 const styles = theme => ({
@@ -26,23 +27,40 @@ class SuggestionModal extends React.Component{
     activityTitle: '',
     typeCategories: ['Relaxation', 'Education', 'Social', "DIY", 'Music', 'Charity', 'Busywork', 'Cooking', 'Recreational'],
     selectedCategory: '',
-    participants: 0
+    participants: 1
   }
 
 userCreating = (e) => {
   const {creatingActivity} = this.props
-  if (e.target.value.length > 3) {
     creatingActivity()
-  this.setState({activityTitle: e.target.value})
-  }
+    if (e.target.value.length >= 4) {
+      this.setState({activityTitle: e.target.value})
+    }
 }
 
 setCategory = (e) => {
   this.setState({selectedCategory: e.target.value})
-  console.log(this.state.selectedCategory)
 }
+
+setParticipants = (e) => {
+  this.setState({participants: e.target.value})
+}
+
+
+componentDidUpdate(prevProps, prevState) {
+  if (this.props.openSuggestBox !== prevProps.openSuggestBox){
+    this.setState({
+      activityTitle: '',
+      selectedCategory: '',
+    })
+  }
+}
+
+
   render() {
     const {openSuggestBox, closeSuggestionBox} = this.props
+    console.log(this.state.selectedCategory)
+    console.log(this.state.activityTitle)
     return (
     <div>
      <Button variant="outlined" color="primary" onClick={this.handleClickOpen}>
@@ -62,9 +80,10 @@ setCategory = (e) => {
            autoFocus
            margin="dense"
            id="activityTitle"
-           label="Activity"
+           name="Activity"
            type="text"
            fullWidth
+           required={true}
            onChange={this.userCreating}
          />
          <InputLabel htmlFor="categorySelect"> Category </InputLabel>
@@ -75,12 +94,18 @@ setCategory = (e) => {
           <MenuItem value="" disabled>Category </MenuItem>
           {this.state.typeCategories.map((cat, index )=> <MenuItem value={cat} key={index}> {cat} </MenuItem>)}
           </Select>
+          <InputLabel htmlFor="participants"> Participants </InputLabel>
+          <Input type="number" required={true}
+          name="participants"
+          inputProps={{min: 1}}
+          value={this.state.participants}
+          onChange={this.setParticipants}/>
        </DialogContent>
        <DialogActions>
          <Button onClick={closeSuggestionBox} color="primary">
            Cancel
          </Button>
-         <Button onClick={this.handleClose} color="primary" disabled={!this.state.activityTitle && !this.state.selectedCategory}>
+         <Button onClick={this.handleClose} color="primary" disabled={this.state.activityTitle < 4 || !this.state.selectedCategory}>
            Send
          </Button>
        </DialogActions>
