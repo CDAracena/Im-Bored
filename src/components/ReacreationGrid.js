@@ -103,7 +103,8 @@ class RecreationGrid extends Component {
   }
 }
 
-const mapStateToProps = ({currentCategory, apiData, favorites}) => {
+const mapStateToProps = (state) => {
+  const {currentCategory, apiData, favorites} = state.core 
   return {
   currentCategory,
   apiData,

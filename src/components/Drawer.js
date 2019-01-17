@@ -231,8 +231,15 @@ searchFilter = item => item.activity.toLowerCase().includes(this.state.searchInp
   }
 }
 
-const mapStateToProps = ({apiData, favorites, history, drawerOpen, drawerType}) => {
-  return {apiData, favorites, history, drawerOpen, drawerType}
+const mapStateToProps = state => {
+  const {apiData, favorites, history, drawerOpen, drawerType} = state.core
+  return {
+    apiData,
+    favorites,
+    history,
+    drawerOpen,
+    drawerType
+  }
 }
 
 const mapDispatchToProps = dispatch => {
