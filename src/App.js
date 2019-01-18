@@ -11,11 +11,13 @@ import RecreationGrid from './components/ReacreationGrid';
 import History from '@material-ui/icons/History';
 import RecreationModal from './components/Modal';
 import LeftDrawer from './components/Drawer';
-import {closeDrawer, setAndOpenDrawer, openSuggestionBox} from './actions/actions';
+import {closeDrawer, setAndOpenDrawer, openSuggestionBox, closeSnackBar} from './actions/actions';
 import { Scrollbars } from 'react-custom-scrollbars';
 import Tooltip from '@material-ui/core/Tooltip';
 import LocalPostOffice from '@material-ui/icons/LocalPostOffice'
 import SuggestionModal from './components/SuggestionModal';
+import Snackbar from '@material-ui/core/Snackbar';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
 
 
 const styles = (theme) => ({
@@ -28,13 +30,17 @@ const styles = (theme) => ({
   },
   textColor: {
     color: theme.palette.secondary.dark
+  },
+  snackbarContent: {
+    color: theme.palette.primary.light,
+    backgroundColor: theme.palette.secondary.dark
   }
 })
 
 class App extends Component {
 
   render(){
-    const { classes, openLeftDrawer, closeLeftDrawer, openSuggestion, openSuggestBox, modalStatus } = this.props
+    const { classes, openLeftDrawer, closeLeftDrawer, openSuggestion, openSuggestBox, modalStatus, openSnackbar } = this.props
     return (
       <div className="app-container">
         <div className={classes.root}>
@@ -64,6 +70,19 @@ class App extends Component {
           <RecreationModal/>
           <SuggestionModal/>
           <LeftDrawer/>
+          <Snackbar
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'left'
+          }}
+          open={openSnackbar}
+          onClose={this.props.closeSnackBar}
+          autoHideDuration={3000}
+          >
+          <SnackbarContent
+            className={classes.snackbarContent}
+            message="Your suggestion was sucessfully sent!"/>
+          </Snackbar>
         </div>
       </div>
     )
@@ -72,12 +91,13 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   const {drawerType, drawerOpen, modalStatus} = state.core
-  const { openSuggestBox} = state.suggestion
+  const { openSuggestBox, openSnackbar } = state.suggestion
   return {
     drawerType,
     drawerOpen,
     openSuggestBox,
-    modalStatus
+    modalStatus,
+    openSnackbar
   }
 }
 
@@ -85,7 +105,8 @@ const mapDispatchToProps = dispatch => {
   return {
     closeLeftDrawer: () => dispatch(closeDrawer()),
     openLeftDrawer: (drawerType) => dispatch(setAndOpenDrawer(drawerType)),
-    openSuggestion: () => dispatch(openSuggestionBox())
+    openSuggestion: () => dispatch(openSuggestionBox()),
+    closeSnackBar: () => dispatch(closeSnackBar())
   }
 }
 

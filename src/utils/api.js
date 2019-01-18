@@ -10,8 +10,9 @@ export const fetchBoredData = (recreationType) => {
   .catch(err => console.log(err))
 }
 
+
   export const postSuggestion = (activity, category, participants) => {
-    return fetch('https://jsonplaceholder.typicode.com/posts', {
+    return fetch('https://www.boredapi.com/api/suggestion', {
        method: 'POST',
        body: JSON.stringify({
          activity: activity,
@@ -23,5 +24,6 @@ export const fetchBoredData = (recreationType) => {
         }
      })
      .then(res => res.json())
+     .then(data => data)
      .catch(err => console.log(err))
   }

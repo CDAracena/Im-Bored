@@ -17,6 +17,8 @@ export const USER_CREATING_NEW_ACTIVITY = "USER_CREATING_NEW_ACTIVITY";
 export const FORM_SUBMITTED = "FORM_SUBMITTED";
 export const RECEIVED_NEW_DATA = "RECEIVED_NEW_DATA";
 export const NEW_PROTOTYPE = "NEW_PROTOTYPE";
+export const OPEN_SNACKBAR = "OPEN_SNACKBAR";
+export const CLOSE_SNACKBAR = "CLOSE_SNACKBAR"
 
 
 export const postNewActivity = (activity, category, participants) => {
@@ -25,7 +27,9 @@ export const postNewActivity = (activity, category, participants) => {
      postSuggestion(activity, category, participants)
     .then(data => {
       if (data) {
+        console.log(data)
         dispatch(receivedNewData(data))
+        return data
       }
     })
     .catch(err => console.log(err))
@@ -127,4 +131,12 @@ export const receivedNewData = (newActivity) => ({
 export const newActivityProtoType = (prototype) => ({
   type: NEW_PROTOTYPE,
   prototype
+})
+
+export const openSnackBar = () => ({
+  type: OPEN_SNACKBAR
+})
+
+export const closeSnackBar = () => ({
+  type: CLOSE_SNACKBAR
 })
