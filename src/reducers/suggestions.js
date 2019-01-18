@@ -1,7 +1,8 @@
 import {
   OPEN_SUGGESTION_BOX,
   CLOSE_SUGGESTION_BOX,
-  USER_CREATING_NEW_ACTIVITY
+  USER_CREATING_NEW_ACTIVITY,
+  RECEIVED_NEW_DATA
 } from '../actions/actions'
 
 const initialState = {
@@ -9,7 +10,10 @@ const initialState = {
   activity: {},
   typing: false,
   submitted: false,
-  suggestions: []
+  suggestions: [],
+  success: false,
+  receivedData: {}
+
 }
 
 // openSuggestBox = is modal open or not
@@ -29,11 +33,27 @@ const suggestion = (state = initialState, action) => {
       openSuggestBox: false,
       activity: {},
       typing: false,
-      submitted: false
+      submitted: false,
+      success: false
     })
     case 'USER_CREATING_NEW_ACTIVITY':
     return Object.assign({}, state, {
       typing: true
+    })
+    case 'FORM_SUBMITTED':
+    return Object.assign({}, state, {
+      submitted: true
+    })
+    case 'RECEIVED_NEW_DATA':
+    return Object.assign({}, state, {
+      receivedData: action.newActivity,
+      success:true
+
+    })
+    case 'NEW_PROTOTYPE':
+    return Object.assign({}, state, {
+      activity: action.prototype,
+      suggestions: [...state.suggestions, action.prototype]
     })
     default:
     return state;

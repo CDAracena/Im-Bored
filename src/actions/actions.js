@@ -1,4 +1,4 @@
-import {fetchBoredData} from '../utils/api';
+import {fetchBoredData, postSuggestion} from '../utils/api';
 
 export const SELECTED_CATEGORY = "SELECTED_CATEGORY";
 export const FETCHING_API_DATA = "FETCHING_API_DATA";
@@ -14,7 +14,23 @@ export const ADD_TO_HISTORY = "ADD_TO_HISTORY";
 export const OPEN_SUGGESTION_BOX = "OPEN_SUGGESTION_BOX";
 export const CLOSE_SUGGESTION_BOX = "CLOSE_SUGGESTION_BOX";
 export const USER_CREATING_NEW_ACTIVITY = "USER_CREATING_NEW_ACTIVITY";
+export const FORM_SUBMITTED = "FORM_SUBMITTED";
+export const RECEIVED_NEW_DATA = "RECEIVED_NEW_DATA";
+export const NEW_PROTOTYPE = "NEW_PROTOTYPE";
 
+
+export const postNewActivity = (activity, category, participants) => {
+  return dispatch => {
+    dispatch(formSubmitted())
+     postSuggestion(activity, category, participants)
+    .then(data => {
+      if (data) {
+        dispatch(receivedNewData(data))
+      }
+    })
+    .catch(err => console.log(err))
+  }
+}
 
 export const fetchApiData = (recreationType) => {
   return (dispatch) => {
@@ -23,7 +39,6 @@ export const fetchApiData = (recreationType) => {
     .then(data => {
       if (data) {
         dispatch(receivedApiData(data))
-
       }
     })
     .catch(err => console.log(err))
@@ -99,4 +114,17 @@ export const closeSuggestBox = () => ({
 
 export const creatingActivity = () => ({
   type: USER_CREATING_NEW_ACTIVITY
+})
+
+export const formSubmitted = () => ({
+  type: FORM_SUBMITTED
+})
+export const receivedNewData = (newActivity) => ({
+  type: RECEIVED_NEW_DATA,
+  newActivity
+})
+
+export const newActivityProtoType = (prototype) => ({
+  type: NEW_PROTOTYPE,
+  prototype
 })
