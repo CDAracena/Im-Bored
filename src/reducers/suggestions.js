@@ -2,7 +2,9 @@ import {
   OPEN_SUGGESTION_BOX,
   CLOSE_SUGGESTION_BOX,
   USER_CREATING_NEW_ACTIVITY,
-  RECEIVED_NEW_DATA
+  RECEIVED_NEW_DATA,
+  OPEN_SNACKBAR,
+  CLOSE_SNACKBAR
 } from '../actions/actions'
 
 const initialState = {
@@ -12,15 +14,11 @@ const initialState = {
   submitted: false,
   suggestions: [],
   success: false,
-  receivedData: {}
+  receivedData: {},
+  openSnackbar: false
 
 }
 
-// openSuggestBox = is modal open or not
-// activity = once submitted, set to the new activity object and spread to suggestions
-// typing = check if user is actively typing in modal input fields
-// submitted = if submitted confirm true
-// suggestions = array that stores the current session's suggestions
 
 const suggestion = (state = initialState, action) => {
   switch(action.type) {
@@ -34,7 +32,7 @@ const suggestion = (state = initialState, action) => {
       activity: {},
       typing: false,
       submitted: false,
-      success: false
+      success: false,
     })
     case 'USER_CREATING_NEW_ACTIVITY':
     return Object.assign({}, state, {
@@ -54,6 +52,14 @@ const suggestion = (state = initialState, action) => {
     return Object.assign({}, state, {
       activity: action.prototype,
       suggestions: [...state.suggestions, action.prototype]
+    })
+    case 'OPEN_SNACKBAR':
+    return Object.assign({}, state, {
+      openSnackbar: true
+    })
+    case 'CLOSE_SNACKBAR':
+    return Object.assign({}, state, {
+      openSnackbar: false
     })
     default:
     return state;
