@@ -27,3 +27,4 @@ User can select any of the following categories and receive a random activity th
 * Cooking
 * Charity
 * Busy or occupational work
+* Random
