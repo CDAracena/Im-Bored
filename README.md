@@ -9,6 +9,8 @@ A React-Redux / Material UI app built to address daily boredom. Filter and searc
 * Material UI
 * [I'm Bored API] (https://www.boredapi.com/)
 
+## Tested With:
+* Cypress IO
 
 ## Usage
 
