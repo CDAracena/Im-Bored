@@ -29,3 +29,7 @@ const theme = createMuiTheme({
 ReactDOM.render(<MuiThemeProvider theme={theme}>
   <Provider store={store}><App/></Provider></MuiThemeProvider>
   , document.querySelector("#root"));
+
+  if (window.Cypress) {
+    window.store = store
+  }
