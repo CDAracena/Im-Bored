@@ -23,3 +23,14 @@
 //
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+Cypress.Commands.add('openEmptyDrawer', () => {
+        cy.visit('/')
+        cy.get('[data-cy="drawer-access-btn"]')
+          .should('have.length', 2)
+          .and('be.visible')
+          .eq(0)
+          .click();
+        
+        cy.get('[data-cy="drawer-container"]')
+          .should('be.visible');
+})
