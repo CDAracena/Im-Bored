@@ -50,12 +50,12 @@ class App extends Component {
                 I'm Bored...
               </Typography>
               <Tooltip title="Favorites">
-                <IconButton className={classes.textColor} onClick={() => openLeftDrawer('favorites')}>
+                <IconButton className={classes.textColor} onClick={() => openLeftDrawer('favorites')} data-cy="drawer-access-btn">
                   <SvgIcon className={classes.textColor}> <path d={Favorites}/> </SvgIcon>
                 </IconButton>
               </Tooltip>
               <Tooltip title="History">
-                <IconButton className={classes.textColor} color="secondary" onClick={() => openLeftDrawer('history')}>
+                <IconButton className={classes.textColor} color="secondary" onClick={() => openLeftDrawer('history')} data-cy="drawer-access-btn">
                   <History/>
                 </IconButton>
               </Tooltip>

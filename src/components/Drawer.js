@@ -155,7 +155,7 @@ searchFilter = item => item.activity.toLowerCase().includes(this.state.searchInp
   render() {
     const {classes, drawerOpen, drawerType, deleteItem, addToFavorites} = this.props;
     const sideList = (
-      <div className={classes.drawer}>
+      <div className={classes.drawer} data-cy="drawer-container">
 
       <List>
           <Scrollbars autoHeight={true}
@@ -197,7 +197,7 @@ searchFilter = item => item.activity.toLowerCase().includes(this.state.searchInp
             <Typography variant="h5" color="primary" style={{paddingLeft: '15px'}}>{drawerType.toUpperCase()}</Typography>
           </Grid>
           <Grid item>
-        <IconButton color="primary" onClick={this.props.closeLeftDrawer}>
+        <IconButton color="primary" onClick={this.props.closeLeftDrawer} data-cy="chevron-left">
           <ChevronLeft/>
         </IconButton>
       </Grid>
