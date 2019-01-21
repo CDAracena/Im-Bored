@@ -157,7 +157,7 @@ searchFilter = item => item.activity.toLowerCase().includes(this.state.searchInp
     const sideList = (
       <div className={classes.drawer} data-cy="drawer-container">
 
-      <List>
+      <List data-cy="drawer-list">
           <Scrollbars autoHeight={true}
             autoHeightMin={100}
             autoHeightMax={600}
@@ -167,7 +167,7 @@ searchFilter = item => item.activity.toLowerCase().includes(this.state.searchInp
             renderThumbVertical={props => <div {...props} className={classes.thumbVertical}/>}
             >
         {
-          drawerType && this.props[drawerType].length > 0 ? this.renderSideListType(drawerType).filter(this.filterChoice).filter(this.searchFilter).map((item, index) => (<ListItem button={true} key={index}>
+          drawerType && this.props[drawerType].length > 0 ? this.renderSideListType(drawerType).filter(this.filterChoice).filter(this.searchFilter).map((item, index) => (<ListItem button={true} key={index} data-cy="drawer-list-item">
             <ListItemText primary={this.primaryTextRender(item)} classes={{primary: classes.drawerText}} onClick={() => this.redirect(item)} />
             <ListItemSecondaryAction>
               <IconButton onClick={ drawerType === 'favorites' ? ()=> deleteItem(item) : ()=> addToFavorites(item)} className={this.props.favorites.includes(item) ? classes.trashCan : classes.notInFavorites}>

@@ -80,9 +80,10 @@ render(){
       aria-describedby="simple-modal-description"
       open={modalStatus}
       onClose={closeModal}
-      className="modalContainer">
+      className="modalContainer"
+      data-cy="activity-modal">
       <div style={getModalStyle()} className={classes.paper}>
-        <span style={{float: 'right'}}><IconButton color="primary" onClick={closeModal}> <Close/> </IconButton></span>
+        <span style={{float: 'right'}}><IconButton color="primary" data-cy="close-activity-modal" onClick={closeModal}> <Close/> </IconButton></span>
         <Typography variant="h6" id="modal-title">
           {apiData.activity}
         </Typography>
