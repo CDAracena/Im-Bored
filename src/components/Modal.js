@@ -98,7 +98,7 @@ render(){
         {this.renderParticipants(apiData.participants)}
         </Grid>
         <Tooltip title="Add to favorites">
-        <IconButton color="primary" onClick={() => this.addDataToFavorites(apiData)}> <Favorite/> </IconButton>
+        <IconButton color="primary" onClick={() => this.addDataToFavorites(apiData)} data-cy="addFavorite-btn"> <Favorite/> </IconButton>
         </Tooltip>
         <Modal />
       </div>

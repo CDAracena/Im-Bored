@@ -171,7 +171,7 @@ searchFilter = item => item.activity.toLowerCase().includes(this.state.searchInp
             <ListItemText primary={this.primaryTextRender(item)} classes={{primary: classes.drawerText}} onClick={() => this.redirect(item)} />
             <ListItemSecondaryAction>
               <IconButton onClick={ drawerType === 'favorites' ? ()=> deleteItem(item) : ()=> addToFavorites(item)} className={this.props.favorites.includes(item) ? classes.trashCan : classes.notInFavorites}>
-              {drawerType === 'favorites' ? <Delete/> : <Favorite/>}
+              {drawerType === 'favorites' ? <Delete data-cy="delete-icon"/> : <Favorite/>}
               </IconButton>
             </ListItemSecondaryAction>
           </ListItem>))
