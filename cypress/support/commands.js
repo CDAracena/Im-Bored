@@ -30,7 +30,15 @@ Cypress.Commands.add('openEmptyDrawer', () => {
           .and('be.visible')
           .eq(0)
           .click();
-        
+
         cy.get('[data-cy="drawer-container"]')
           .should('be.visible');
+})
+
+Cypress.Commands.add('addFavoriteActivity', () => {
+    cy.get('[data-cy="category-btn"]')
+      .eq(2)
+      .click()
+    cy.get('[data-cy="addFavorite-btn"]')
+      .click()
 })
