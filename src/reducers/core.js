@@ -59,7 +59,8 @@ const core = (state=initialState, action) => {
     return Object.assign({}, state, {
       modalStatus: false,
       currentCategory: '',
-      receivedApiData: false
+      receivedApiData: false,
+      apiData: {}
     })
     case 'ADD_TO_FAVORITES':
       return Object.assign({}, state, {

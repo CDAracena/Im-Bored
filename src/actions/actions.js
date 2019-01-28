@@ -27,7 +27,6 @@ export const postNewActivity = (activity, category, participants) => {
      postSuggestion(activity, category, participants)
     .then(data => {
       if (data) {
-        console.log(data)
         dispatch(receivedNewData(data))
         return data
       }
@@ -42,7 +41,10 @@ export const fetchApiData = (recreationType) => {
      return fetchBoredData(recreationType)
     .then(data => {
       if (data) {
-        dispatch(receivedApiData(data))
+        setTimeout(function(){
+          dispatch(receivedApiData(data))
+        }, 1000)
+
       }
     })
     .catch(err => console.log(err))
