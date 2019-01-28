@@ -11,6 +11,7 @@ import {closeModal, addToFavorites, addToHistory} from '../actions/actions';
 import Favorite from '@material-ui/icons/Favorite';
 import Grid from '@material-ui/core/Grid';
 import Tooltip from '@material-ui/core/Tooltip';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 function getModalStyle() {
@@ -35,6 +36,10 @@ const styles = theme => ({
       width: '80%'
     }
   },
+  progress: {
+    display:'flex',
+    justfiyContent:'center'
+  }
 });
 
 class RecreationModal extends React.Component {
@@ -83,7 +88,12 @@ render(){
       className="modalContainer"
       data-cy="activity-modal">
       <div style={getModalStyle()} className={classes.paper}>
-        <span style={{float: 'right'}}><IconButton color="primary" data-cy="close-activity-modal" onClick={closeModal}> <Close/> </IconButton></span>
+      {this.props.fetchingApiData ? <div style={{display: 'flex', justifyContent: 'center'}}>
+        <CircularProgress color="primary"/>
+        </div>
+      :
+      <Fragment>
+      <span style={{float: 'right'}}><IconButton color="primary" data-cy="close-activity-modal" onClick={closeModal}> <Close/> </IconButton></span>
         <Typography variant="h6" id="modal-title">
           {apiData.activity}
         </Typography>
@@ -100,7 +110,7 @@ render(){
         <Tooltip title="Add to favorites">
         <IconButton color="primary" onClick={() => this.addDataToFavorites(apiData)} data-cy="addFavorite-btn"> <Favorite/> </IconButton>
         </Tooltip>
-        <Modal />
+        </Fragment>}
       </div>
     </Modal>
   </div>
@@ -110,13 +120,14 @@ render(){
 }
 
 const mapStateToProps = state => {
-  const {apiData, modalStatus, favorites, receivedApiData, history} = state.core
+  const {apiData, modalStatus, favorites, receivedApiData, history, fetchingApiData} = state.core
   return {
     apiData,
     modalStatus,
     favorites,
     receivedApiData,
-    history
+    history,
+    fetchingApiData
   }
 }
 
