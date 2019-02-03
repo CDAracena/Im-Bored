@@ -1,5 +1,5 @@
 describe('Drawer', () => {
-    beforeEach(() => {
+    before(() => {
         cy.visit('/')
     })
 it('User can open the left drawer', () => {
@@ -8,14 +8,12 @@ it('User can open the left drawer', () => {
       .and('be.visible')
       .eq(0)
       .click();
-    
+
     cy.get('[data-cy="drawer-container"]')
       .should('be.visible');
     })
 
     it('User can close left drawer by clicking chevron icon', () => {
-        cy.openEmptyDrawer()
-
         cy.get('[data-cy="chevron-left"]')
           .should('be.visible')
           .click()
