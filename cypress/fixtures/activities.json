@@ -1,0 +1,17 @@
+[
+  {
+  "activity": "Get better at using Cypress IO",
+  "type": "education",
+  "participants": 1
+},
+{
+  "activity":"Learn Vue JS",
+  "type": "education",
+  "participants": 1
+},
+{
+  "activity": "Go to the beach with friends",
+  "type": "social",
+  "participants": 10
+}
+]
