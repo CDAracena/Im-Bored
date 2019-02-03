@@ -9,6 +9,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
+import Person from '@material-ui/icons/Person'
 import MailIcon from '@material-ui/icons/Mail';
 import {closeDrawer, deleteFromFavorites, addToFavorites} from '../actions/actions';
 import Delete from '@material-ui/icons/Delete';
@@ -90,12 +91,14 @@ class LeftDrawer extends React.Component {
       music: true,
       busywork: true,
       cooking: true,
-      searchInput: ''
+      searchInput: '',
+      searchParticipants: 1,
+      numberInputErr: false
       }
 
       componentDidUpdate(prevProps) {
         if (prevProps.drawerOpen !== this.props.drawerOpen) {
-          this.setState({searchInput: ''})
+          this.setState({searchInput: '', searchParticipants: 1})
         }
       }
 
@@ -146,7 +149,19 @@ primaryTextRender = (apiItem) => {
     }
   }
 
+  setParticipantFilter = (e) => {
+    if (Number(e.target.value)){
+        this.setState({searchParticipants: e.target.value})
+      } else {
+        this.setState({numberInputErr: true})
+      }
+    }
 
+    setInputErrOff = () => this.setState({numberInputErr: false})
+
+
+
+filterParticipants = item => item.participants >= this.state.searchParticipants
 
 searchFilter = item => item.activity.toLowerCase().includes(this.state.searchInput.toLowerCase()) || item.type.toLowerCase().includes(this.state.searchInput.toLowerCase())
 
@@ -167,7 +182,7 @@ searchFilter = item => item.activity.toLowerCase().includes(this.state.searchInp
             renderThumbVertical={props => <div {...props} className={classes.thumbVertical}/>}
             >
         {
-          drawerType && this.props[drawerType].length > 0 ? this.renderSideListType(drawerType).filter(this.filterChoice).filter(this.searchFilter).map((item, index) => (<ListItem button={true} key={index} data-cy="drawer-list-item">
+          drawerType && this.props[drawerType].length > 0 ? this.renderSideListType(drawerType).filter(this.filterChoice).filter(this.searchFilter).filter(this.filterParticipants).map((item, index) => (<ListItem button={true} key={index} data-cy="drawer-list-item">
             <ListItemText primary={this.primaryTextRender(item)} classes={{primary: classes.drawerText}} onClick={() => this.redirect(item)} />
             <ListItemSecondaryAction>
               <IconButton onClick={ drawerType === 'favorites' ? ()=> deleteItem(item) : ()=> addToFavorites(item)} className={this.props.favorites.includes(item) ? classes.trashCan : classes.notInFavorites}>
@@ -211,6 +226,7 @@ searchFilter = item => item.activity.toLowerCase().includes(this.state.searchInp
                  </Grid> )}
           </Grid>
           <Grid container justify="center">
+          <Grid item>
             <Input placeholder="search"
               margin="dense"
               onChange={this.setSearchInput}
@@ -220,6 +236,25 @@ searchFilter = item => item.activity.toLowerCase().includes(this.state.searchInp
                 <InputAdornment position="start" variant="outlined" classes={{positionStart: classes.drawerText}}> <Search/></InputAdornment>
               }
             />
+            </Grid>
+            <Grid item style={{width: '15%'}}>
+            <Tooltip open={this.state.numberInputErr}
+              title="Please input a #"
+              onClose={this.setInputErrOff}>
+              <Input type="number"
+              inputProps={{min: 1, max: 10}}
+              margin="dense"
+              style={{width: '100%'}}
+              classes={{input: classes.inputText}}
+              className={classes.inputField}
+              onChange={this.setParticipantFilter}
+              value={this.state.searchParticipants}
+              startAdornment={
+                <InputAdornment position="start" variant="outlined" classes={{positionStart: classes.drawerText}}> <Person/> </InputAdornment>
+              }
+              />
+              </Tooltip>
+            </Grid>
           </Grid>
           <Divider className={classes.divider} variant="middle"/>
           {sideList}
