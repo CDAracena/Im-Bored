@@ -150,11 +150,10 @@ primaryTextRender = (apiItem) => {
   }
 
   setParticipantFilter = (e) => {
-    if (Number(e.target.value)){
-        this.setState({searchParticipants: e.target.value})
-      } else {
-        this.setState({numberInputErr: true})
-      }
+    if (!Number(e.target.value)) {
+      this.setState({numberInputErr: true})
+    }
+      this.setState({searchParticipants: e.target.value})
     }
 
     setInputErrOff = () => this.setState({numberInputErr: false})
