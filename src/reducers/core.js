@@ -27,7 +27,6 @@ const initialState = {
   drawerOpen: false,
   drawerType: '',
   deleting: ''
-
 }
 
 const core = (state=initialState, action) => {

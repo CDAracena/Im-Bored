@@ -11,6 +11,7 @@ import RecreationGrid from './components/ReacreationGrid';
 import History from '@material-ui/icons/History';
 import RecreationModal from './components/Modal';
 import LeftDrawer from './components/Drawer';
+import BottomDrawer from './components/BottomDrawer';
 import {closeDrawer, setAndOpenDrawer, openSuggestionBox, closeSnackBar} from './actions/actions';
 import { Scrollbars } from 'react-custom-scrollbars';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -70,6 +71,7 @@ class App extends Component {
           <RecreationModal/>
           <SuggestionModal/>
           <LeftDrawer/>
+          <BottomDrawer/>
           <Snackbar
           anchorOrigin={{
             vertical: 'bottom',
