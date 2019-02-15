@@ -13,13 +13,15 @@ import RecreationModal from './components/Modal';
 import LeftDrawer from './components/Drawer';
 import BottomDrawer from './components/BottomDrawer';
 import {closeDrawer, setAndOpenDrawer, openSuggestionBox, closeSnackBar} from './actions/actions';
+import {openBottomDrawer} from './actions/bottomdrawer';
 import { Scrollbars } from 'react-custom-scrollbars';
 import Tooltip from '@material-ui/core/Tooltip';
 import LocalPostOffice from '@material-ui/icons/LocalPostOffice'
 import SuggestionModal from './components/SuggestionModal';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
-
+import SentimentVerySatisfied from '@material-ui/icons/SentimentVerySatisfied';
+import SentimentSatisfied from '@material-ui/icons/SentimentSatisfied'
 
 const styles = (theme) => ({
   root: {
@@ -40,6 +42,17 @@ const styles = (theme) => ({
 
 class App extends Component {
 
+state = {
+  mouseOverFace: false
+}
+
+setSatisfiedTrue = () => {
+  this.setState({mouseOverFace: true})
+}
+
+setSatisfiedFalse = () => {
+  this.setState({mouseOverFace: false})
+}
   render(){
     const { classes, openLeftDrawer, closeLeftDrawer, openSuggestion, openSuggestBox, modalStatus, openSnackbar } = this.props
     return (
@@ -63,6 +76,15 @@ class App extends Component {
               <Tooltip title="Suggest New Activity">
               <IconButton className={classes.textColor} onClick={openSuggestion}>
                 <LocalPostOffice/>
+              </IconButton>
+              </Tooltip>
+              <Tooltip title="Jokester!">
+              <IconButton
+              onMouseOver={this.setSatisfiedTrue}
+              onMouseOut={this.setSatisfiedFalse}
+              data-cy="bottom-drawer-icon"
+              onClick={this.props.openBottomDrawer}>
+              {this.state.mouseOverFace ? <SentimentVerySatisfied/> : <SentimentSatisfied/>}
               </IconButton>
               </Tooltip>
             </Toolbar>
@@ -108,7 +130,8 @@ const mapDispatchToProps = dispatch => {
     closeLeftDrawer: () => dispatch(closeDrawer()),
     openLeftDrawer: (drawerType) => dispatch(setAndOpenDrawer(drawerType)),
     openSuggestion: () => dispatch(openSuggestionBox()),
-    closeSnackBar: () => dispatch(closeSnackBar())
+    closeSnackBar: () => dispatch(closeSnackBar()),
+    openBottomDrawer: () => dispatch(openBottomDrawer())
   }
 }
 
