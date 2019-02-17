@@ -42,3 +42,9 @@ Cypress.Commands.add('addFavoriteActivity', () => {
     cy.get('[data-cy="addFavorite-btn"]')
       .click()
 })
+
+Cypress.Commands.add('openBottomDrawer', () => {
+  cy.get('[data-cy="bottom-drawer-icon"]')
+    .should('be.visible')
+    .click()
+})
