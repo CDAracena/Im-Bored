@@ -27,3 +27,60 @@ export const fetchBoredData = (recreationType) => {
      .then(data => data)
      .catch(err => console.log(err))
   }
+
+  export const fetchGeekJoke = () => {
+    return fetch('https://geek-jokes.sameerkumar.website/api')
+    .then(res => res.json())
+    .then(data => data)
+    .catch(err => err)
+  }
+
+export const fetchDadJoke = (searchTerm) => {
+  let apiLink = '';
+
+  if (searchTerm) {
+    apiLink = `https://icanhazdadjoke.com/search?term=${searchTerm}`
+  } else {
+    apiLink = "https://icanhazdadjoke.com/"
+  }
+
+  return fetch(apiLink, {
+    method: 'GET',
+    headers: {
+      "Accept": 'application/json',
+      "User-Agent": "My Library (https://github.com/CDAracena/Im-Bored)"
+    }
+  })
+  .then(res => res.json())
+  .then(data => data)
+  .catch(err => console.log(err))
+}
+
+export const postDadJoke = (joke) => {
+  return fetch('https://icanhazdadjoke/submit', {
+    method: "POST",
+    headers: {
+      "Accept": 'application/json',
+      "User-Agent": "My Library (https://github.com/CDAracena/Im-Bored)"
+    },
+    body: JSON.stringify({
+      joke: joke
+    })
+  }).then(res => res.json())
+  .then(data => data)
+  .catch(err => console.log(err))
+}
+
+export const fetchCorporateBS = () => {
+  return fetch ('https://corporatebs-generator.sameerkumar.website/')
+    .then(res => res.json())
+    .then(data => data)
+    .catch(err => console.log(err))
+}
+
+export const fetchAdvice = () => {
+  return fetch('https://api.adviceslip.com/advice')
+    .then(res => res.json())
+    .then(data => data)
+    .catch(err => console.log(err))
+}

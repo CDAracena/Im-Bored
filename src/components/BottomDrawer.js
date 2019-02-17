@@ -14,6 +14,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import {openBottomDrawer, closeBottomDrawer} from '../actions/bottomdrawer';
+import {fetchGeekJoke, fetchDadJoke, postDadJoke, fetchCorporateBS, fetchAdvice} from '../../src/utils/api'
 
 //Going to serve as a container for displaying the favorited jokes.
 
@@ -30,7 +31,8 @@ import {openBottomDrawer, closeBottomDrawer} from '../actions/bottomdrawer';
     return <Slide direction="up" {...props} />;
   }
 
-  class BottomDrawer extends React.Component {
+  class BottomDrawer extends Component {
+
     render() {
       const { classes, openBottom, closeBottom, jokester } = this.props;
       const {bottomDrawerOpen} = jokester
@@ -49,22 +51,10 @@ import {openBottomDrawer, closeBottomDrawer} from '../actions/bottomdrawer';
                   <CloseIcon />
                 </IconButton>
                 <Typography variant="h6" color="inherit" className={classes.flex}>
-                  Sound
+                  Jokester!
                 </Typography>
-                <Button color="inherit">
-                  save
-                </Button>
               </Toolbar>
             </AppBar>
-            <List>
-              <ListItem button>
-                <ListItemText primary="Phone ringtone" secondary="Titania" />
-              </ListItem>
-              <Divider />
-              <ListItem button>
-                <ListItemText primary="Default notification ringtone" secondary="Tethys" />
-              </ListItem>
-            </List>
           </Dialog>
         </div>
       );
