@@ -53,6 +53,7 @@ setSatisfiedTrue = () => {
 setSatisfiedFalse = () => {
   this.setState({mouseOverFace: false})
 }
+
   render(){
     const { classes, openLeftDrawer, closeLeftDrawer, openSuggestion, openSuggestBox, modalStatus, openSnackbar } = this.props
     return (
