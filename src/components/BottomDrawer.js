@@ -13,6 +13,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
+import JokesterCard from './Card'
+import Grid from '@material-ui/core/Grid'
 import {openBottomDrawer, closeBottomDrawer} from '../actions/bottomdrawer';
 import {fetchGeekJoke, fetchDadJoke, postDadJoke, fetchCorporateBS, fetchAdvice} from '../../src/utils/api'
 
@@ -47,7 +49,7 @@ import {fetchGeekJoke, fetchDadJoke, postDadJoke, fetchCorporateBS, fetchAdvice}
           >
             <AppBar className={classes.appBar}>
               <Toolbar>
-                <IconButton color="inherit" onClick={closeBottom} aria-label="Close">
+                <IconButton color="inherit" onClick={closeBottom} aria-label="Close" data-cy="bottom-drawer-closer">
                   <CloseIcon />
                 </IconButton>
                 <Typography variant="h6" color="inherit" className={classes.flex}>
@@ -55,6 +57,20 @@ import {fetchGeekJoke, fetchDadJoke, postDadJoke, fetchCorporateBS, fetchAdvice}
                 </Typography>
               </Toolbar>
             </AppBar>
+            <Grid container justify="center">
+            <Grid item>
+            <JokesterCard cardTitle="Geek Joke" cardSubheader="Fetch a Geek Joke!" searchable={false}/>
+            </Grid>
+            <Grid item>
+            <JokesterCard cardTitle="Dad Joke" cardSubheader="Fetch a Dad Joke" searchable={true}/>
+            </Grid>
+            <Grid item>
+            <JokesterCard cardTitle="Corporate BS" cardSubheader="Fetch a corporate bs" searchable={false}/>
+            </Grid>
+            <Grid item>
+            <JokesterCard cardTitle="Advice" cardSubheader="Fetch life advice" searchable={true}/>
+            </Grid>
+            </Grid>
           </Dialog>
         </div>
       );

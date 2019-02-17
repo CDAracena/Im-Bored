@@ -14,10 +14,10 @@ describe('Open and close bottom drawer', () => {
       cy.get('[data-cy="bottom-drawer"]')
         .should('be.visible')
   })
-  it('Pressing outside the drawer should close the bottom drawer', () => {
+  it('Pressing X button should close the bottom drawer', () => {
       openBottomDrawer()
-      
-    cy.get('[data-cy="category-btn"]')
+
+    cy.get('[data-cy="bottom-drawer-closer"]')
       .eq(0)
       .click({force: true})
 
