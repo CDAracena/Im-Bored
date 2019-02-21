@@ -16,7 +16,6 @@ import CloseIcon from '@material-ui/icons/Close';
 import JokesterCard from './Card'
 import Grid from '@material-ui/core/Grid'
 import {openBottomDrawer, closeBottomDrawer} from '../actions/bottomdrawer';
-import {fetchGeekJoke, fetchDadJoke, postDadJoke, fetchCorporateBS, fetchAdvice} from '../../src/utils/api'
 
 //Going to serve as a container for displaying the favorited jokes.
 

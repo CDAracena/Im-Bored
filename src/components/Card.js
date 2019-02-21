@@ -16,7 +16,11 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-
+import WbSunny from '@material-ui/icons/WbSunny';
+import AccessibilityNew from '@material-ui/icons/AccessibilityNew';
+import LocationCity from '@material-ui/icons/LocationCity';
+import Face from '@material-ui/icons/Face';
+import {fetchGeekJoke, fetchDadJoke, postDadJoke, fetchCorporateBS, fetchAdvice} from '../../src/utils/api'
 
 // Maybe add favorites to the bottom / collapse area of the card.
 //Reset favorite icon upon every fetch request
@@ -43,16 +47,33 @@ const styles = theme => ({
     transform: 'rotate(180deg)',
   },
   avatar: {
-    backgroundColor: red[500],
+    backgroundColor: theme.palette.primary.main,
   },
 });
 
 class JokesterCard extends Component {
-  state = { expanded: false };
+  state = { expanded: false, joke: '' };
 
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
   };
+
+
+  getCardAvatar = () => {
+    switch(this.props.cardTitle){
+      case 'Geek Joke':
+      return <Face/>;
+      case 'Dad Joke':
+      return <AccessibilityNew/>;
+      case 'Corporate BS':
+      return <LocationCity/>
+      case 'Advice':
+      return <WbSunny/>
+      default:
+      return;
+    }
+  }
+
 
   render() {
     const { classes, cardTitle, cardSubheader, apiChoice, searchable} = this.props;
@@ -62,7 +83,7 @@ class JokesterCard extends Component {
         <CardHeader
           avatar={
             <Avatar aria-label="Recipe" className={classes.avatar}>
-              R
+              {this.getCardAvatar()}
             </Avatar>
           }
           action={
@@ -72,6 +93,7 @@ class JokesterCard extends Component {
           }
           title={cardTitle}
           subheader={cardSubheader}
+          className={classes.cardHeader}
         />
         <CardMedia
           className={classes.media}
@@ -80,8 +102,7 @@ class JokesterCard extends Component {
         />
         <CardContent>
           <Typography component="p">
-            This impressive paella is a perfect party dish and a fun meal to cook together with your
-            guests. Add 1 cup of frozen peas along with the mussels, if you like.
+            {this.state.joke}
           </Typography>
         </CardContent>
         <CardActions className={classes.actions} disableActionSpacing>
