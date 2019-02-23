@@ -47,11 +47,16 @@ const jokester = (state=initialState, action) => {
     });
     case 'FETCHING_GEEK_JOKE':
     return Object.assign({}, state, {
-      geekJoke: {fetching: true}
+      geekJoke: {
+        fetching: true
+      }
     })
     case 'FETCH_GEEK_JOKE':
     return Object.assign({}, state, {
-      geekJoke: {currentJoke: action.data}
+      geekJoke: {
+        currentJoke: action.data,
+        fetching: false
+      }
     })
     case 'FETCHING_DAD_JOKE':
     return Object.assign({}, state, {
@@ -59,23 +64,36 @@ const jokester = (state=initialState, action) => {
     })
     case 'FETCH_DAD_JOKE':
     return Object.assign({}, state, {
-      dadJoke: {currentJoke: action.data}
+      dadJoke: {
+        currentJoke: action.data,
+        fetching: false
+      }
     })
     case 'FETCHING_CORPORATE_JOKE':
     return Object.assign({}, state, {
-      corporateBS: {fetching: true}
+      corporateBS: {
+      fetching: true
+      }
     })
     case 'FETCH_CORPORATE_JOKE':
     return Object.assign({}, state, {
-      corporateBS: {currentJoke: action.data}
+      corporateBS: {
+        currentJoke: action.data,
+        fetching: false
+      }
     })
     case 'FETCHING_LIFE_ADVICE_JOKE':
     return Object.assign({}, state, {
-      lifeAdvice:{fetching: true}
+      lifeAdvice:{
+      fetching: true
+      }
     })
     case 'FETCH_LIFE_ADVICE_JOKE':
     return Object.assign({}, state, {
-      lifeAdvice:{currentJoke: action.data}
+      lifeAdvice:{
+      currentJoke: action.data,
+      fetching: false
+    }
     })
     default:
     return state;
