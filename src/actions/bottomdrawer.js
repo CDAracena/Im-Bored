@@ -27,26 +27,62 @@ export const closeBottomDrawer = () => ({
 export const fetchNewGeekJoke = () => {
   return dispatch => {
     dispatch(fetchingGeekJoke())
+    return fetchGeekJoke()
+      .then(joke => {
+        dispatch(getGeekData(joke))
+      })
   }
 }
+
+export const getGeekData = (data) => ({
+  type: FETCH_GEEK_JOKE,
+  data: data
+})
 
 export const fetchNewDadJoke = () => {
   return dispatch => {
     dispatch(fetchingDadJoke())
+    return fetchDadJoke()
+      .then(joke => {
+        dispatch(getDadData(joke))
+      })
   }
 }
+
+export const getDadData = (data) => ({
+  type: FETCH_DAD_JOKE,
+  data: data
+})
 
 export const fetchNewLifeAdvice = () => {
   return dispatch => {
     dispatch(fetchingLifeAdvice())
+    return fetchAdvice()
+    .then(joke => {
+      dispatch(getLifeAdvice(joke))
+    })
   }
 }
+
+export const getLifeAdvice = (data) =>({
+  type: FETCH_LIFE_ADVICE_JOKE,
+  data: data
+})
 
 export const fetchNewCorporateBS = () => {
   return dispatch => {
     dispatch(fetchingCorporateBS())
+    return fetchCorporateBS()
+    .then(joke => {
+      dispatch(getCorporateBS(joke))
+    })
   }
 }
+
+export const getCorporateBS = (data) => ({
+  type: FETCH_CORPORATE_JOKE,
+  data: data
+})
 
 export const fetchingGeekJoke = () => ({
 type:  FETCHING_GEEK_JOKE
