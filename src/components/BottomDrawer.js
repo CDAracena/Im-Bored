@@ -15,6 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import JokesterCard from './Card'
 import Grid from '@material-ui/core/Grid'
+import Input from '@material-ui/core/Input'
 import {openBottomDrawer, closeBottomDrawer} from '../actions/bottomdrawer';
 
 //Going to serve as a container for displaying the favorited jokes.
@@ -58,16 +59,16 @@ import {openBottomDrawer, closeBottomDrawer} from '../actions/bottomdrawer';
             </AppBar>
             <Grid container justify="center">
             <Grid item>
-            <JokesterCard cardTitle="Geek Joke" cardSubheader="Fetch a Geek Joke!" searchable={false}/>
+            <JokesterCard cardTitle="Geek Joke" cardSubheader="Fetch a Geek Joke!"/>
             </Grid>
             <Grid item>
-            <JokesterCard cardTitle="Dad Joke" cardSubheader="Fetch a Dad Joke" searchable={true}/>
+            <JokesterCard cardTitle="Dad Joke" cardSubheader="Fetch a Dad Joke" />
             </Grid>
             <Grid item>
-            <JokesterCard cardTitle="Corporate BS" cardSubheader="Fetch a corporate bs" searchable={false}/>
+            <JokesterCard cardTitle="Corporate BS" cardSubheader="Fetch a corporate bs"/>
             </Grid>
             <Grid item>
-            <JokesterCard cardTitle="Advice" cardSubheader="Fetch life advice" searchable={true}/>
+            <JokesterCard cardTitle="Advice" cardSubheader="Fetch life advice"/>
             </Grid>
             </Grid>
           </Dialog>
