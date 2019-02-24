@@ -20,7 +20,7 @@ export const NEW_PROTOTYPE = "NEW_PROTOTYPE";
 export const OPEN_SNACKBAR = "OPEN_SNACKBAR";
 export const CLOSE_SNACKBAR = "CLOSE_SNACKBAR"
 
-
+//test
 export const postNewActivity = (activity, category, participants) => {
   return dispatch => {
     dispatch(formSubmitted())
