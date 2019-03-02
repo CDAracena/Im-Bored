@@ -21,7 +21,7 @@ import AccessibilityNew from '@material-ui/icons/AccessibilityNew';
 import LocationCity from '@material-ui/icons/LocationCity';
 import Face from '@material-ui/icons/Face';
 import Input from '@material-ui/core/Input';
-import {fetchGeekJoke, fetchDadJoke, postDadJoke, fetchCorporateBS, fetchAdvice} from '../../src/utils/api'
+import {fetchNewDadJoke, fetchNewLifeAdvice, fetchNewCorporateBS, fetchNewGeekJoke} from '../actions/bottomdrawer';
 
 // Maybe add favorites to the bottom / collapse area of the card.
 //Reset favorite icon upon every fetch request
@@ -53,7 +53,11 @@ const styles = theme => ({
 });
 
 class JokesterCard extends Component {
-  state = { expanded: false, joke: '' };
+  state = {
+    expanded: false,
+    joke: '',
+    cardTitle: ''
+  };
 
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
@@ -83,8 +87,38 @@ renderInput = (title) => {
   }
 }
 
+
+
+componentDidMount() {
+const {cardTitle} = this.props;
+ this.setState({cardTitle: cardTitle})
+
+cardTitle === 'Geek Joke' ? this.props.getGeekJoke() : undefined
+cardTitle === 'Dad Joke' ? this.props.getDadJoke() : undefined
+cardTitle === 'Corporate BS' ? this.props.getCorporateBS() : undefined
+cardTitle === 'Advice' ? this.props.getLifeAdvice() : undefined
+}
+
+renderActiveJoke = () => {
+  const {jokester, cardTitle} = this.props
+  const {geekJoke, dadJoke, lifeAdvice, corporateBS} = jokester
+  switch(cardTitle) {
+    case 'Geek Joke':
+    return geekJoke.currentJoke
+    case 'Dad Joke':
+    return dadJoke.currentJoke ? dadJoke.currentJoke.joke : 'Fetching...'
+    case 'Advice':
+    return lifeAdvice.currentJoke ? lifeAdvice.currentJoke.slip.advice : 'Fetching...'
+    default:
+    case 'Corporate BS':
+    return corporateBS.currentJoke ? corporateBS.currentJoke.phrase : 'Fetching...'
+    return ;
+  }
+}
+
+
   render() {
-    const { classes, cardTitle, cardSubheader, apiChoice, searchable} = this.props;
+    const { classes, cardTitle, cardSubheader, apiChoice, searchable, jokester} = this.props;
 
     return (
       <Card className={classes.card} data-cy="jokester-card">
@@ -103,17 +137,13 @@ renderInput = (title) => {
           subheader={cardSubheader}
           className={classes.cardHeader}
         />
-        <CardMedia
-          className={classes.media}
-          image="/static/images/cards/paella.jpg"
-          title="Paella dish"
-        />
         <CardContent>
-          <Typography component="p">
-            {this.state.joke}
+          <Typography component="p" data-cy="joke-text">
+          {this.renderActiveJoke()}
           </Typography>
           {this.renderInput(cardTitle)}
         </CardContent>
+
         <CardActions className={classes.actions} disableActionSpacing>
           <IconButton aria-label="Add to favorites">
             <FavoriteIcon />
@@ -142,15 +172,19 @@ renderInput = (title) => {
   }
 }
 
-const mapStateToProps = () => {
+const mapStateToProps = ({jokester}) => {
   return {
-
+    jokester
   }
 }
 
-const mapDispatchToProps = () => {
-  return {
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getDadJoke: (searchTerm) => dispatch(fetchNewDadJoke(searchTerm)),
+    getLifeAdvice: (searchTerm) => dispatch(fetchNewLifeAdvice(searchTerm)),
+    getCorporateBS: () => dispatch(fetchNewCorporateBS()),
+    getGeekJoke: () => dispatch(fetchNewGeekJoke())
   }
 }
 

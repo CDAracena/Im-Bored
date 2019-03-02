@@ -39,10 +39,10 @@ export const getGeekData = (data) => ({
   data: data
 })
 
-export const fetchNewDadJoke = () => {
+export const fetchNewDadJoke = (searchTerm) => {
   return dispatch => {
     dispatch(fetchingDadJoke())
-    return fetchDadJoke()
+    return fetchDadJoke(searchTerm)
       .then(joke => {
         dispatch(getDadData(joke))
       })
