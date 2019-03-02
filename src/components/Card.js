@@ -21,6 +21,10 @@ import AccessibilityNew from '@material-ui/icons/AccessibilityNew';
 import LocationCity from '@material-ui/icons/LocationCity';
 import Face from '@material-ui/icons/Face';
 import Input from '@material-ui/core/Input';
+import Search from '@material-ui/icons/Search';
+import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import FormControl from '@material-ui/core/FormControl';
 import {fetchNewDadJoke, fetchNewLifeAdvice, fetchNewCorporateBS, fetchNewGeekJoke} from '../actions/bottomdrawer';
 
 // Maybe add favorites to the bottom / collapse area of the card.
@@ -56,7 +60,8 @@ class JokesterCard extends Component {
   state = {
     expanded: false,
     joke: '',
-    cardTitle: ''
+    cardTitle: '',
+    searchTerm: ''
   };
 
   handleExpandClick = () => {
@@ -79,10 +84,25 @@ class JokesterCard extends Component {
     }
   }
 
+  setSearchTerm = (e) => {
+    this.setState({searchTerm: e.target.value})
+  }
+
 renderInput = (title) => {
   if (title === 'Dad Joke' || title === 'Advice') {
     return (
-      <Input data-cy="card-search-input"/>
+      <FormControl>
+      <InputLabel htmlFor="searchTerm"> Search </InputLabel>
+      <Input
+      data-cy="card-search-input"
+      name="searchTerm"
+      margin="dense"
+      onChange={this.setSearchTerm}
+      startAdornment={
+        <InputAdornment position="start" variant="outlined"> <Search/> </InputAdornment>
+      }
+      />
+      </FormControl>
     )
   }
 }
@@ -109,9 +129,9 @@ renderActiveJoke = () => {
     return dadJoke.currentJoke ? dadJoke.currentJoke.joke : 'Fetching...'
     case 'Advice':
     return lifeAdvice.currentJoke ? lifeAdvice.currentJoke.slip.advice : 'Fetching...'
-    default:
     case 'Corporate BS':
     return corporateBS.currentJoke ? corporateBS.currentJoke.phrase : 'Fetching...'
+    default:
     return ;
   }
 }

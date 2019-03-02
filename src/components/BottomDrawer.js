@@ -26,7 +26,11 @@ import {openBottomDrawer, closeBottomDrawer} from '../actions/bottomdrawer';
     },
     flex: {
       flex: 1,
+      paddingTop: '25px'
     },
+    card: {
+      width: '400px'
+    }
   };
 
   function Transition(props) {
@@ -52,22 +56,22 @@ import {openBottomDrawer, closeBottomDrawer} from '../actions/bottomdrawer';
                 <IconButton color="inherit" onClick={closeBottom} aria-label="Close" data-cy="bottom-drawer-closer">
                   <CloseIcon />
                 </IconButton>
-                <Typography variant="h6" color="inherit" className={classes.flex}>
+                <Typography variant="h6" color="inherit">
                   Jokester!
                 </Typography>
               </Toolbar>
             </AppBar>
-            <Grid container justify="center">
-            <Grid item>
+            <Grid container justify="space-evenly" className={classes.flex}>
+            <Grid item className={classes.card}>
             <JokesterCard cardTitle="Geek Joke" cardSubheader="Fetch a Geek Joke!"/>
             </Grid>
-            <Grid item>
+            <Grid item className={classes.card}>
             <JokesterCard cardTitle="Dad Joke" cardSubheader="Fetch a Dad Joke" />
             </Grid>
-            <Grid item>
+            <Grid item className={classes.card}>
             <JokesterCard cardTitle="Corporate BS" cardSubheader="Fetch a corporate bs"/>
             </Grid>
-            <Grid item>
+            <Grid item className={classes.card}>
             <JokesterCard cardTitle="Advice" cardSubheader="Fetch life advice"/>
             </Grid>
             </Grid>
