@@ -12,4 +12,10 @@ describe('Jokester Cards', () => {
         .should('be.visible')
         .and('have.length', 2)
   })
+  it ('All 4 four card types should have random data at mount', () => {
+    cy.openBottomDrawer()
+    cy.get('[data-cy="joke-text"]')
+      .should('be.visible')
+      .and('have.length', 4)
+  })
 })

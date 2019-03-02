@@ -72,15 +72,23 @@ export const postDadJoke = (joke) => {
 }
 
 export const fetchCorporateBS = () => {
-  return fetch ('https://corporatebs-generator.sameerkumar.website/')
+  const proxyurl = "https://cors-anywhere.herokuapp.com/";
+  return fetch (proxyurl + 'https://corporatebs-generator.sameerkumar.website/', {
+  })
     .then(res => res.json())
     .then(data => data)
     .catch(err => console.log(err))
 }
 
-export const fetchAdvice = () => {
-  return fetch('https://api.adviceslip.com/advice')
-    .then(res => res.json())
-    .then(data => data)
-    .catch(err => console.log(err))
+export const fetchAdvice = (searchTerm) => {
+  let apiLink = '';
+  if (searchTerm){
+    apiLink = `https://api.adviceslip/advice/search/${searchTerm}`
+  } else {
+    apiLink = 'https://api.adviceslip.com/advice'
+  }
+  return fetch(apiLink)
+  .then(response => response.json())
+  .then(data => data)
+  .catch(err => console.log(err))
 }
