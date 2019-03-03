@@ -208,7 +208,7 @@ searchFilter = item => item.activity.toLowerCase().includes(this.state.searchInp
       <Drawer open={drawerOpen} onClose={this.props.closeLeftDrawer} anchor='left' classes={{paper : classes.paperAnchorLeft}}>
         <Grid container justify="space-between" alignItems="center" style={{paddingTop: '15px'}}>
           <Grid item>
-            <Typography variant="h5" color="primary" style={{paddingLeft: '15px'}}>{drawerType.toUpperCase()}</Typography>
+            <Typography variant="headline" color="primary" style={{paddingLeft: '15px'}}>{drawerType.toUpperCase()}</Typography>
           </Grid>
           <Grid item>
         <IconButton color="primary" onClick={this.props.closeLeftDrawer} data-cy="chevron-left">

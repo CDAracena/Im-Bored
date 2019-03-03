@@ -25,6 +25,8 @@ import Search from '@material-ui/icons/Search';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
+import posed from 'react-pose';
+
 import {fetchNewDadJoke, fetchNewLifeAdvice, fetchNewCorporateBS, fetchNewGeekJoke} from '../actions/bottomdrawer';
 
 // Maybe add favorites to the bottom / collapse area of the card.

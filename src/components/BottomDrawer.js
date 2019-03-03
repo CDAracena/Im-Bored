@@ -56,7 +56,7 @@ import {openBottomDrawer, closeBottomDrawer} from '../actions/bottomdrawer';
                 <IconButton color="inherit" onClick={closeBottom} aria-label="Close" data-cy="bottom-drawer-closer">
                   <CloseIcon />
                 </IconButton>
-                <Typography variant="h6" color="inherit">
+                <Typography variant="title" color="inherit">
                   Jokester!
                 </Typography>
               </Toolbar>

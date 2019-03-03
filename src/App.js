@@ -61,7 +61,7 @@ setSatisfiedFalse = () => {
         <div className={classes.root}>
           <AppBar position='sticky' color='primary'>
             <Toolbar>
-              <Typography variant='h6' className={classes.textColor}>
+              <Typography variant='title' className={classes.textColor}>
                 I'm Bored...
               </Typography>
               <Tooltip title="Favorites">
