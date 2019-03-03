@@ -94,14 +94,14 @@ render(){
       :
       <Fragment>
       <span style={{float: 'right'}}><IconButton color="primary" data-cy="close-activity-modal" onClick={closeModal}> <Close/> </IconButton></span>
-        <Typography variant="h6" id="modal-title">
+        <Typography variant="title" id="modal-title">
           {apiData.activity}
         </Typography>
         <Grid container
           alignItems="center"
           direction="row">
         <Grid item>
-        <Typography variant="subtitle1" id="simple-modal-description">
+        <Typography variant="subheading" id="simple-modal-description">
           Partipants:
         </Typography>
         </Grid>
