@@ -26,6 +26,11 @@ import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 import posed from 'react-pose';
+import SkipNext from '@material-ui/icons/SkipNext';
+import Button from '@material-ui/core/Button';
+import Send from '@material-ui/icons/Send';
+
+
 
 import {fetchNewDadJoke, fetchNewLifeAdvice, fetchNewCorporateBS, fetchNewGeekJoke} from '../actions/bottomdrawer';
 
@@ -56,6 +61,13 @@ const styles = theme => ({
   avatar: {
     backgroundColor: theme.palette.primary.main,
   },
+  searchButton: {
+    backgroundColor: theme.palette.primary.main
+  },
+  searchForm: {
+    display: 'flex',
+    alignItems: 'center'
+  }
 });
 
 class JokesterCard extends Component {
@@ -91,8 +103,10 @@ class JokesterCard extends Component {
   }
 
 renderInput = (title) => {
+  const {classes} = this.props
   if (title === 'Dad Joke' || title === 'Advice') {
     return (
+      <form onSubmit={this.fetchSearchTerm} className={classes.searchForm}>
       <FormControl>
       <InputLabel htmlFor="searchTerm"> Search </InputLabel>
       <Input
@@ -100,11 +114,18 @@ renderInput = (title) => {
       name="searchTerm"
       margin="dense"
       onChange={this.setSearchTerm}
+      value={this.state.searchTerm}
       startAdornment={
         <InputAdornment position="start" variant="outlined"> <Search/> </InputAdornment>
       }
       />
       </FormControl>
+      <Button classes={{root: classes.searchButton}}
+      disabled={!this.state.searchTerm}
+      onClick={this.fetchSearchTerm}>
+      Search<Send/>
+      </Button>
+      </form>
     )
   }
 }
@@ -115,10 +136,7 @@ componentDidMount() {
 const {cardTitle} = this.props;
  this.setState({cardTitle: cardTitle})
 
-cardTitle === 'Geek Joke' ? this.props.getGeekJoke() : undefined
-cardTitle === 'Dad Joke' ? this.props.getDadJoke() : undefined
-cardTitle === 'Corporate BS' ? this.props.getCorporateBS() : undefined
-cardTitle === 'Advice' ? this.props.getLifeAdvice() : undefined
+this.fetchNewJoke()
 }
 
 renderActiveJoke = () => {
@@ -136,6 +154,25 @@ renderActiveJoke = () => {
     default:
     return ;
   }
+}
+
+fetchNewJoke = () => {
+  const {cardTitle} = this.props
+  cardTitle === 'Geek Joke' ? this.props.getGeekJoke() : undefined
+  cardTitle === 'Dad Joke' ? this.props.getDadJoke() : undefined
+  cardTitle === 'Corporate BS' ? this.props.getCorporateBS() : undefined
+  cardTitle === 'Advice' ? this.props.getLifeAdvice() : undefined
+}
+
+// Need to figure out what I'm going to do about dad joke search results. return a list or a single one?
+fetchSearchTerm = (e) => {
+  e.preventDefault()
+  if (this.state.searchTerm && this.state.cardTitle === 'Dad Joke') {
+      this.props.getDadJoke(this.state.searchTerm)
+  } else if (this.state.searchTerm && this.state.cardTitle === 'Advice') {
+    this.props.getLifeAdvice(this.state.searchTerm)
+  }
+  this.setState({searchTerm: ''})
 }
 
 
@@ -170,8 +207,8 @@ renderActiveJoke = () => {
           <IconButton aria-label="Add to favorites">
             <FavoriteIcon />
           </IconButton>
-          <IconButton aria-label="Share">
-            <ShareIcon />
+          <IconButton aria-label="SkipNext" onClick={this.fetchNewJoke}>
+            <SkipNext />
           </IconButton>
           <IconButton
             className={classnames(classes.expand, {
