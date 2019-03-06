@@ -14,7 +14,11 @@ export const FETCHING_DAD_JOKE = "FETCHING_DAD_JOKE";
 export const FETCH_CORPORATE_JOKE = "FETCH_CORPORATE_JOKE";
 export const FETCHING_CORPORATE_JOKE = "FETCHING_CORPORATE_JOKE";
 export const FETCH_LIFE_ADVICE_JOKE = "FETCH_LIFE_ADVICE_JOKE";
-export const FETCHING_LIFE_ADVICE_JOKE = "FETCHING_LIFE_ADVICE_JOKE"
+export const FETCHING_LIFE_ADVICE_JOKE = "FETCHING_LIFE_ADVICE_JOKE";
+export const ADD_TO_GEEK_FAVORITES = "ADD_TO_GEEK_FAVORITES";
+export const ADD_TO_CORPORATEBS_FAVORITES = "ADD_TO_CORPORATEBS_FAVORITES";
+export const ADD_TO_ADVICE_FAVORITES = "ADD_TO_ADVICE_FAVORITES";
+export const ADD_TO_DAD_FAVORITES = "ADD_TO_DAD_FAVORITES";
 
 export const openBottomDrawer = () => ({
   type: OPEN_BOTTOM_DRAWER
@@ -78,6 +82,26 @@ export const fetchNewCorporateBS = () => {
     })
   }
 }
+
+export const addToGeekFavorites = (joke) => ({
+  type: ADD_TO_GEEK_FAVORITES,
+  newJoke: joke
+})
+
+export const addToDadFavorites = (joke) => ({
+  type: ADD_TO_DAD_FAVORITES,
+  newJoke: joke
+})
+
+export const addToAdviceFavorites = (advice) => ({
+  type: ADD_TO_ADVICE_FAVORITES,
+  advice: advice
+})
+
+export const addToCorporateFavorites = (joke) => ({
+  type: ADD_TO_CORPORATEBS_FAVORITES,
+  newJoke: joke
+})
 
 export const getCorporateBS = (data) => ({
   type: FETCH_CORPORATE_JOKE,
