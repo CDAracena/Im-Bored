@@ -8,7 +8,11 @@ import {
   FETCH_GEEK_JOKE,
   FETCH_DAD_JOKE,
   FETCH_CORPORATE_JOKE,
-  FETCH_LIFE_ADVICE_JOKE
+  FETCH_LIFE_ADVICE_JOKE,
+  ADD_TO_DAD_FAVORITES,
+  ADD_TO_GEEK_FAVORITES,
+  ADD_TO_ADVICE_FAVORITES,
+  ADD_TO_CORPORATEBS_FAVORITES
 } from '../actions/bottomdrawer';
 
 const initialState = {
@@ -35,6 +39,8 @@ const initialState = {
   }
 }
 
+
+// Might have to break up individual api reducers into seperate reducers to support object copies.
 const jokester = (state=initialState, action) => {
   switch(action.type) {
     case 'OPEN_BOTTOM_DRAWER':
@@ -79,7 +85,7 @@ const jokester = (state=initialState, action) => {
     return Object.assign({}, state, {
       corporateBS: {
         currentJoke: action.data,
-        fetching: false
+        fetching: false,
       }
     })
     case 'FETCHING_LIFE_ADVICE_JOKE':
@@ -94,6 +100,30 @@ const jokester = (state=initialState, action) => {
       currentJoke: action.data,
       fetching: false
     }
+    })
+    case 'ADD_TO_DAD_FAVORITES':
+    return Object.assign({}, state, {
+      dadJoke: {
+        collection: [...state.dadJoke.collection, action.newJoke]
+      }
+    })
+    case 'ADD_TO_GEEK_FAVORITES':
+    return Object.assign({}, state, {
+      geekJoke: {
+        collection: [...state.geekJoke.collection, action.newJoke]
+      }
+    })
+    case 'ADD_TO_ADVICE_FAVORITES':
+    return Object.assign({}, state, {
+      lifeAdvice: {
+        collection: [...state.lifeAdvice.collection, action.advice]
+      }
+    })
+    case 'ADD_TO_CORPORATEBS_FAVORITES':
+    return Object.assign({}, state, {
+      corporateBS: {
+        collection: [...state.corporateBS.collection, action.newJoke]
+      }
     })
     default:
     return state;

@@ -30,9 +30,16 @@ import SkipNext from '@material-ui/icons/SkipNext';
 import Button from '@material-ui/core/Button';
 import Send from '@material-ui/icons/Send';
 
-
-
-import {fetchNewDadJoke, fetchNewLifeAdvice, fetchNewCorporateBS, fetchNewGeekJoke} from '../actions/bottomdrawer';
+import {
+  fetchNewDadJoke,
+  fetchNewLifeAdvice,
+  fetchNewCorporateBS,
+  fetchNewGeekJoke,
+  addToDadFavorites,
+  addToAdviceFavorites,
+  addToCorporateFavorites,
+  addToGeekFavorites
+} from '../actions/bottomdrawer';
 
 // Maybe add favorites to the bottom / collapse area of the card.
 //Reset favorite icon upon every fetch request
@@ -144,7 +151,7 @@ renderActiveJoke = () => {
   const {geekJoke, dadJoke, lifeAdvice, corporateBS} = jokester
   switch(cardTitle) {
     case 'Geek Joke':
-    return geekJoke.currentJoke
+    return geekJoke.currentJoke ? geekJoke.currentJoke : 'Fetching...'
     case 'Dad Joke':
     return dadJoke.currentJoke ? dadJoke.currentJoke.joke : 'Fetching...'
     case 'Advice':
@@ -164,7 +171,7 @@ fetchNewJoke = () => {
   cardTitle === 'Advice' ? this.props.getLifeAdvice() : undefined
 }
 
-// Need to figure out what I'm going to do about dad joke search results. return a list or a single one?
+// Need to figure out what I'm going to do about dad joke search results. return a list or a single on
 fetchSearchTerm = (e) => {
   e.preventDefault()
   if (this.state.searchTerm && this.state.cardTitle === 'Dad Joke') {
@@ -175,10 +182,29 @@ fetchSearchTerm = (e) => {
   this.setState({searchTerm: ''})
 }
 
+addToJokeList = () => {
+  const {geekJoke, dadJoke, lifeAdvice, corporateBS} = this.props.jokester
+  switch(this.state.cardTitle) {
+    case 'Geek Joke':
+    console.log(geekJoke.collection)
+    return this.props.addToGeek(geekJoke.currentJoke)
+    case 'Dad Joke':
+    console.log(dadJoke.collection)
+    return this.props.addToDad(dadJoke.currentJoke.joke)
+    case 'Advice':
+    console.log(lifeAdvice.collection)
+    return this.props.addToAdvice(lifeAdvice.currentJoke.slip.advice)
+    case 'Corporate BS':
+    console.log(corporateBS.collection)
+    return this.props.addToCorporate(corporateBS.currentJoke.phrase)
+    default:
+    return ;
+}
+}
 
   render() {
     const { classes, cardTitle, cardSubheader, apiChoice, searchable, jokester} = this.props;
-
+    console.log(jokester.corporateBS)
     return (
       <Card className={classes.card} data-cy="jokester-card">
         <CardHeader
@@ -204,7 +230,7 @@ fetchSearchTerm = (e) => {
         </CardContent>
 
         <CardActions className={classes.actions} disableActionSpacing>
-          <IconButton aria-label="Add to favorites">
+          <IconButton aria-label="Add to favorites" onClick={this.addToJokeList}>
             <FavoriteIcon />
           </IconButton>
           <IconButton aria-label="SkipNext" onClick={this.fetchNewJoke}>
@@ -243,7 +269,13 @@ const mapDispatchToProps = (dispatch) => {
     getDadJoke: (searchTerm) => dispatch(fetchNewDadJoke(searchTerm)),
     getLifeAdvice: (searchTerm) => dispatch(fetchNewLifeAdvice(searchTerm)),
     getCorporateBS: () => dispatch(fetchNewCorporateBS()),
-    getGeekJoke: () => dispatch(fetchNewGeekJoke())
+    getGeekJoke: () => dispatch(fetchNewGeekJoke()),
+    addToGeek: (joke) => dispatch(addToGeekFavorites(joke)),
+    addToDad: (joke) => dispatch(addToDadFavorites(joke)),
+    addToAdvice: (advice) => dispatch(addToAdviceFavorites(advice)),
+    addToCorporate: (joke) => dispatch(addToCorporateFavorites(joke))
+
+
   }
 }
 
