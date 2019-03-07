@@ -186,8 +186,10 @@ addToJokeList = () => {
   const {geekJoke, dadJoke, lifeAdvice, corporateBS} = this.props.jokester
   switch(this.state.cardTitle) {
     case 'Geek Joke':
-    console.log(geekJoke.collection)
-    return this.props.addToGeek(geekJoke.currentJoke)
+    this.props.addToGeek(geekJoke.currentJoke)
+    this.props.getGeekJoke()
+    return;
+
     case 'Dad Joke':
     console.log(dadJoke.collection)
     return this.props.addToDad(dadJoke.currentJoke.joke)
@@ -204,7 +206,7 @@ addToJokeList = () => {
 
   render() {
     const { classes, cardTitle, cardSubheader, apiChoice, searchable, jokester} = this.props;
-    console.log(jokester.corporateBS)
+    console.log(jokester.geekJoke)
     return (
       <Card className={classes.card} data-cy="jokester-card">
         <CardHeader
