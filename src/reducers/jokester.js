@@ -52,17 +52,19 @@ const jokester = (state=initialState, action) => {
       bottomDrawerOpen: false
     });
     case 'FETCHING_GEEK_JOKE':
+    const geekCopy = Object.assign({}, state.geekJoke, {
+      fetching: true
+    })
     return Object.assign({}, state, {
-      geekJoke: {
-        fetching: true
-      }
+      geekJoke: geekCopy
     })
     case 'FETCH_GEEK_JOKE':
+    const geekCopyJoke = Object.assign({}, state.geekJoke, {
+      currentJoke: action.data,
+      fetching: false
+    })
     return Object.assign({}, state, {
-      geekJoke: {
-        currentJoke: action.data,
-        fetching: false
-      }
+      geekJoke: geekCopyJoke
     })
     case 'FETCHING_DAD_JOKE':
     return Object.assign({}, state, {
@@ -108,10 +110,11 @@ const jokester = (state=initialState, action) => {
       }
     })
     case 'ADD_TO_GEEK_FAVORITES':
+    const geekCollection = Object.assign({}, state.geekJoke, {
+      collection: [...state.geekJoke.collection, action.newJoke]
+    })
     return Object.assign({}, state, {
-      geekJoke: {
-        collection: [...state.geekJoke.collection, action.newJoke]
-      }
+      geekJoke: geekCollection
     })
     case 'ADD_TO_ADVICE_FAVORITES':
     return Object.assign({}, state, {
