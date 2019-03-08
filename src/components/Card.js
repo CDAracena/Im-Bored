@@ -85,6 +85,8 @@ class JokesterCard extends Component {
     searchTerm: ''
   };
 
+  //ADD CARD TYPE TO LOCAL STATE INSTEAD, USE CARD TITLE FOR THE ACTUAL CARD TITLE 
+
   handleExpandClick = () => {
     this.setState(state => ({ expanded: !state.expanded }));
   };
@@ -173,6 +175,7 @@ fetchNewJoke = () => {
 
 // Need to figure out what I'm going to do about dad joke search results. return a list or a single on
 fetchSearchTerm = (e) => {
+  // NEED TO EDIT THIS
   e.preventDefault()
   if (this.state.searchTerm && this.state.cardTitle === 'Dad Joke') {
       this.props.getDadJoke(this.state.searchTerm)
