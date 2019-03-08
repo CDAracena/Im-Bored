@@ -92,13 +92,13 @@ class JokesterCard extends Component {
 
   getCardAvatar = () => {
     switch(this.props.cardTitle){
-      case 'Geek Joke':
+      case 'geekJoke':
       return <Face/>;
-      case 'Dad Joke':
+      case 'dadJoke':
       return <AccessibilityNew/>;
-      case 'Corporate BS':
+      case 'corporateBS':
       return <LocationCity/>
-      case 'Advice':
+      case 'lifeAdvice':
       return <WbSunny/>
       default:
       return;
@@ -111,7 +111,7 @@ class JokesterCard extends Component {
 
 renderInput = (title) => {
   const {classes} = this.props
-  if (title === 'Dad Joke' || title === 'Advice') {
+  if (title === 'dadJoke' || title === 'lifeAdvice') {
     return (
       <form onSubmit={this.fetchSearchTerm} className={classes.searchForm}>
       <FormControl>
@@ -150,13 +150,13 @@ renderActiveJoke = () => {
   const {jokester, cardTitle} = this.props
   const {geekJoke, dadJoke, lifeAdvice, corporateBS} = jokester
   switch(cardTitle) {
-    case 'Geek Joke':
+    case 'geekJoke':
     return geekJoke.currentJoke ? geekJoke.currentJoke : 'Fetching...'
-    case 'Dad Joke':
+    case 'dadJoke':
     return dadJoke.currentJoke ? dadJoke.currentJoke.joke : 'Fetching...'
-    case 'Advice':
+    case 'lifeAdvice':
     return lifeAdvice.currentJoke ? lifeAdvice.currentJoke.slip.advice : 'Fetching...'
-    case 'Corporate BS':
+    case 'corporateBS':
     return corporateBS.currentJoke ? corporateBS.currentJoke.phrase : 'Fetching...'
     default:
     return ;
@@ -165,10 +165,10 @@ renderActiveJoke = () => {
 
 fetchNewJoke = () => {
   const {cardTitle} = this.props
-  cardTitle === 'Geek Joke' ? this.props.getGeekJoke() : undefined
-  cardTitle === 'Dad Joke' ? this.props.getDadJoke() : undefined
-  cardTitle === 'Corporate BS' ? this.props.getCorporateBS() : undefined
-  cardTitle === 'Advice' ? this.props.getLifeAdvice() : undefined
+  cardTitle === 'geekJoke' ? this.props.getGeekJoke() : undefined
+  cardTitle === 'dadJoke' ? this.props.getDadJoke() : undefined
+  cardTitle === 'corporateBS' ? this.props.getCorporateBS() : undefined
+  cardTitle === 'lifeAdvice' ? this.props.getLifeAdvice() : undefined
 }
 
 // Need to figure out what I'm going to do about dad joke search results. return a list or a single on
@@ -185,24 +185,28 @@ fetchSearchTerm = (e) => {
 addToJokeList = () => {
   const {geekJoke, dadJoke, lifeAdvice, corporateBS} = this.props.jokester
   switch(this.state.cardTitle) {
-    case 'Geek Joke':
+    case 'geekJoke':
     this.props.addToGeek(geekJoke.currentJoke)
     this.props.getGeekJoke()
     return;
-
-    case 'Dad Joke':
-    console.log(dadJoke.collection)
-    return this.props.addToDad(dadJoke.currentJoke.joke)
-    case 'Advice':
-    console.log(lifeAdvice.collection)
-    return this.props.addToAdvice(lifeAdvice.currentJoke.slip.advice)
-    case 'Corporate BS':
-    console.log(corporateBS.collection)
-    return this.props.addToCorporate(corporateBS.currentJoke.phrase)
+    case 'dadJoke':
+    this.props.addToDad(dadJoke.currentJoke.joke)
+    this.props.getDadJoke()
+    return;
+    case 'lifeAdvice':
+    this.props.addToAdvice(lifeAdvice.currentJoke.slip.advice)
+    this.props.getLifeAdvice()
+    return;
+    case 'corporateBS':
+    this.props.addToCorporate(corporateBS.currentJoke.phrase)
+    this.props.getCorporateBS()
+    return;
     default:
     return ;
 }
 }
+
+
 
   render() {
     const { classes, cardTitle, cardSubheader, apiChoice, searchable, jokester} = this.props;
@@ -251,7 +255,7 @@ addToJokeList = () => {
         </CardActions>
         <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
           <CardContent>
-
+          {jokester[cardTitle].collection && jokester[cardTitle].collection.map(item => <Typography> {item} </Typography>)}
           </CardContent>
         </Collapse>
       </Card>
