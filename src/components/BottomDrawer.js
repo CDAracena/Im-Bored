@@ -63,16 +63,16 @@ import {openBottomDrawer, closeBottomDrawer} from '../actions/bottomdrawer';
             </AppBar>
             <Grid container justify="space-evenly" className={classes.flex}>
             <Grid item className={classes.card}>
-            <JokesterCard cardTitle="geekJoke" cardSubheader="Fetch a Geek Joke!"/>
+            <JokesterCard cardType="geekJoke" cardSubheader="Fetch a Geek Joke!" cardtitle="Geek Joke"/>
             </Grid>
             <Grid item className={classes.card}>
-            <JokesterCard cardTitle="dadJoke" cardSubheader="Fetch a Dad Joke" />
+            <JokesterCard cardType="dadJoke" cardSubheader="Fetch a Dad Joke"  cardTitle="Dad Joke"/>
             </Grid>
             <Grid item className={classes.card}>
-            <JokesterCard cardTitle="corporateBS" cardSubheader="Fetch a corporate bs"/>
+            <JokesterCard cardType="corporateBS" cardSubheader="Fetch a corporate bs" cardTitle="Corporate BS"/>
             </Grid>
             <Grid item className={classes.card}>
-            <JokesterCard cardTitle="lifeAdvice" cardSubheader="Fetch life advice"/>
+            <JokesterCard cardType="lifeAdvice" cardSubheader="Fetch life advice" cardTitle="Life Advice"/>
             </Grid>
             </Grid>
           </Dialog>
