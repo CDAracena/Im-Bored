@@ -29,6 +29,8 @@ import posed from 'react-pose';
 import SkipNext from '@material-ui/icons/SkipNext';
 import Button from '@material-ui/core/Button';
 import Send from '@material-ui/icons/Send';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
 
 import {
   fetchNewDadJoke,
@@ -41,8 +43,6 @@ import {
   addToGeekFavorites
 } from '../actions/bottomdrawer';
 
-// Maybe add favorites to the bottom / collapse area of the card.
-//Reset favorite icon upon every fetch request
 
 const styles = theme => ({
   card: {
@@ -74,6 +74,16 @@ const styles = theme => ({
   searchForm: {
     display: 'flex',
     alignItems: 'center'
+  },
+  heartButton: {
+    color: '#C3423F'
+  },
+  favCount: {
+    color: '#C3423F',
+    textShadow: '1px 1px 5px'
+  },
+  disabledFavCount: {
+    color: theme.palette.secondary.main
   }
 });
 
@@ -82,18 +92,15 @@ class JokesterCard extends Component {
     expanded: false,
     joke: '',
     cardTitle: '',
-    searchTerm: ''
+    searchTerm: '',
+    favoriteCount: 0
   };
 
-  //ADD CARD TYPE TO LOCAL STATE INSTEAD, USE CARD TITLE FOR THE ACTUAL CARD TITLE 
-
-  handleExpandClick = () => {
-    this.setState(state => ({ expanded: !state.expanded }));
-  };
+  handleExpandClick = () => this.setState({expanded: !this.state.expanded})
 
 
   getCardAvatar = () => {
-    switch(this.props.cardTitle){
+    switch(this.props.cardType){
       case 'geekJoke':
       return <Face/>;
       case 'dadJoke':
@@ -111,9 +118,9 @@ class JokesterCard extends Component {
     this.setState({searchTerm: e.target.value})
   }
 
-renderInput = (title) => {
+renderInput = (type) => {
   const {classes} = this.props
-  if (title === 'dadJoke' || title === 'lifeAdvice') {
+  if (type === 'dadJoke' || type === 'lifeAdvice') {
     return (
       <form onSubmit={this.fetchSearchTerm} className={classes.searchForm}>
       <FormControl>
@@ -149,9 +156,9 @@ this.fetchNewJoke()
 }
 
 renderActiveJoke = () => {
-  const {jokester, cardTitle} = this.props
+  const {jokester, cardType} = this.props
   const {geekJoke, dadJoke, lifeAdvice, corporateBS} = jokester
-  switch(cardTitle) {
+  switch(cardType) {
     case 'geekJoke':
     return geekJoke.currentJoke ? geekJoke.currentJoke : 'Fetching...'
     case 'dadJoke':
@@ -166,11 +173,11 @@ renderActiveJoke = () => {
 }
 
 fetchNewJoke = () => {
-  const {cardTitle} = this.props
-  cardTitle === 'geekJoke' ? this.props.getGeekJoke() : undefined
-  cardTitle === 'dadJoke' ? this.props.getDadJoke() : undefined
-  cardTitle === 'corporateBS' ? this.props.getCorporateBS() : undefined
-  cardTitle === 'lifeAdvice' ? this.props.getLifeAdvice() : undefined
+  const {cardType} = this.props
+  cardType === 'geekJoke' ? this.props.getGeekJoke() : undefined
+  cardType === 'dadJoke' ? this.props.getDadJoke() : undefined
+  cardType === 'corporateBS' ? this.props.getCorporateBS() : undefined
+  cardType === 'lifeAdvice' ? this.props.getLifeAdvice() : undefined
 }
 
 // Need to figure out what I'm going to do about dad joke search results. return a list or a single on
@@ -187,7 +194,7 @@ fetchSearchTerm = (e) => {
 
 addToJokeList = () => {
   const {geekJoke, dadJoke, lifeAdvice, corporateBS} = this.props.jokester
-  switch(this.state.cardTitle) {
+  switch(this.props.cardType) {
     case 'geekJoke':
     this.props.addToGeek(geekJoke.currentJoke)
     this.props.getGeekJoke()
@@ -206,14 +213,20 @@ addToJokeList = () => {
     return;
     default:
     return ;
+ }
 }
+
+componentDidUpdate(prevProps, prevState) {
+  const {cardType} = this.props
+  if (prevProps.jokester[cardType].collection !== this.props.jokester[cardType].collection) {
+    this.setState({favoriteCount: this.props.jokester[cardType].collection.length})
+  }
 }
 
 
 
   render() {
-    const { classes, cardTitle, cardSubheader, apiChoice, searchable, jokester} = this.props;
-    console.log(jokester.geekJoke)
+    const { classes, cardTitle, cardSubheader, apiChoice, searchable, jokester, cardType} = this.props;
     return (
       <Card className={classes.card} data-cy="jokester-card">
         <CardHeader
@@ -235,14 +248,17 @@ addToJokeList = () => {
           <Typography component="p" data-cy="joke-text">
           {this.renderActiveJoke()}
           </Typography>
-          {this.renderInput(cardTitle)}
+          {this.renderInput(cardType)}
         </CardContent>
 
         <CardActions className={classes.actions} disableActionSpacing>
-          <IconButton aria-label="Add to favorites" onClick={this.addToJokeList}>
+          <IconButton aria-label="Add to favorites" onClick={this.addToJokeList} className={classes.heartButton}>
             <FavoriteIcon />
           </IconButton>
-          <IconButton aria-label="SkipNext" onClick={this.fetchNewJoke}>
+          <Typography component="span" className={this.state.favoriteCount ? classes.favCount : classes.disabledFavCount}>
+          {this.state.favoriteCount}
+          </Typography>
+          <IconButton aria-label="SkipNext" onClick={this.fetchNewJoke} color="primary">
             <SkipNext />
           </IconButton>
           <IconButton
@@ -252,13 +268,17 @@ addToJokeList = () => {
             onClick={this.handleExpandClick}
             aria-expanded={this.state.expanded}
             aria-label="Show more"
+            disabled={!this.state.favoriteCount}
+            color="primary"
           >
             <ExpandMoreIcon />
           </IconButton>
         </CardActions>
         <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
           <CardContent>
-          {jokester[cardTitle].collection && jokester[cardTitle].collection.map(item => <Typography> {item} </Typography>)}
+          <List>
+          {jokester[cardType].collection && jokester[cardType].collection.map((item, idx) => <ListItem key={idx}> {item} </ListItem>)}
+          </List>
           </CardContent>
         </Collapse>
       </Card>
@@ -283,8 +303,6 @@ const mapDispatchToProps = (dispatch) => {
     addToDad: (joke) => dispatch(addToDadFavorites(joke)),
     addToAdvice: (advice) => dispatch(addToAdviceFavorites(advice)),
     addToCorporate: (joke) => dispatch(addToCorporateFavorites(joke))
-
-
   }
 }
 

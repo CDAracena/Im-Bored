@@ -166,8 +166,16 @@ searchFilter = item => item.activity.toLowerCase().includes(this.state.searchInp
 
   filterChoice = (item) => this.state[item.type] === true
 
+deleteOrAdd = (item) => {
+  const {deleteItem, addToFavorites, favorites} = this.props
+  if (favorites.includes(item)) {
+    deleteItem(item)
+  } else {
+    addToFavorites(item)
+  }
+}
   render() {
-    const {classes, drawerOpen, drawerType, deleteItem, addToFavorites} = this.props;
+    const {classes, drawerOpen, drawerType, favorites} = this.props;
     const sideList = (
       <div className={classes.drawer} data-cy="drawer-container">
 
@@ -184,7 +192,7 @@ searchFilter = item => item.activity.toLowerCase().includes(this.state.searchInp
           drawerType && this.props[drawerType].length > 0 ? this.renderSideListType(drawerType).filter(this.filterChoice).filter(this.searchFilter).filter(this.filterParticipants).map((item, index) => (<ListItem button={true} key={index} data-cy="drawer-list-item">
             <ListItemText primary={this.primaryTextRender(item)} classes={{primary: classes.drawerText}} onClick={() => this.redirect(item)} />
             <ListItemSecondaryAction>
-              <IconButton onClick={ drawerType === 'favorites' ? ()=> deleteItem(item) : ()=> addToFavorites(item)} className={this.props.favorites.includes(item) ? classes.trashCan : classes.notInFavorites}>
+              <IconButton onClick={() => this.deleteOrAdd(item)} className={favorites.includes(item) ? classes.trashCan : classes.notInFavorites}>
               {drawerType === 'favorites' ? <Delete data-cy="delete-icon"/> : <Favorite/>}
               </IconButton>
             </ListItemSecondaryAction>

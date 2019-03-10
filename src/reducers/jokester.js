@@ -67,47 +67,56 @@ const jokester = (state=initialState, action) => {
       geekJoke: geekCopyJoke
     })
     case 'FETCHING_DAD_JOKE':
+    const dadCopy = Object.assign({}, state.dadJoke, {
+      fetching: true
+    })
     return Object.assign({}, state, {
-      dadJoke: {fetching: true}
+      dadJoke: dadCopy
     })
     case 'FETCH_DAD_JOKE':
+    const dadCopyJoke = Object.assign({}, state.dadJoke, {
+      currentJoke:action.data,
+      fetching: false
+    })
     return Object.assign({}, state, {
-      dadJoke: {
-        currentJoke: action.data,
-        fetching: false
-      }
+      dadJoke: dadCopyJoke
     })
     case 'FETCHING_CORPORATE_JOKE':
-    return Object.assign({}, state, {
-      corporateBS: {
+    const corporateCopy = Object.assign({}, state.corporateBS, {
       fetching: true
-      }
+    })
+    return Object.assign({}, state, {
+      corporateBS: corporateCopy
     })
     case 'FETCH_CORPORATE_JOKE':
-    return Object.assign({}, state, {
-      corporateBS: {
-        currentJoke: action.data,
-        fetching: false,
-      }
-    })
-    case 'FETCHING_LIFE_ADVICE_JOKE':
-    return Object.assign({}, state, {
-      lifeAdvice:{
-      fetching: true
-      }
-    })
-    case 'FETCH_LIFE_ADVICE_JOKE':
-    return Object.assign({}, state, {
-      lifeAdvice:{
+    const corporateCopyJoke = Object.assign({}, state.corporateBS, {
       currentJoke: action.data,
       fetching: false
-    }
+    })
+    return Object.assign({}, state, {
+      corporateBS: corporateCopyJoke
+    })
+    case 'FETCHING_LIFE_ADVICE_JOKE':
+    const lifeCopy = Object.assign({}, state.lifeAdvice, {
+      fetching: true
+    })
+    return Object.assign({}, state, {
+      lifeAdvice: lifeCopy
+    })
+    case 'FETCH_LIFE_ADVICE_JOKE':
+    const adviceCopyJoke = Object.assign({}, state.lifeAdvice, {
+      currentJoke: action.data,
+      fetching: false
+    })
+    return Object.assign({}, state, {
+      lifeAdvice: adviceCopyJoke
     })
     case 'ADD_TO_DAD_FAVORITES':
+    const dadCollection = Object.assign({}, state.dadJoke, {
+      collection: [...state.dadJoke.collection, action.newJoke]
+    })
     return Object.assign({}, state, {
-      dadJoke: {
-        collection: [...state.dadJoke.collection, action.newJoke]
-      }
+      dadJoke: dadCollection
     })
     case 'ADD_TO_GEEK_FAVORITES':
     const geekCollection = Object.assign({}, state.geekJoke, {
@@ -117,16 +126,18 @@ const jokester = (state=initialState, action) => {
       geekJoke: geekCollection
     })
     case 'ADD_TO_ADVICE_FAVORITES':
+    const adviceCollection = Object.assign({}, state.lifeAdvice, {
+      collection: [...state.lifeAdvice.collection, action.advice]
+    })
     return Object.assign({}, state, {
-      lifeAdvice: {
-        collection: [...state.lifeAdvice.collection, action.advice]
-      }
+      lifeAdvice: adviceCollection
     })
     case 'ADD_TO_CORPORATEBS_FAVORITES':
+    const corporateCollection = Object.assign({}, state.corporateBS, {
+      collection: [...state.corporateBS.collection, action.newJoke]
+    })
     return Object.assign({}, state, {
-      corporateBS: {
-        collection: [...state.corporateBS.collection, action.newJoke]
-      }
+      corporateBS: corporateCollection
     })
     default:
     return state;
