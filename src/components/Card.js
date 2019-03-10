@@ -303,8 +303,6 @@ const mapDispatchToProps = (dispatch) => {
     addToDad: (joke) => dispatch(addToDadFavorites(joke)),
     addToAdvice: (advice) => dispatch(addToAdviceFavorites(advice)),
     addToCorporate: (joke) => dispatch(addToCorporateFavorites(joke))
-
-
   }
 }
 
