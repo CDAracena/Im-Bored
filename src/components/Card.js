@@ -29,6 +29,8 @@ import posed from 'react-pose';
 import SkipNext from '@material-ui/icons/SkipNext';
 import Button from '@material-ui/core/Button';
 import Send from '@material-ui/icons/Send';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
 
 import {
   fetchNewDadJoke,
@@ -84,8 +86,6 @@ class JokesterCard extends Component {
     cardTitle: '',
     searchTerm: ''
   };
-
-  //ADD CARD TYPE TO LOCAL STATE INSTEAD, USE CARD TITLE FOR THE ACTUAL CARD TITLE
 
   handleExpandClick = () => this.setState({expanded: !this.state.expanded})
 
@@ -211,7 +211,6 @@ addToJokeList = () => {
 
   render() {
     const { classes, cardTitle, cardSubheader, apiChoice, searchable, jokester, cardType} = this.props;
-    console.log(jokester.dadJoke)
     return (
       <Card className={classes.card} data-cy="jokester-card">
         <CardHeader
@@ -256,7 +255,9 @@ addToJokeList = () => {
         </CardActions>
         <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
           <CardContent>
-          {jokester[cardType].collection && jokester[cardType].collection.map(item => <Typography> {item} </Typography>)}
+          <List>
+          {jokester[cardType].collection && jokester[cardType].collection.map((item, idx) => <ListItem key={idx}> {item} </ListItem>)}
+          </List>
           </CardContent>
         </Collapse>
       </Card>

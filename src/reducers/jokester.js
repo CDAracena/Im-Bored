@@ -113,7 +113,7 @@ const jokester = (state=initialState, action) => {
     })
     case 'ADD_TO_DAD_FAVORITES':
     const dadCollection = Object.assign({}, state.dadJoke, {
-      collection: [...state.dadJoke, action.data]
+      collection: [...state.dadJoke.collection, action.newJoke]
     })
     return Object.assign({}, state, {
       dadJoke: dadCollection
