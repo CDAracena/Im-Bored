@@ -43,8 +43,6 @@ import {
   addToGeekFavorites
 } from '../actions/bottomdrawer';
 
-// Maybe add favorites to the bottom / collapse area of the card.
-//Reset favorite icon upon every fetch request
 
 const styles = theme => ({
   card: {
@@ -76,6 +74,16 @@ const styles = theme => ({
   searchForm: {
     display: 'flex',
     alignItems: 'center'
+  },
+  heartButton: {
+    color: '#C3423F'
+  },
+  favCount: {
+    color: '#C3423F',
+    textShadow: '1px 1px 5px'
+  },
+  disabledFavCount: {
+    color: theme.palette.secondary.main
   }
 });
 
@@ -84,7 +92,8 @@ class JokesterCard extends Component {
     expanded: false,
     joke: '',
     cardTitle: '',
-    searchTerm: ''
+    searchTerm: '',
+    favoriteCount: 0
   };
 
   handleExpandClick = () => this.setState({expanded: !this.state.expanded})
@@ -204,7 +213,14 @@ addToJokeList = () => {
     return;
     default:
     return ;
+ }
 }
+
+componentDidUpdate(prevProps, prevState) {
+  const {cardType} = this.props
+  if (prevProps.jokester[cardType].collection !== this.props.jokester[cardType].collection) {
+    this.setState({favoriteCount: this.props.jokester[cardType].collection.length})
+  }
 }
 
 
@@ -236,10 +252,13 @@ addToJokeList = () => {
         </CardContent>
 
         <CardActions className={classes.actions} disableActionSpacing>
-          <IconButton aria-label="Add to favorites" onClick={this.addToJokeList}>
+          <IconButton aria-label="Add to favorites" onClick={this.addToJokeList} className={classes.heartButton}>
             <FavoriteIcon />
           </IconButton>
-          <IconButton aria-label="SkipNext" onClick={this.fetchNewJoke}>
+          <Typography component="span" className={this.state.favoriteCount ? classes.favCount : classes.disabledFavCount}>
+          {this.state.favoriteCount}
+          </Typography>
+          <IconButton aria-label="SkipNext" onClick={this.fetchNewJoke} color="primary">
             <SkipNext />
           </IconButton>
           <IconButton
@@ -249,6 +268,8 @@ addToJokeList = () => {
             onClick={this.handleExpandClick}
             aria-expanded={this.state.expanded}
             aria-label="Show more"
+            disabled={!this.state.favoriteCount}
+            color="primary"
           >
             <ExpandMoreIcon />
           </IconButton>
