@@ -48,6 +48,12 @@ export const fetchNewDadJoke = (searchTerm) => {
     dispatch(fetchingDadJoke())
     return fetchDadJoke(searchTerm)
       .then(joke => {
+         if (searchTerm && joke.results.length === 0) {
+         joke = {id: 'random', joke: `Sorry no results found for ${searchTerm}`, status: 200}
+       } else if (searchTerm && joke.results) {
+          const randomSelection = Math.floor(Math.random() * joke.results.length)
+          joke = joke.results[randomSelection]
+        }
         dispatch(getDadData(joke))
       })
   }
