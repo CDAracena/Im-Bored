@@ -73,7 +73,8 @@ const styles = theme => ({
   },
   searchForm: {
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingTop: '15px'
   },
   heartButton: {
     color: '#C3423F'
