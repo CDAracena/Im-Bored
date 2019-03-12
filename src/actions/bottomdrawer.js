@@ -48,6 +48,12 @@ export const fetchNewDadJoke = (searchTerm) => {
     dispatch(fetchingDadJoke())
     return fetchDadJoke(searchTerm)
       .then(joke => {
+         if (searchTerm && joke.results.length === 0) {
+         joke = {id: 'random', joke: `Sorry no results found for ${searchTerm}`, status: 200}
+       } else if (searchTerm && joke.results) {
+          const randomSelection = Math.floor(Math.random() * joke.results.length)
+          joke = joke.results[randomSelection]
+        }
         dispatch(getDadData(joke))
       })
   }
@@ -58,11 +64,24 @@ export const getDadData = (data) => ({
   data: data
 })
 
-export const fetchNewLifeAdvice = () => {
+export const fetchNewLifeAdvice = (searchTerm) => {
   return dispatch => {
     dispatch(fetchingLifeAdvice())
-    return fetchAdvice()
+    return fetchAdvice(searchTerm)
     .then(joke => {
+      if (searchTerm && joke.message) {
+        joke = {slip: {
+          type: joke.message.type,
+          advice: joke.message.text
+        }}
+      } else if (searchTerm && joke.slips) {
+        const randomSelection = Math.floor(Math.random() * joke.slips.length)
+        joke = {slip: {
+          advice: joke.slips[randomSelection].advice,
+          slip_id: joke.slips[randomSelection].slip_id
+        }
+      }
+      }
       dispatch(getLifeAdvice(joke))
     })
   }

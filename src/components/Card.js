@@ -73,7 +73,8 @@ const styles = theme => ({
   },
   searchForm: {
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingTop: '15px'
   },
   heartButton: {
     color: '#C3423F'
@@ -186,7 +187,7 @@ fetchSearchTerm = (e) => {
   e.preventDefault()
   if (this.state.searchTerm && this.state.cardTitle === 'Dad Joke') {
       this.props.getDadJoke(this.state.searchTerm)
-  } else if (this.state.searchTerm && this.state.cardTitle === 'Advice') {
+  } else if (this.state.searchTerm && this.state.cardTitle === 'Life Advice') {
     this.props.getLifeAdvice(this.state.searchTerm)
   }
   this.setState({searchTerm: ''})
