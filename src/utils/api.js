@@ -83,7 +83,7 @@ export const fetchCorporateBS = () => {
 export const fetchAdvice = (searchTerm) => {
   let apiLink = '';
   if (searchTerm){
-    apiLink = `https://api.adviceslip/advice/search/${searchTerm}`
+    apiLink = `https://api.adviceslip.com/advice/search/${searchTerm}`
   } else {
     apiLink = 'https://api.adviceslip.com/advice'
   }

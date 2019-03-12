@@ -64,11 +64,12 @@ export const getDadData = (data) => ({
   data: data
 })
 
-export const fetchNewLifeAdvice = () => {
+export const fetchNewLifeAdvice = (searchTerm) => {
   return dispatch => {
     dispatch(fetchingLifeAdvice())
-    return fetchAdvice()
+    return fetchAdvice(searchTerm)
     .then(joke => {
+      console.log(joke)
       dispatch(getLifeAdvice(joke))
     })
   }
