@@ -69,7 +69,19 @@ export const fetchNewLifeAdvice = (searchTerm) => {
     dispatch(fetchingLifeAdvice())
     return fetchAdvice(searchTerm)
     .then(joke => {
-      console.log(joke)
+      if (searchTerm && joke.message) {
+        joke = {slip: {
+          type: joke.message.type,
+          advice: joke.message.text
+        }}
+      } else if (searchTerm && joke.slips) {
+        const randomSelection = Math.floor(Math.random() * joke.slips.length)
+        joke = {slip: {
+          advice: joke.slips[randomSelection].advice,
+          slip_id: joke.slips[randomSelection].slip_id
+        }
+      }
+      }
       dispatch(getLifeAdvice(joke))
     })
   }
