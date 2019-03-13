@@ -181,7 +181,6 @@ fetchNewJoke = () => {
   cardType === 'lifeAdvice' ? this.props.getLifeAdvice() : undefined
 }
 
-// Need to figure out what I'm going to do about dad joke search results. return a list or a single on
 fetchSearchTerm = (e) => {
   // NEED TO EDIT THIS
   e.preventDefault()
@@ -253,13 +252,13 @@ componentDidUpdate(prevProps, prevState) {
         </CardContent>
 
         <CardActions className={classes.actions} disableActionSpacing>
-          <IconButton aria-label="Add to favorites" onClick={this.addToJokeList} className={classes.heartButton}>
+          <IconButton aria-label="Add to favorites" onClick={this.addToJokeList} className={classes.heartButton} data-cy="favorite-jokester-btn">
             <FavoriteIcon />
           </IconButton>
-          <Typography component="span" className={this.state.favoriteCount ? classes.favCount : classes.disabledFavCount}>
+          <Typography component="span" className={this.state.favoriteCount ? classes.favCount : classes.disabledFavCount} data-cy="favorite-count">
           {this.state.favoriteCount}
           </Typography>
-          <IconButton aria-label="SkipNext" onClick={this.fetchNewJoke} color="primary">
+          <IconButton aria-label="SkipNext" onClick={this.fetchNewJoke} color="primary" data-cy="next-joke-btn">
             <SkipNext />
           </IconButton>
           <IconButton
@@ -271,6 +270,7 @@ componentDidUpdate(prevProps, prevState) {
             aria-label="Show more"
             disabled={!this.state.favoriteCount}
             color="primary"
+            data-cy="expand-collapse-list"
           >
             <ExpandMoreIcon />
           </IconButton>
@@ -278,7 +278,7 @@ componentDidUpdate(prevProps, prevState) {
         <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
           <CardContent>
           <List>
-          {jokester[cardType].collection && jokester[cardType].collection.map((item, idx) => <ListItem key={idx}> {item} </ListItem>)}
+          {jokester[cardType].collection && jokester[cardType].collection.map((item, idx) => <ListItem key={idx} data-cy="collapse-list-item"> {item} </ListItem>)}
           </List>
           </CardContent>
         </Collapse>

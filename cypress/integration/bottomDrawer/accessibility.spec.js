@@ -1,7 +1,7 @@
 const openBottomDrawer = () => {
   cy.get('[data-cy="bottom-drawer-icon"]')
     .should('be.visible')
-    .click()
+    .click({force: true})
 }
 
 describe('Open and close bottom drawer', () => {
