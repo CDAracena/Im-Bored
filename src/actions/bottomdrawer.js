@@ -2,7 +2,8 @@ import {
   fetchGeekJoke,
   fetchDadJoke,
   fetchCorporateBS,
-  fetchAdvice
+  fetchAdvice,
+  fetchKanyeQuote
 } from '../utils/api';
 
 export const OPEN_BOTTOM_DRAWER = "OPEN_BOTTOM_DRAWER";
@@ -19,6 +20,9 @@ export const ADD_TO_GEEK_FAVORITES = "ADD_TO_GEEK_FAVORITES";
 export const ADD_TO_CORPORATEBS_FAVORITES = "ADD_TO_CORPORATEBS_FAVORITES";
 export const ADD_TO_ADVICE_FAVORITES = "ADD_TO_ADVICE_FAVORITES";
 export const ADD_TO_DAD_FAVORITES = "ADD_TO_DAD_FAVORITES";
+export const ADD_TO_KANYE_FAVORITES = "ADD_TO_KANYE_FAVORITES";
+export const FETCHING_KANYE_QUOTE = "FETCHING_KANYE_QUOTE";
+export const FETCH_KANYE_QUOTE =  "FETCH_KANYE_QUOTE";
 
 export const openBottomDrawer = () => ({
   type: OPEN_BOTTOM_DRAWER
@@ -58,6 +62,32 @@ export const fetchNewDadJoke = (searchTerm) => {
       })
   }
 }
+
+export const fetchNewKanyeQuote = () => {
+  return dispatch  => {
+    dispatch(fetchingKanyeQuote())
+     return fetchKanyeQuote()
+     .then(quote => {
+       console.log(quote)
+       dispatch(getKanyeQuote(quote))
+     })
+    }
+  }
+
+
+export const fetchingKanyeQuote = () =>({
+  type: FETCHING_KANYE_QUOTE
+})
+
+export const getKanyeQuote = (quote) => ({
+  type: FETCH_KANYE_QUOTE,
+  quote
+})
+
+export const addToKanyeFavorites = (quote) => ({
+  type: ADD_TO_KANYE_FAVORITES,
+  quote
+})
 
 export const getDadData = (data) => ({
   type: FETCH_DAD_JOKE,

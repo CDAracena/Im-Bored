@@ -77,9 +77,9 @@ describe('Jokester Cards', () => {
       .should('be.visible')
       .and('have.length', 5)
   })
-  it('One of the cards should have title of Useless Fact', () => {
+  it('One of the cards should have title of Kanye Quote', () => {
     cy.openBottomDrawer()
     cy.get('[data-cy="jokester-card"]')
-      .should('contain', 'Useless Fact')
+      .should('contain', 'Kanye Quoute')
   })
 })

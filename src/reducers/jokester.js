@@ -12,7 +12,10 @@ import {
   ADD_TO_DAD_FAVORITES,
   ADD_TO_GEEK_FAVORITES,
   ADD_TO_ADVICE_FAVORITES,
-  ADD_TO_CORPORATEBS_FAVORITES
+  ADD_TO_CORPORATEBS_FAVORITES,
+  ADD_TO_KANYE_FAVORITES,
+  FETCH_KANYE_QUOTE,
+  FETCHING_KANYE_QUOTE
 } from '../actions/bottomdrawer';
 
 const initialState = {
@@ -33,6 +36,11 @@ const initialState = {
     fetching: false
   },
   dadJoke: {
+    currentJoke: '',
+    collection: [],
+    fetching: false
+  },
+  kanyeQuote: {
     currentJoke: '',
     collection: [],
     fetching: false
@@ -138,6 +146,28 @@ const jokester = (state=initialState, action) => {
     })
     return Object.assign({}, state, {
       corporateBS: corporateCollection
+    })
+    case 'FETCHING_KANYE_QUOTE':
+    const kanyeFetching = Object.assign({}, state.kanyeQuote, {
+      fetching: true
+    })
+    return Object.assign({}, state, {
+      kanyeQuote: kanyeFetching
+    })
+    case 'FETCH_KANYE_QUOTE':
+    const kanyeQuote = Object.assign({}, state.kanyeQuote, {
+      currentJoke: action.quote,
+      fetching: false
+    })
+    return Object.assign({}, state, {
+      kanyeQuote: kanyeQuote
+    })
+    case 'ADD_TO_KANYE_FAVORITES':
+    const kanyeCollection = Object.assign({}, state.kanyeQuote, {
+      collection: [...state.kanyeQuote.collection, action.quote]
+    })
+    return Object.assign({}, state, {
+      kanyeQuote: kanyeCollection
     })
     default:
     return state;
