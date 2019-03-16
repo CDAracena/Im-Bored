@@ -150,10 +150,15 @@ renderInput = (type) => {
 
 
 componentDidMount() {
-const {cardTitle} = this.props;
+const {cardTitle, cardType} = this.props;
+console.log(this.props.jokester[cardType].collection)
  this.setState({cardTitle: cardTitle})
 
 this.fetchNewJoke()
+
+if (this.props.jokester[cardType].collection) {
+  this.setState({favoriteCount: this.props.jokester[cardType].collection.length})
+  }
 }
 
 renderActiveJoke = () => {
