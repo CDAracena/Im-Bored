@@ -37,10 +37,12 @@ import {
   fetchNewLifeAdvice,
   fetchNewCorporateBS,
   fetchNewGeekJoke,
+  fetchNewKanyeQuote,
   addToDadFavorites,
   addToAdviceFavorites,
   addToCorporateFavorites,
-  addToGeekFavorites
+  addToGeekFavorites,
+  addToKanyeFavorites
 } from '../actions/bottomdrawer';
 
 
@@ -151,7 +153,6 @@ renderInput = (type) => {
 
 componentDidMount() {
 const {cardTitle, cardType} = this.props;
-console.log(this.props.jokester[cardType].collection)
  this.setState({cardTitle: cardTitle})
 
 this.fetchNewJoke()
@@ -163,7 +164,7 @@ if (this.props.jokester[cardType].collection) {
 
 renderActiveJoke = () => {
   const {jokester, cardType} = this.props
-  const {geekJoke, dadJoke, lifeAdvice, corporateBS} = jokester
+  const {geekJoke, dadJoke, lifeAdvice, corporateBS, kanyeQuote} = jokester
   switch(cardType) {
     case 'geekJoke':
     return geekJoke.currentJoke ? geekJoke.currentJoke : 'Fetching...'
@@ -173,6 +174,8 @@ renderActiveJoke = () => {
     return lifeAdvice.currentJoke ? lifeAdvice.currentJoke.slip.advice : 'Fetching...'
     case 'corporateBS':
     return corporateBS.currentJoke ? corporateBS.currentJoke.phrase : 'Fetching...'
+    case 'kanyeQuote':
+    return kanyeQuote.currentJoke ? kanyeQuote.currentJoke.quote : 'Fetching...'
     default:
     return ;
   }
@@ -184,6 +187,7 @@ fetchNewJoke = () => {
   cardType === 'dadJoke' ? this.props.getDadJoke() : undefined
   cardType === 'corporateBS' ? this.props.getCorporateBS() : undefined
   cardType === 'lifeAdvice' ? this.props.getLifeAdvice() : undefined
+  cardType === 'kanyeQuote' ? this.props.getKanyeQuote() : undefined
 }
 
 fetchSearchTerm = (e) => {
@@ -198,7 +202,7 @@ fetchSearchTerm = (e) => {
 }
 
 addToJokeList = () => {
-  const {geekJoke, dadJoke, lifeAdvice, corporateBS} = this.props.jokester
+  const {geekJoke, dadJoke, lifeAdvice, corporateBS, kanyeQuote} = this.props.jokester
   switch(this.props.cardType) {
     case 'geekJoke':
     this.props.addToGeek(geekJoke.currentJoke)
@@ -216,6 +220,9 @@ addToJokeList = () => {
     this.props.addToCorporate(corporateBS.currentJoke.phrase)
     this.props.getCorporateBS()
     return;
+    case 'kanyeQuote':
+    this.props.addToKanyeFavorites(kanyeQuote.currentJoke.quote)
+    this.props.getKanyeQuote()
     default:
     return ;
  }
@@ -308,7 +315,9 @@ const mapDispatchToProps = (dispatch) => {
     addToGeek: (joke) => dispatch(addToGeekFavorites(joke)),
     addToDad: (joke) => dispatch(addToDadFavorites(joke)),
     addToAdvice: (advice) => dispatch(addToAdviceFavorites(advice)),
-    addToCorporate: (joke) => dispatch(addToCorporateFavorites(joke))
+    addToCorporate: (joke) => dispatch(addToCorporateFavorites(joke)),
+    addToKanyeFavorites: (quote) => dispatch(addToKanyeFavorites(quote)),
+    getKanyeQuote: () => dispatch(fetchNewKanyeQuote())
   }
 }
 
