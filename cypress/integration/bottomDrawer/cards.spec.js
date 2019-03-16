@@ -53,6 +53,7 @@ describe('Jokester Cards', () => {
     cy.get('[data-cy="favorite-jokester-btn"]').eq(0).click({force: true})
     cy.get('[data-cy="favorite-count"]').eq(0).invoke('text').should('eq', '1')
   })
+
   it('Expect favorited joke to be added to collapsible list', () => {
     cy.visit('/')
     cy.openBottomDrawer()
@@ -68,5 +69,17 @@ describe('Jokester Cards', () => {
         .should('be.visible')
         .and('contain', initialText)
     })
+  })
+  it.only('5 cards should now exist', () => {
+    cy.visit('/')
+    cy.openBottomDrawer()
+    cy.get('[data-cy="jokester-card"]')
+      .should('be.visible')
+      .and('have.length', 5)
+  })
+  it('One of the cards should have title of Useless Fact', () => {
+    cy.openBottomDrawer()
+    cy.get('[data-cy="jokester-card"]')
+      .should('contain', 'Useless Fact')
   })
 })
