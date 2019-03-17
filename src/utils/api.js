@@ -72,8 +72,7 @@ export const postDadJoke = (joke) => {
 }
 
 export const fetchCorporateBS = () => {
-  const proxyurl = "https://cors-anywhere.herokuapp.com/";
-  return fetch (proxyurl + 'https://corporatebs-generator.sameerkumar.website/', {
+  return fetch (process.env.REACT_APP_PROXY_URL + 'https://corporatebs-generator.sameerkumar.website/', {
   })
     .then(res => res.json())
     .then(data => data)
@@ -98,4 +97,11 @@ export const fetchKanyeQuote = () => {
   .then(res => res.json())
   .then(data => data)
   .catch(e => console.log(e))
+}
+
+export const fetchAnimalFact = (animalType) => {
+  return fetch(`${process.env.REACT_APP_PROXY_URL}https://fact.birb.pw/api/v1/${animalType}`)
+  .then(res => res.json())
+  .then(data => data)
+  .catch(error => console.log(error))
 }

@@ -3,7 +3,8 @@ import {
   fetchDadJoke,
   fetchCorporateBS,
   fetchAdvice,
-  fetchKanyeQuote
+  fetchKanyeQuote,
+  fetchAnimalFact
 } from '../utils/api';
 
 export const OPEN_BOTTOM_DRAWER = "OPEN_BOTTOM_DRAWER";
@@ -23,6 +24,9 @@ export const ADD_TO_DAD_FAVORITES = "ADD_TO_DAD_FAVORITES";
 export const ADD_TO_KANYE_FAVORITES = "ADD_TO_KANYE_FAVORITES";
 export const FETCHING_KANYE_QUOTE = "FETCHING_KANYE_QUOTE";
 export const FETCH_KANYE_QUOTE =  "FETCH_KANYE_QUOTE";
+export const FETCHING_ANIMAL_FACT = "FETCHING_ANIMAL_FACT";
+export const ADD_TO_ANIMAL_FAVORITES = "ADD_TO_ANIMAL_FAVORITES";
+export const FETCH_ANIMAL_FACT = "FETCH_ANIMAL_FACT";
 
 export const openBottomDrawer = () => ({
   type: OPEN_BOTTOM_DRAWER
@@ -88,6 +92,30 @@ export const addToKanyeFavorites = (quote) => ({
   type: ADD_TO_KANYE_FAVORITES,
   quote
 })
+
+export const getAnimalFact = (fact)=>({
+  type:FETCH_ANIMAL_FACT,
+  fact
+})
+
+export const addToAnimalFacts = (fact)=>({
+  type: ADD_TO_ANIMAL_FAVORITES,
+  fact
+})
+
+export const fetchingAnimalFact = () => ({
+  type: FETCHING_ANIMAL_FACT
+})
+
+export const fetchNewAnimalFact = (animalType) => {
+  return dispatch => {
+    dispatch(fetchingAnimalFact())
+    return fetchAnimalFact(animalType)
+    .then(fact => {
+      dispatch(getAnimalFact(fact))
+    })
+  }
+}
 
 export const getDadData = (data) => ({
   type: FETCH_DAD_JOKE,
