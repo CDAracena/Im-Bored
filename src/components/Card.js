@@ -31,6 +31,11 @@ import Button from '@material-ui/core/Button';
 import Send from '@material-ui/icons/Send';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import Menu from '@material-ui/core/Menu';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormLabel from '@material-ui/core/FormLabel';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
 
 import {
   fetchNewDadJoke,
@@ -42,7 +47,9 @@ import {
   addToAdviceFavorites,
   addToCorporateFavorites,
   addToGeekFavorites,
-  addToKanyeFavorites
+  addToKanyeFavorites,
+  fetchNewAnimalFact,
+  addToAnimalFacts
 } from '../actions/bottomdrawer';
 
 
@@ -96,7 +103,9 @@ class JokesterCard extends Component {
     joke: '',
     cardTitle: '',
     searchTerm: '',
-    favoriteCount: 0
+    favoriteCount: 0,
+    animalType: 'dog',
+    anchorEl: null
   };
 
   handleExpandClick = () => this.setState({expanded: !this.state.expanded})
@@ -164,7 +173,7 @@ if (this.props.jokester[cardType].collection) {
 
 renderActiveJoke = () => {
   const {jokester, cardType} = this.props
-  const {geekJoke, dadJoke, lifeAdvice, corporateBS, kanyeQuote} = jokester
+  const {geekJoke, dadJoke, lifeAdvice, corporateBS, kanyeQuote, animalFact} = jokester
   switch(cardType) {
     case 'geekJoke':
     return geekJoke.currentJoke ? geekJoke.currentJoke : 'Fetching...'
@@ -176,6 +185,8 @@ renderActiveJoke = () => {
     return corporateBS.currentJoke ? corporateBS.currentJoke.phrase : 'Fetching...'
     case 'kanyeQuote':
     return kanyeQuote.currentJoke ? kanyeQuote.currentJoke.quote : 'Fetching...'
+    case 'animalFact':
+    return animalFact.currentJoke ? animalFact.currentJoke.string : "Fetching..."
     default:
     return ;
   }
@@ -188,6 +199,7 @@ fetchNewJoke = () => {
   cardType === 'corporateBS' ? this.props.getCorporateBS() : undefined
   cardType === 'lifeAdvice' ? this.props.getLifeAdvice() : undefined
   cardType === 'kanyeQuote' ? this.props.getKanyeQuote() : undefined
+  cardType === 'animalFact' ? this.props.getAnimalFact(this.state.animalType) : undefined
 }
 
 fetchSearchTerm = (e) => {
@@ -202,7 +214,7 @@ fetchSearchTerm = (e) => {
 }
 
 addToJokeList = () => {
-  const {geekJoke, dadJoke, lifeAdvice, corporateBS, kanyeQuote} = this.props.jokester
+  const {geekJoke, dadJoke, lifeAdvice, corporateBS, kanyeQuote, animalFact} = this.props.jokester
   switch(this.props.cardType) {
     case 'geekJoke':
     this.props.addToGeek(geekJoke.currentJoke)
@@ -223,6 +235,10 @@ addToJokeList = () => {
     case 'kanyeQuote':
     this.props.addToKanyeFavorites(kanyeQuote.currentJoke.quote)
     this.props.getKanyeQuote()
+    case 'animalFact':
+    this.props.addToAnimalFacts(animalFact.currentJoke.fact)
+    this.props.getAnimalFact(this.state.animalType)
+    return;
     default:
     return ;
  }
@@ -235,7 +251,24 @@ componentDidUpdate(prevProps, prevState) {
   }
 }
 
+setNewAnimalType = (e) => this.setState({animalType: e.target.value})
+renderAnimalFactMenu = () =>{
+  const open = this.state.anchorEl ? true : false
+  return (
+    <React.Fragment>
+    <Menu anchorEl={this.state.anchorEl} open={open} onClose={this.handleMenuClose} PaperProps={{style: {maxHeight: 48 * 4.5, width: 200}}}>
+      <RadioGroup value={this.state.animalType} onChange={this.setNewAnimalType} aria-label="Animal Type">
+        <FormControlLabel label="Birb" control={<Radio checked={this.state.animalType === 'birb'} value="birb" color="primary"/> }/>
+        <FormControlLabel label="Dog" control={<Radio checked={this.state.animalType === 'dog'}  value='dog' color="primary"/> }/>
+        <FormControlLabel label="Cat" control={<Radio checked={this.state.animalType === 'cat'}  value="cat" color="primary"/> }/>
+      </RadioGroup>
+    </Menu>
+    </React.Fragment>
+  )
+}
 
+openCardMenu = (e) => this.setState({anchorEl: e.currentTarget})
+handleMenuClose = () => this.setState({anchorEl: null})
 
   render() {
     const { classes, cardTitle, cardSubheader, apiChoice, searchable, jokester, cardType} = this.props;
@@ -248,7 +281,7 @@ componentDidUpdate(prevProps, prevState) {
             </Avatar>
           }
           action={
-            <IconButton>
+            <IconButton disabled={cardType !== 'animalFact' ?  true : false } onClick={this.openCardMenu}>
               <MoreVertIcon />
             </IconButton>
           }
@@ -256,6 +289,7 @@ componentDidUpdate(prevProps, prevState) {
           subheader={cardSubheader}
           className={classes.cardHeader}
         />
+        {this.state.anchorEl && this.renderAnimalFactMenu()}
         <CardContent>
           <Typography component="p" data-cy="joke-text">
           {this.renderActiveJoke()}
@@ -317,7 +351,8 @@ const mapDispatchToProps = (dispatch) => {
     addToAdvice: (advice) => dispatch(addToAdviceFavorites(advice)),
     addToCorporate: (joke) => dispatch(addToCorporateFavorites(joke)),
     addToKanyeFavorites: (quote) => dispatch(addToKanyeFavorites(quote)),
-    getKanyeQuote: () => dispatch(fetchNewKanyeQuote())
+    getKanyeQuote: () => dispatch(fetchNewKanyeQuote()),
+    getAnimalFact: (type) => dispatch(fetchNewAnimalFact(type))
   }
 }
 

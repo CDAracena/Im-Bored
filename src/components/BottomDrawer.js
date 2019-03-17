@@ -77,6 +77,9 @@ import {openBottomDrawer, closeBottomDrawer} from '../actions/bottomdrawer';
             <Grid item className={classes.card}>
             <JokesterCard cardType="kanyeQuote" cardSubheader="Fetch a Kanye quote" cardTitle="Kanye Quote"/>
             </Grid>
+            <Grid item className={classes.card}>
+            <JokesterCard cardType="animalFact" cardSubHeader="Fetch a cat, dog or birb fact" cardTitle="Animal Fact"/>
+            </Grid>
             </Grid>
           </Dialog>
         </div>
