@@ -352,7 +352,8 @@ const mapDispatchToProps = (dispatch) => {
     addToCorporate: (joke) => dispatch(addToCorporateFavorites(joke)),
     addToKanyeFavorites: (quote) => dispatch(addToKanyeFavorites(quote)),
     getKanyeQuote: () => dispatch(fetchNewKanyeQuote()),
-    getAnimalFact: (type) => dispatch(fetchNewAnimalFact(type))
+    getAnimalFact: (type) => dispatch(fetchNewAnimalFact(type)),
+    addToAnimalFacts: (fact) => dispatch(addToAnimalFacts(fact))
   }
 }
 

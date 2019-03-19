@@ -70,12 +70,12 @@ describe('Jokester Cards', () => {
         .and('contain', initialText)
     })
   })
-  it.only('5 cards should now exist', () => {
+  it('6 cards should now exist', () => {
     cy.visit('/')
     cy.openBottomDrawer()
     cy.get('[data-cy="jokester-card"]')
       .should('be.visible')
-      .and('have.length', 5)
+      .and('have.length', 6)
   })
   it('One of the cards should have title of Kanye Quote', () => {
     cy.openBottomDrawer()
