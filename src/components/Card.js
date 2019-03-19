@@ -36,6 +36,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormLabel from '@material-ui/core/FormLabel';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
+import Pets from '@material-ui/icons/Pets';
 
 import {
   fetchNewDadJoke,
@@ -121,6 +122,8 @@ class JokesterCard extends Component {
       return <LocationCity/>
       case 'lifeAdvice':
       return <WbSunny/>
+      case 'animalFact':
+      return <Pets/>
       default:
       return;
     }
@@ -236,7 +239,7 @@ addToJokeList = () => {
     this.props.addToKanyeFavorites(kanyeQuote.currentJoke.quote)
     this.props.getKanyeQuote()
     case 'animalFact':
-    this.props.addToAnimalFacts(animalFact.currentJoke.fact)
+    this.props.addToAnimalFacts(animalFact.currentJoke.string)
     this.props.getAnimalFact(this.state.animalType)
     return;
     default:
@@ -257,10 +260,10 @@ renderAnimalFactMenu = () =>{
   return (
     <React.Fragment>
     <Menu anchorEl={this.state.anchorEl} open={open} onClose={this.handleMenuClose} PaperProps={{style: {maxHeight: 48 * 4.5, width: 200}}}>
-      <RadioGroup value={this.state.animalType} onChange={this.setNewAnimalType} aria-label="Animal Type">
-        <FormControlLabel label="Birb" control={<Radio checked={this.state.animalType === 'birb'} value="birb" color="primary"/> }/>
-        <FormControlLabel label="Dog" control={<Radio checked={this.state.animalType === 'dog'}  value='dog' color="primary"/> }/>
-        <FormControlLabel label="Cat" control={<Radio checked={this.state.animalType === 'cat'}  value="cat" color="primary"/> }/>
+      <RadioGroup value={this.state.animalType} onChange={this.setNewAnimalType} aria-label="Animal Type" style={{outline: 'none'}}>
+        <FormControlLabel label="Birb" control={<Radio checked={this.state.animalType === 'birb'} value="birb" color="primary"/> } style={{marginLeft: '0px'}}/>
+        <FormControlLabel label="Dog" control={<Radio checked={this.state.animalType === 'dog'}  value='dog' color="primary"/> } style={{marginLeft: '0px'}}/>
+        <FormControlLabel label="Cat" control={<Radio checked={this.state.animalType === 'cat'}  value="cat" color="primary"/> } style={{marginLeft: '0px'}}/>
       </RadioGroup>
     </Menu>
     </React.Fragment>
@@ -352,7 +355,8 @@ const mapDispatchToProps = (dispatch) => {
     addToCorporate: (joke) => dispatch(addToCorporateFavorites(joke)),
     addToKanyeFavorites: (quote) => dispatch(addToKanyeFavorites(quote)),
     getKanyeQuote: () => dispatch(fetchNewKanyeQuote()),
-    getAnimalFact: (type) => dispatch(fetchNewAnimalFact(type))
+    getAnimalFact: (type) => dispatch(fetchNewAnimalFact(type)),
+    addToAnimalFacts: (fact) => dispatch(addToAnimalFacts(fact))
   }
 }
 
