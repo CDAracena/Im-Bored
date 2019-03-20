@@ -12,6 +12,7 @@ A React-Redux / Material UI app built to address daily boredom. Filter and searc
 * [icanhazdadjoke] (https://icanhazdadjoke.com/)
 * [Advice Slip] (https://api.adviceslip.com/#top)
 * [KanyeRest] (https://kanye.rest/)
+* [RandomFactAPI] (https://fact.birb.pw/)
 
 
 ## Tested With:
