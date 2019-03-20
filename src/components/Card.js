@@ -37,7 +37,7 @@ import FormLabel from '@material-ui/core/FormLabel';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Pets from '@material-ui/icons/Pets';
-
+import Mic from '@material-ui/icons/Mic';
 import {
   fetchNewDadJoke,
   fetchNewLifeAdvice,
@@ -124,6 +124,8 @@ class JokesterCard extends Component {
       return <WbSunny/>
       case 'animalFact':
       return <Pets/>
+      case 'kanyeQuote':
+      return <Mic/>
       default:
       return;
     }
