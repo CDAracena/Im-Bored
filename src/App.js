@@ -26,9 +26,7 @@ import ExitToApp from '@material-ui/icons/ExitToApp';
 import { Router, Route, Link } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import Login from './components/Login';
-import { withRouter } from "react-router-dom";
 
-const boredHistory = createBrowserHistory();
 
 const styles = (theme) => ({
   root: {
@@ -45,6 +43,9 @@ const styles = (theme) => ({
   snackbarContent: {
     color: theme.palette.primary.light,
     backgroundColor: theme.palette.secondary.dark
+  },
+  thumbVertical: {
+    backgroundColor: theme.palette.primary.main
   }
 })
 
@@ -66,8 +67,9 @@ setSatisfiedFalse = () => {
 setCurrentUI = (uiType) => this.setState({currentUI: uiType})
   render(){
     const { classes, openLeftDrawer, closeLeftDrawer, openSuggestion, openSuggestBox, modalStatus, openSnackbar } = this.props
+    const {currentUI} = this.state
     return (
-      <Router history={boredHistory}>
+
       <div className="app-container">
         <div className={classes.root}>
           <AppBar position='sticky' color='primary'>
@@ -76,17 +78,17 @@ setCurrentUI = (uiType) => this.setState({currentUI: uiType})
                 I'm Bored...
               </Typography>
               <Tooltip title="Favorites">
-                <IconButton className={classes.textColor} onClick={() => openLeftDrawer('favorites')} data-cy="drawer-access-btn">
+                <IconButton className={classes.textColor} onClick={() => openLeftDrawer('favorites')} data-cy="drawer-access-btn" disabled={currentUI === 'login'}>
                   <SvgIcon className={classes.textColor}> <path d={Favorites}/> </SvgIcon>
                 </IconButton>
               </Tooltip>
               <Tooltip title="History">
-                <IconButton className={classes.textColor} color="secondary" onClick={() => openLeftDrawer('history')} data-cy="drawer-access-btn">
+                <IconButton className={classes.textColor} color="secondary" onClick={() => openLeftDrawer('history')} data-cy="drawer-access-btn" disabled={currentUI === 'login'}>
                   <History/>
                 </IconButton>
               </Tooltip>
               <Tooltip title="Suggest New Activity">
-              <IconButton className={classes.textColor} onClick={openSuggestion}>
+              <IconButton className={classes.textColor} onClick={openSuggestion} disabled={currentUI === 'login'}>
                 <LocalPostOffice/>
               </IconButton>
               </Tooltip>
@@ -95,6 +97,7 @@ setCurrentUI = (uiType) => this.setState({currentUI: uiType})
               onMouseOver={this.setSatisfiedTrue}
               onMouseOut={this.setSatisfiedFalse}
               data-cy="bottom-drawer-icon"
+              disabled={currentUI === 'login'}
               onClick={this.props.openBottomDrawer}>
               {this.state.mouseOverFace ? <SentimentVerySatisfied/> : <SentimentSatisfied/>}
               </IconButton>
@@ -106,7 +109,7 @@ setCurrentUI = (uiType) => this.setState({currentUI: uiType})
               </Tooltip>
             </Toolbar>
           </AppBar>
-          {this.state.currentUI === 'main' ? <RecreationGrid/> : <Login/>}
+          {currentUI === 'main' ? <RecreationGrid/> : <Login/>}
           <RecreationModal/>
           <SuggestionModal/>
           <LeftDrawer/>
@@ -126,7 +129,6 @@ setCurrentUI = (uiType) => this.setState({currentUI: uiType})
           </Snackbar>
         </div>
       </div>
-      </Router>
     )
   }
 }
