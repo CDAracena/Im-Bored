@@ -21,7 +21,8 @@ import SuggestionModal from './components/SuggestionModal';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import SentimentVerySatisfied from '@material-ui/icons/SentimentVerySatisfied';
-import SentimentSatisfied from '@material-ui/icons/SentimentSatisfied'
+import SentimentSatisfied from '@material-ui/icons/SentimentSatisfied';
+import ExitToApp from '@material-ui/icons/ExitToApp';
 
 const styles = (theme) => ({
   root: {
@@ -86,6 +87,11 @@ setSatisfiedFalse = () => {
               data-cy="bottom-drawer-icon"
               onClick={this.props.openBottomDrawer}>
               {this.state.mouseOverFace ? <SentimentVerySatisfied/> : <SentimentSatisfied/>}
+              </IconButton>
+              </Tooltip>
+              <Tooltip title="Login">
+              <IconButton data-cy="login-page-btn">
+              <ExitToApp/>
               </IconButton>
               </Tooltip>
             </Toolbar>
