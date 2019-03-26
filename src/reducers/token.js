@@ -13,3 +13,5 @@ const token = (state = initialState, action) => {
     return state;
   }
 }
+
+export default token;
