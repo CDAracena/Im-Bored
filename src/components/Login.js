@@ -12,7 +12,8 @@ class Login extends Component {
     username: '',
     email: '',
     password: '',
-    password_confirmation: ''
+    password_confirmation: '',
+    errorMsg: ''
   }
   render(){
     return (
