@@ -26,6 +26,7 @@ import ExitToApp from '@material-ui/icons/ExitToApp';
 import { Router, Route, Link } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import Login from './components/Login';
+import { withRouter } from "react-router-dom";
 
 const boredHistory = createBrowserHistory();
 
@@ -38,7 +39,8 @@ const styles = (theme) => ({
     marginRight: 20
   },
   textColor: {
-    color: theme.palette.secondary.dark
+    color: theme.palette.secondary.dark,
+    cursor: 'pointer'
   },
   snackbarContent: {
     color: theme.palette.primary.light,
@@ -61,11 +63,7 @@ setSatisfiedFalse = () => {
   this.setState({mouseOverFace: false})
 }
 
-headToLogin = () => {
-  boredHistory.push('/login')
-  this.setState({currentUI: 'login'})
-}
-
+setCurrentUI = (uiType) => this.setState({currentUI: uiType})
   render(){
     const { classes, openLeftDrawer, closeLeftDrawer, openSuggestion, openSuggestBox, modalStatus, openSnackbar } = this.props
     return (
@@ -74,7 +72,7 @@ headToLogin = () => {
         <div className={classes.root}>
           <AppBar position='sticky' color='primary'>
             <Toolbar>
-              <Typography variant='title' className={classes.textColor}>
+              <Typography variant='title' className={classes.textColor} onClick={() => this.setCurrentUI('main')}>
                 I'm Bored...
               </Typography>
               <Tooltip title="Favorites">
@@ -102,13 +100,13 @@ headToLogin = () => {
               </IconButton>
               </Tooltip>
               <Tooltip title="Login">
-              <IconButton data-cy="login-page-btn" onClick={this.headToLogin}>
+              <IconButton data-cy="login-page-btn" onClick={() => this.setCurrentUI('login')}>
                <ExitToApp/>
               </IconButton>
               </Tooltip>
             </Toolbar>
           </AppBar>
-          <RecreationGrid/>
+          {this.state.currentUI === 'main' ? <RecreationGrid/> : <Login/>}
           <RecreationModal/>
           <SuggestionModal/>
           <LeftDrawer/>
