@@ -5,12 +5,14 @@
   "dependencies": {
     "@material-ui/core": "^3.6.0",
     "@material-ui/icons": "^3.0.2",
+    "history": "^4.9.0",
     "material-ui-icons": "^1.0.0-beta.36",
     "react": "^16.6.3",
     "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^16.6.3",
     "react-pose": "^4.0.7",
     "react-redux": "^5.1.1",
+    "react-router-dom": "^5.0.0",
     "react-scripts": "1.1.4",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0"

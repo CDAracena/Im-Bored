@@ -7,5 +7,8 @@ describe('Access login page', () => {
       .should('be.visible')
       .click({force: true})
     cy.url().should('contain','/login')
+
+    cy.get('[data-cy="login-box"]')
+      .should('be.visible')
   })
 })

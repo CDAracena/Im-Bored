@@ -23,6 +23,11 @@ import SnackbarContent from '@material-ui/core/SnackbarContent';
 import SentimentVerySatisfied from '@material-ui/icons/SentimentVerySatisfied';
 import SentimentSatisfied from '@material-ui/icons/SentimentSatisfied';
 import ExitToApp from '@material-ui/icons/ExitToApp';
+import { Router, Route, Link } from "react-router-dom";
+import { createBrowserHistory } from "history";
+import Login from './components/Login';
+
+const boredHistory = createBrowserHistory();
 
 const styles = (theme) => ({
   root: {
@@ -44,7 +49,8 @@ const styles = (theme) => ({
 class App extends Component {
 
 state = {
-  mouseOverFace: false
+  mouseOverFace: false,
+  currentUI: 'main'
 }
 
 setSatisfiedTrue = () => {
@@ -55,9 +61,15 @@ setSatisfiedFalse = () => {
   this.setState({mouseOverFace: false})
 }
 
+headToLogin = () => {
+  boredHistory.push('/login')
+  this.setState({currentUI: 'login'})
+}
+
   render(){
     const { classes, openLeftDrawer, closeLeftDrawer, openSuggestion, openSuggestBox, modalStatus, openSnackbar } = this.props
     return (
+      <Router history={boredHistory}>
       <div className="app-container">
         <div className={classes.root}>
           <AppBar position='sticky' color='primary'>
@@ -90,8 +102,8 @@ setSatisfiedFalse = () => {
               </IconButton>
               </Tooltip>
               <Tooltip title="Login">
-              <IconButton data-cy="login-page-btn">
-              <ExitToApp/>
+              <IconButton data-cy="login-page-btn" onClick={this.headToLogin}>
+               <ExitToApp/>
               </IconButton>
               </Tooltip>
             </Toolbar>
@@ -116,6 +128,7 @@ setSatisfiedFalse = () => {
           </Snackbar>
         </div>
       </div>
+      </Router>
     )
   }
 }
