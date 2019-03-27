@@ -42,13 +42,15 @@ export const signUserIn = (userCreds) => {
     signInUser(userCreds)
     .then(res => {
       if (res.status >= 200 && res.status < 300) {
-        const accessToken = res.headers.get('access-token')
-        const client = res.headers.get('client')
-        const expiry = res.headers.get('expiry')
-        const uid = res.headers.get('uid')
-        setStorageToken(accessToken)
+        const tokenObj = {
+          accessToken: res.headers.get('access-token'),
+          client: res.headers.get('client'),
+          expiry: res.headers.get('expiry'),
+          uid: res.headers.get('uid')
+        }
+        setStorageToken(tokenObj)
         dispatch(tokenIsValidated())
-        dispatch(setStoreToken(accessToken, client, expiry, uid))
+        dispatch(setStoreToken(tokenObj.accessToken, tokenObj.client, tokenObj.expiry, tokenObj.uid))
         return res.json()
       } else {
         console.log('Something went wrong')
