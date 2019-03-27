@@ -1,3 +1,18 @@
+//Create a function that getsHeaders from the token, pass those headers to make post requests to items and cards
+//if headers don't exist just send request as content-type:'application json'
+
+
+export const signInUser = (creds) => {
+  return fetch(`${process.env.REACT_APP_RAILS_LOCAL}/api/auth/sign_in`, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify(creds)
+})
+}
+
+
 export const fetchBoredData = (recreationType) => {
   let apiDataLink;
   if (recreationType === "random"){

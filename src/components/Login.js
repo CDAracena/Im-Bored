@@ -7,6 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Button from '@material-ui/core/Button';
+import {signUserIn} from '../actions/token'
 
 
 const styles = theme => ({
@@ -28,18 +29,17 @@ class Login extends Component {
   setEmail = (e) => this.setState({email: e.target.value})
   setUserPassword = (e) => this.setState({password: e.target.value})
 
+// MOVE THIS TO API.js
+// CREATE ACTION TO PUSH LOGIN SUCCESS TO GLOBAL STATE
+// STORE SUCCESS USER DATA TO GLOBAL STORE USER Object
+// USE REDUX THUNK TO MAKE REQUEST from API JS
+// BUT SUBMIT THE USER CREDENTIALS FROM HERE
   submitInputFields = () => {
     const {email, password} = this.state
     const userData = {email, password}
-    fetch(`${process.env.REACT_APP_RAILS_LOCAL}/api/auth/sign_in`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userData)
-    }).then(res => res.json())
-      .then(data => console.log(data))
 
+//call redux action here, provide user data as object
+  this.props.signInUser(userData)
   }
   render(){
 
@@ -89,20 +89,20 @@ const InputComponent = ({email, componentType, setEmail, password, setPassword, 
       placeholder="Enter your password"
       margin="normal"
       label="Password"/>
-      <Button onClick={loginConfirm}> Login </Button>
+      <Button onClick={loginConfirm} color="primary"> Login </Button>
     </React.Fragment>
   )
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({token}) => {
   return {
-
+    token
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-
+    signInUser: (userCreds) => dispatch(signUserIn(userCreds))
   }
 }
 export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(Login))
