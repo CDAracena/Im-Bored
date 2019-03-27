@@ -72,7 +72,6 @@ export const fetchNewKanyeQuote = () => {
     dispatch(fetchingKanyeQuote())
      return fetchKanyeQuote()
      .then(quote => {
-       console.log(quote)
        dispatch(getKanyeQuote(quote))
      })
     }
