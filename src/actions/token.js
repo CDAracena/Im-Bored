@@ -1,6 +1,7 @@
 import {
   signInUser,
-  registerNewUser
+  registerNewUser,
+  validateOldToken
 } from '../utils/api';
 
 export const VALIDATING_TOKEN = "VALIDATING_TOKEN";
@@ -12,15 +13,38 @@ export const CLEAR_USER_DATA = "CLEAR_USER_DATA";
 
 const setStorageToken = (token) => {
   localStorage.setItem('boredToken', JSON.stringify(token))
-
 }
+
 
 const clearStorageToken = () => {
   localStorage.removeItem('boredToken')
 }
 
-// You now need to fetch the storage token upon mounting the components to check if user is already signed in, if they have a token just set the existing token
-// to the reducer, fetch the user data and set it in redux
+
+export const confirmOldToken = (uid, client, accessToken) => {
+  return dispatch => {
+    dispatch(validatingToken())
+    return validateOldToken(uid, client, accessToken)
+    .then(res => {
+      if (res.status >= 200 && res.status < 300) {
+        const tokenObj = {
+          accessToken: res.headers.get('access-token'),
+          client: res.headers.get('client'),
+          expiry: res.headers.get('expiry'),
+          uid: res.headers.get('uid')
+        }
+        dispatch(tokenIsValidated())
+        setStorageToken(tokenObj)
+        dispatch(setStoreToken(tokenObj.accessToken, tokenObj.client, tokenObj.expiry, tokenObj.uid))
+        return res.json()
+      } else {
+        console.log('Response error')
+      }
+    })
+    .then(userData => dispatch(setUserData(userData.data)))
+    .catch(err => console.log(err))
+  }
+}
 
 
 export const validatingToken = () => ({

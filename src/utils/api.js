@@ -1,6 +1,15 @@
-//Create a function that getsHeaders from the token, pass those headers to make post requests to items and cards
-//if headers don't exist just send request as content-type:'application json'
 
+export const validateOldToken = (uid, client, accessToken) => {
+  return fetch(`${process.env.REACT_APP_RAILS_LOCAL}/api/auth/validate_token`, {
+    method: "GET",
+    headers: {
+      "Content-type": "application/json",
+      "access-token": accessToken,
+      "uid": uid,
+      "client": client
+    }
+  })
+}
 
 export const signInUser = (creds) => {
   return fetch(`${process.env.REACT_APP_RAILS_LOCAL}/api/auth/sign_in`, {

@@ -29,11 +29,6 @@ class Login extends Component {
   setEmail = (e) => this.setState({email: e.target.value})
   setUserPassword = (e) => this.setState({password: e.target.value})
 
-// MOVE THIS TO API.js
-// CREATE ACTION TO PUSH LOGIN SUCCESS TO GLOBAL STATE
-// STORE SUCCESS USER DATA TO GLOBAL STORE USER Object
-// USE REDUX THUNK TO MAKE REQUEST from API JS
-// BUT SUBMIT THE USER CREDENTIALS FROM HERE
   submitInputFields = () => {
     const {email, password, password_confirmation, username} = this.state
     let userData = {}
@@ -44,8 +39,6 @@ class Login extends Component {
       userData = {email, password, password_confirmation, username}
       this.props.createNewUser(userData)
     }
-
-//call redux action here, provide user data as object
   }
 
   setPasswordConfirmation = (e) => this.setState({password_confirmation: e.target.value})
