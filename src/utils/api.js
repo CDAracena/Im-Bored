@@ -12,6 +12,16 @@ export const signInUser = (creds) => {
 })
 }
 
+export const registerNewUser = (creds) => {
+  return fetch(`${process.env.REACT_APP_RAILS_LOCAL}/api/auth/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(creds)
+  })
+}
+
 
 export const fetchBoredData = (recreationType) => {
   let apiDataLink;

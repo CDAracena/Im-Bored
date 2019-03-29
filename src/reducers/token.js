@@ -33,9 +33,21 @@ const token = (state = initialState, action) => {
       client: action.client,
       expiry: action.expiry
     })
+    case 'CLEAR_TOKEN':
+    return Object.assign({}, state, {
+      accessToken: '',
+      uid: '',
+      client: '',
+      expiry: '',
+      isValidated: false
+    })
     case 'SET_USER_DATA':
     return Object.assign({}, state, {
       currentUser: action.currentUser
+    })
+    case 'CLEAR_USER_DATA':
+    return Object.assign({}, state, {
+      currentUser: {}
     })
     default:
     return state;

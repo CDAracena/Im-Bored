@@ -7,7 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Button from '@material-ui/core/Button';
-import {signUserIn} from '../actions/token'
+import {signUserIn, createUser} from '../actions/token'
 
 
 const styles = theme => ({
@@ -35,11 +35,26 @@ class Login extends Component {
 // USE REDUX THUNK TO MAKE REQUEST from API JS
 // BUT SUBMIT THE USER CREDENTIALS FROM HERE
   submitInputFields = () => {
-    const {email, password} = this.state
-    const userData = {email, password}
+    const {email, password, password_confirmation, username} = this.state
+    let userData = {}
+    if (this.state.value === 'login') {
+      userData = {email, password}
+      this.props.signInUser(userData)
+  } else if (this.state.value === 'register') {
+      userData = {email, password, password_confirmation, username}
+      this.props.createNewUser(userData)
+    }
 
 //call redux action here, provide user data as object
-  this.props.signInUser(userData)
+  }
+
+  setPasswordConfirmation = (e) => this.setState({password_confirmation: e.target.value})
+  setUserName = (e) => this.setState({username: e.target.value})
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.value !== prevState.value) {
+      this.setState({username: '', email: '', password: '', password_confirmation: ''})
+    }
   }
   render(){
 
@@ -63,6 +78,11 @@ class Login extends Component {
       password={this.state.password}
       setPassword={this.setUserPassword}
       loginConfirm={this.submitInputFields}
+      componentType={this.state.value}
+      password_confirmation={this.state.password_confirmation}
+      setPWConfirmation={this.setPasswordConfirmation}
+      username={this.state.username}
+      setUsername={this.setUserName}
       />
       </Grid>
       </Grid>
@@ -70,7 +90,7 @@ class Login extends Component {
   }
 }
 
-const InputComponent = ({email, componentType, setEmail, password, setPassword, loginConfirm}) => {
+const InputComponent = ({email, componentType, setEmail, password, setPassword, loginConfirm, password_confirmation, setPWConfirmation, username, setUsername}) => {
 
   return (
     <React.Fragment>
@@ -81,15 +101,38 @@ const InputComponent = ({email, componentType, setEmail, password, setPassword, 
       placeholder="Enter your email"
       margin="normal"
       label="Email"/>
+      {componentType === 'register' &&
+      <TextField
+      required
+      value={username}
+      onChange={setUsername}
+      label="Username"
+      margin="normal"
+      paceholder="Create a username"
+      />
 
+      }
       <TextField
       required
       value={password}
       onChange={setPassword}
+      type="password"
       placeholder="Enter your password"
       margin="normal"
       label="Password"/>
-      <Button onClick={loginConfirm} color="primary"> Login </Button>
+      {componentType === 'register' &&
+      <TextField
+      required
+      value={password_confirmation}
+      onChange={setPWConfirmation}
+      type="password"
+      label="Confirm Password"
+      margin="normal"
+      paceholder="Confirm your password"
+      />
+
+      }
+      <Button onClick={loginConfirm} color="primary"> {componentType === 'login' ? 'Login' : 'Register'} </Button>
     </React.Fragment>
   )
 }
@@ -102,7 +145,8 @@ const mapStateToProps = ({token}) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    signInUser: (userCreds) => dispatch(signUserIn(userCreds))
+    signInUser: (userCreds) => dispatch(signUserIn(userCreds)),
+    createNewUser: (userCreds) => dispatch(createUser(userCreds))
   }
 }
 export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(Login))
