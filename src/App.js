@@ -13,6 +13,7 @@ import RecreationModal from './components/Modal';
 import LeftDrawer from './components/Drawer';
 import BottomDrawer from './components/BottomDrawer';
 import {closeDrawer, setAndOpenDrawer, openSuggestionBox, closeSnackBar} from './actions/actions';
+import {confirmOldToken} from './actions/token';
 import {openBottomDrawer} from './actions/bottomdrawer';
 import { Scrollbars } from 'react-custom-scrollbars';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -65,6 +66,13 @@ setSatisfiedFalse = () => {
 }
 
 setCurrentUI = (uiType) => this.setState({currentUI: uiType})
+
+componentDidMount() {
+  if (localStorage.boredToken){
+    const {uid, client, accessToken} = JSON.parse(localStorage.boredToken)
+    this.props.confirmOldToken(uid, client, accessToken)
+  }
+}
   render(){
     const { classes, openLeftDrawer, closeLeftDrawer, openSuggestion, openSuggestBox, modalStatus, openSnackbar } = this.props
     const {currentUI} = this.state
@@ -151,7 +159,8 @@ const mapDispatchToProps = dispatch => {
     openLeftDrawer: (drawerType) => dispatch(setAndOpenDrawer(drawerType)),
     openSuggestion: () => dispatch(openSuggestionBox()),
     closeSnackBar: () => dispatch(closeSnackBar()),
-    openBottomDrawer: () => dispatch(openBottomDrawer())
+    openBottomDrawer: () => dispatch(openBottomDrawer()),
+    confirmOldToken: (uid, client, accessToken) => dispatch(confirmOldToken(uid, client, accessToken))
   }
 }
 
