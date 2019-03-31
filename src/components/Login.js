@@ -8,10 +8,13 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Button from '@material-ui/core/Button';
 import {signUserIn, createUser} from '../actions/token'
-
+import CustomizedSnackbars from './LoginSnackBar';
 
 const styles = theme => ({
-
+  loginContainer: {
+    margin: 'auto',
+    width: '70%'
+  }
 })
 
 class Login extends Component {
@@ -44,15 +47,18 @@ class Login extends Component {
   setPasswordConfirmation = (e) => this.setState({password_confirmation: e.target.value})
   setUserName = (e) => this.setState({username: e.target.value})
 
+
   componentDidUpdate(prevProps, prevState) {
     if (this.state.value !== prevState.value) {
       this.setState({username: '', email: '', password: '', password_confirmation: ''})
     }
   }
-  render(){
 
+  render(){
+    const {classes} = this.props
     return (
-      <Grid container justify="center" data-cy="login-box">
+      <React.Fragment>
+      <Grid container justify="center" data-cy="login-box" className={classes.loginContainer}>
       <Grid item>
       <Tabs
       value={this.state.value}
@@ -79,6 +85,8 @@ class Login extends Component {
       />
       </Grid>
       </Grid>
+      {this.props.loginSnackBar.open && <CustomizedSnackbars/>}
+      </React.Fragment>
     )
   }
 }
@@ -130,9 +138,10 @@ const InputComponent = ({email, componentType, setEmail, password, setPassword, 
   )
 }
 
-const mapStateToProps = ({token}) => {
+const mapStateToProps = ({token, loginSnackBar}) => {
   return {
-    token
+    token,
+    loginSnackBar
   }
 }
 
