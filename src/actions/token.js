@@ -4,6 +4,13 @@ import {
   validateOldToken
 } from '../utils/api';
 
+import {
+  openLoginSnackbar,
+  setVariant,
+  setMessage
+} from './loginSnackBar.js'
+
+
 export const VALIDATING_TOKEN = "VALIDATING_TOKEN";
 export const TOKEN_IS_VALIDATED = "TOKEN_IS_VALIDATED";
 export const SET_TOKEN = "SET_TOKEN";
@@ -103,12 +110,23 @@ export const signUserIn = (userCreds) => {
         setStorageToken(tokenObj)
         dispatch(tokenIsValidated())
         dispatch(setStoreToken(tokenObj.accessToken, tokenObj.client, tokenObj.expiry, tokenObj.uid))
+        dispatch(openSnackBar('success', 'Signed In Successfully!'))
         return res.json()
+      } else if (res.status >= 400){
+        dispatch(openSnackBar('error', 'Error Loggin In!'))
       } else {
-        console.log('Something went wrong')
+        console.log('Error')
       }
     })
     .then(userData => dispatch(setUserData(userData.data)))
     .catch(err => console.log(err))
+  }
+}
+
+export const openSnackBar = (variant, message) => {
+  return dispatch => {
+    dispatch(setVariant(variant))
+    dispatch(setMessage(message))
+    dispatch(openLoginSnackbar())
   }
 }
