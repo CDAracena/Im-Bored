@@ -1,4 +1,14 @@
-
+export const signUserOut = (uid, client, accessToken) => {
+  return fetch(`${process.env.REACT_APP_RAILS_LOCAL}/api/auth/sign_out`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": 'application/json',
+      "access-token": accessToken,
+      "uid": uid,
+      "client": client
+    }
+  })
+}
 export const validateOldToken = (uid, client, accessToken) => {
   return fetch(`${process.env.REACT_APP_RAILS_LOCAL}/api/auth/validate_token`, {
     method: "GET",

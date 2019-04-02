@@ -13,7 +13,7 @@ import RecreationModal from './components/Modal';
 import LeftDrawer from './components/Drawer';
 import BottomDrawer from './components/BottomDrawer';
 import {closeDrawer, setAndOpenDrawer, openSuggestionBox, closeSnackBar} from './actions/actions';
-import {confirmOldToken} from './actions/token';
+import {confirmOldToken, logOutUser} from './actions/token';
 import {openBottomDrawer} from './actions/bottomdrawer';
 import { Scrollbars } from 'react-custom-scrollbars';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -54,7 +54,8 @@ class App extends Component {
 
 state = {
   mouseOverFace: false,
-  currentUI: 'main'
+  currentUI: 'main',
+  userName: ''
 }
 
 setSatisfiedTrue = () => {
@@ -67,12 +68,29 @@ setSatisfiedFalse = () => {
 
 setCurrentUI = (uiType) => this.setState({currentUI: uiType})
 
+handleAuthOptions = () => {
+  if (this.props.currentUser.email){
+    this.setCurrentUI('main')
+    this.props.logOutUser(this.props.uid, this.props.client, this.props.accessToken)
+  } else {
+    this.setCurrentUI('login')
+  }
+}
+
 componentDidMount() {
   if (localStorage.boredToken){
     const {uid, client, accessToken} = JSON.parse(localStorage.boredToken)
     this.props.confirmOldToken(uid, client, accessToken)
   }
 }
+
+componentDidUpdate(prevProps, prevState) {
+  const {currentUser} = this.props
+  if (currentUser !== prevProps.currentUser && currentUser.email) {
+    this.setState({userName: currentUser.username || currentUser.email.split('@')[0]})
+  }
+}
+
   render(){
     const { classes, openLeftDrawer, closeLeftDrawer, openSuggestion, openSuggestBox, modalStatus, openSnackbar } = this.props
     const {currentUI} = this.state
@@ -83,7 +101,7 @@ componentDidMount() {
           <AppBar position='sticky' color='primary'>
             <Toolbar>
               <Typography variant='title' className={classes.textColor} onClick={() => this.setCurrentUI('main')}>
-                I'm Bored...
+                {this.state.userName ? this.state.userName : "I'm Bored..."}
               </Typography>
               <Tooltip title="Favorites">
                 <IconButton className={classes.textColor} onClick={() => openLeftDrawer('favorites')} data-cy="drawer-access-btn" disabled={currentUI === 'login'}>
@@ -110,8 +128,8 @@ componentDidMount() {
               {this.state.mouseOverFace ? <SentimentVerySatisfied/> : <SentimentSatisfied/>}
               </IconButton>
               </Tooltip>
-              <Tooltip title="Login">
-              <IconButton data-cy="login-page-btn" onClick={() => this.setCurrentUI('login')}>
+              <Tooltip title={this.props.currentUser.email ? 'Log Out' : 'Log In'}>
+              <IconButton data-cy="login-page-btn" onClick={this.handleAuthOptions}>
                <ExitToApp/>
               </IconButton>
               </Tooltip>
@@ -144,12 +162,17 @@ componentDidMount() {
 const mapStateToProps = (state) => {
   const {drawerType, drawerOpen, modalStatus} = state.core
   const { openSuggestBox, openSnackbar } = state.suggestion
+  const {currentUser, accessToken, uid, client} = state.token
   return {
     drawerType,
     drawerOpen,
     openSuggestBox,
     modalStatus,
-    openSnackbar
+    openSnackbar,
+    currentUser,
+    accessToken,
+    uid,
+    client
   }
 }
 
@@ -160,7 +183,8 @@ const mapDispatchToProps = dispatch => {
     openSuggestion: () => dispatch(openSuggestionBox()),
     closeSnackBar: () => dispatch(closeSnackBar()),
     openBottomDrawer: () => dispatch(openBottomDrawer()),
-    confirmOldToken: (uid, client, accessToken) => dispatch(confirmOldToken(uid, client, accessToken))
+    confirmOldToken: (uid, client, accessToken) => dispatch(confirmOldToken(uid, client, accessToken)),
+    logOutUser: (uid, client, accessToken) => dispatch(logOutUser(uid, client, accessToken))
   }
 }
 

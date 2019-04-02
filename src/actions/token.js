@@ -1,7 +1,8 @@
 import {
   signInUser,
   registerNewUser,
-  validateOldToken
+  validateOldToken,
+  signUserOut
 } from '../utils/api';
 
 import {
@@ -23,11 +24,25 @@ const setStorageToken = (token) => {
   localStorage.setItem('boredToken', JSON.stringify(token))
 }
 
-
 const clearStorageToken = () => {
   localStorage.removeItem('boredToken')
 }
 
+export const logOutUser = (uid, client, accessToken) => {
+  return dispatch => {
+    return signUserOut(uid, client, accessToken)
+      .then(res => res.json())
+      .then(data => {
+        if (data) {
+          clearStorageToken()
+          dispatch(clearToken())
+          dispatch(clearUserData())
+        }
+      })
+      .catch(err => console.log(err))
+
+  }
+}
 
 export const confirmOldToken = (uid, client, accessToken) => {
   return dispatch => {

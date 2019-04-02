@@ -3,7 +3,9 @@ import {
   TOKEN_IS_VALIDATED,
   SET_TOKEN,
   SET_USER_DATA,
-  SET_ERROR_MESSAGES
+  SET_ERROR_MESSAGES,
+  CLEAR_USER_DATA,
+  CLEAR_TOKEN
 } from '../actions/token';
 
 const initialState = {

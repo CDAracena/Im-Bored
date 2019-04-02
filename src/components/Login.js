@@ -81,10 +81,10 @@ class Login extends Component {
       </Tabs>
       </Grid>
       <Grid container justify="center" direction="column" data-cy="input-component-container">
-      {this.state.errorMsgs && <List>
-        {this.state.errorMsgs.map((msg, idx) => <ListItem key={idx}><ListItemText primary={msg} classes={{primary: classes.errorMsgText}}/></ListItem>)}
-
-        </List>
+      {this.state.errorMsgs &&
+      <List>
+      {this.state.errorMsgs.map((msg, idx) => <ListItem key={idx}><ListItemText primary={msg} classes={{primary: classes.errorMsgText}}/></ListItem>)}
+      </List>
       }
       <InputComponent
       setEmail={this.setEmail}
