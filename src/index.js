@@ -6,6 +6,7 @@ import orange from '@material-ui/core/colors/orange';
 import grey from '@material-ui/core/colors/grey';
 import { MuiThemeProvider } from '@material-ui/core/styles'
 import { createStore } from "redux"
+import red from '@material-ui/core/colors/red';
 import {Provider} from 'react-redux';
 import store from './store'
 
@@ -21,7 +22,9 @@ const theme = createMuiTheme({
       light:'#E0E0E0',
       main: '#9E9E9E',
       dark: '#424242'
-
+    },
+    error: {
+      main: red[800]
     },
     typography: {
       useNextVariants: true

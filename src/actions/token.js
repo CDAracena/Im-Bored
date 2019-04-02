@@ -17,6 +17,7 @@ export const SET_TOKEN = "SET_TOKEN";
 export const SET_USER_DATA = "SET_USER_DATA";
 export const CLEAR_TOKEN = "CLEAR_TOKEN";
 export const CLEAR_USER_DATA = "CLEAR_USER_DATA";
+export const SET_ERROR_MESSAGES = "SET_ERROR_MESSAGES";
 
 const setStorageToken = (token) => {
   localStorage.setItem('boredToken', JSON.stringify(token))
@@ -88,8 +89,12 @@ export const createUser = (userCreds) => {
     return registerNewUser(userCreds)
       .then(res => res.json())
       .then(userData => {
-        const {email, password} = userCreds
-        dispatch(signUserIn({email, password}))
+        if (userData.errors.full_messages) {
+          dispatch(setErrorMsgs(userData.errors.full_messages))
+        } else {
+          const {email, password} = userCreds
+          dispatch(signUserIn({email, password}))
+        }
       })
       .catch(err => console.log(err))
   }
@@ -111,14 +116,21 @@ export const signUserIn = (userCreds) => {
         dispatch(tokenIsValidated())
         dispatch(setStoreToken(tokenObj.accessToken, tokenObj.client, tokenObj.expiry, tokenObj.uid))
         dispatch(openSnackBar('success', 'Signed In Successfully!'))
-        return res.json()
       } else if (res.status >= 400){
         dispatch(openSnackBar('error', 'Error Loggin In!'))
       } else {
         console.log('Error')
       }
+      return res.json()
     })
-    .then(userData => dispatch(setUserData(userData.data)))
+    .then(userData => {
+      if (userData.errors) {
+        dispatch(setErrorMsgs(userData.errors))
+      } else {
+        dispatch(setUserData(userData.data))
+      }
+
+    })
     .catch(err => console.log(err))
   }
 }
@@ -130,3 +142,8 @@ export const openSnackBar = (variant, message) => {
     dispatch(openLoginSnackbar())
   }
 }
+
+export const setErrorMsgs = (errMsgArray) => ({
+  type: SET_ERROR_MESSAGES,
+  errorMsgsCollection: errMsgArray
+})
