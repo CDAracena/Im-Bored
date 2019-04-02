@@ -86,8 +86,12 @@ componentDidMount() {
 
 componentDidUpdate(prevProps, prevState) {
   const {currentUser} = this.props
-  if (currentUser !== prevProps.currentUser && currentUser.email) {
-    this.setState({userName: currentUser.username || currentUser.email.split('@')[0]})
+  if (currentUser !== prevProps.currentUser) {
+    if (currentUser.email) {
+      this.setState({userName: currentUser.username || currentUser.email.split('@')[0]})
+    } else {
+      this.setState({userName: ''})
+    }
   }
 }
 
