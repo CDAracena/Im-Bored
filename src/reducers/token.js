@@ -2,7 +2,10 @@ import {
   VALIDATING_TOKEN,
   TOKEN_IS_VALIDATED,
   SET_TOKEN,
-  SET_USER_DATA
+  SET_USER_DATA,
+  SET_ERROR_MESSAGES,
+  CLEAR_USER_DATA,
+  CLEAR_TOKEN
 } from '../actions/token';
 
 const initialState = {
@@ -12,7 +15,8 @@ const initialState = {
   uid: '',
   client: '',
   currentUser: {},
-  expiry: ''
+  expiry: '',
+  errorMsgs: []
 }
 
 const token = (state = initialState, action) => {
@@ -48,6 +52,10 @@ const token = (state = initialState, action) => {
     case 'CLEAR_USER_DATA':
     return Object.assign({}, state, {
       currentUser: {}
+    })
+    case 'SET_ERROR_MESSAGES':
+    return Object.assign({}, state, {
+      errorMsgs: action.errorMsgsCollection
     })
     default:
     return state;

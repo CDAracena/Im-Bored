@@ -9,11 +9,18 @@ import Tab from '@material-ui/core/Tab';
 import Button from '@material-ui/core/Button';
 import {signUserIn, createUser} from '../actions/token'
 import CustomizedSnackbars from './LoginSnackBar';
+import List from '@material-ui/core/List';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItem from '@material-ui/core/ListItem';
 
 const styles = theme => ({
   loginContainer: {
     margin: 'auto',
     width: '70%'
+  },
+  errorMsgText: {
+    color: theme.palette.error.main,
+    textAlign: 'center'
   }
 })
 
@@ -23,7 +30,7 @@ class Login extends Component {
     email: '',
     password: '',
     password_confirmation: '',
-    errorMsg: '',
+    errorMsgs: this.props.token.errorMsgs || [],
     value: 'login'
   }
 
@@ -50,7 +57,10 @@ class Login extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (this.state.value !== prevState.value) {
-      this.setState({username: '', email: '', password: '', password_confirmation: ''})
+      this.setState({username: '', email: '', password: '', password_confirmation: '', errorMsgs: []})
+    }
+    if (this.props.token.errorMsgs !== prevProps.token.errorMsgs) {
+      this.setState({errorMsgs: this.props.token.errorMsgs})
     }
   }
 
@@ -71,6 +81,11 @@ class Login extends Component {
       </Tabs>
       </Grid>
       <Grid container justify="center" direction="column" data-cy="input-component-container">
+      {this.state.errorMsgs &&
+      <List>
+      {this.state.errorMsgs.map((msg, idx) => <ListItem key={idx}><ListItemText primary={msg} classes={{primary: classes.errorMsgText}}/></ListItem>)}
+      </List>
+      }
       <InputComponent
       setEmail={this.setEmail}
       email={this.state.email}
