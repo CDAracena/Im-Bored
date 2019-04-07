@@ -100,7 +100,6 @@ class Login extends Component {
       />
       </Grid>
       </Grid>
-      {this.props.loginSnackBar.open && <CustomizedSnackbars/>}
       </React.Fragment>
     )
   }
