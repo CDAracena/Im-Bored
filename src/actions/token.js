@@ -104,12 +104,9 @@ export const createUser = (userCreds) => {
     return registerNewUser(userCreds)
       .then(res => res.json())
       .then(userData => {
-        if (userData.errors.full_messages) {
-          dispatch(setErrorMsgs(userData.errors.full_messages))
-        } else {
-          const {email, password} = userCreds
-          dispatch(signUserIn({email, password}))
-        }
+          if (userData.status === 'success') {
+            dispatch(signUserIn({email: userCreds.email, password: userCreds.password}))
+          }
       })
       .catch(err => console.log(err))
   }

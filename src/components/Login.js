@@ -12,6 +12,9 @@ import CustomizedSnackbars from './LoginSnackBar';
 import List from '@material-ui/core/List';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItem from '@material-ui/core/ListItem';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import CheckCircle from '@material-ui/icons/CheckCircle';
+import CheckCircleOutline from '@material-ui/icons/CheckCircleOutline';
 
 const styles = theme => ({
   loginContainer: {
@@ -100,7 +103,6 @@ class Login extends Component {
       />
       </Grid>
       </Grid>
-      {this.props.loginSnackBar.open && <CustomizedSnackbars/>}
       </React.Fragment>
     )
   }
@@ -116,7 +118,11 @@ const InputComponent = ({email, componentType, setEmail, password, setPassword, 
       onChange={setEmail}
       placeholder="Enter your email"
       margin="normal"
-      label="Email"/>
+      label="Email"
+      InputProps={{
+          endAdornment: <InputAdornment position="end"><CheckCircle color={email.includes('@') && email ? 'primary' : 'secondary'}/></InputAdornment>,
+        }}
+      />
       {componentType === 'register' &&
       <TextField
       required
@@ -124,9 +130,11 @@ const InputComponent = ({email, componentType, setEmail, password, setPassword, 
       onChange={setUsername}
       label="Username"
       margin="normal"
-      paceholder="Create a username"
+      placeholder="Create a username"
+      InputProps={{
+          endAdornment: <InputAdornment position="end"><CheckCircle color={username ? 'primary' : 'secondary'}/></InputAdornment>,
+        }}
       />
-
       }
       <TextField
       required
@@ -135,7 +143,11 @@ const InputComponent = ({email, componentType, setEmail, password, setPassword, 
       type="password"
       placeholder="Enter your password"
       margin="normal"
-      label="Password"/>
+      label="Password"
+      InputProps={{
+          endAdornment: <InputAdornment position="end"><CheckCircle color={password.length >= 8 ? 'primary' : 'secondary'}/></InputAdornment>,
+        }}
+      />
       {componentType === 'register' &&
       <TextField
       required
@@ -144,9 +156,11 @@ const InputComponent = ({email, componentType, setEmail, password, setPassword, 
       type="password"
       label="Confirm Password"
       margin="normal"
-      paceholder="Confirm your password"
+      placeholder="Confirm your password"
+      InputProps={{
+          endAdornment: <InputAdornment position="end"><CheckCircle color={password_confirmation === password && password_confirmation.length >= 8 ? 'primary' : 'secondary'}/></InputAdornment>,
+        }}
       />
-
       }
       <Button onClick={loginConfirm} color="primary"> {componentType === 'login' ? 'Login' : 'Register'} </Button>
     </React.Fragment>

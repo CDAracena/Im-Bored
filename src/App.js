@@ -27,6 +27,7 @@ import ExitToApp from '@material-ui/icons/ExitToApp';
 import { Router, Route, Link } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import Login from './components/Login';
+import CustomizedSnackbars from './components/LoginSnackBar'
 
 
 const styles = (theme) => ({
@@ -93,13 +94,17 @@ componentDidUpdate(prevProps, prevState) {
       this.setState({userName: ''})
     }
   }
+
+  if (!prevProps.isValidated && this.props.isValidated){
+    this.setCurrentUI('main')
+  }
 }
 
   render(){
     const { classes, openLeftDrawer, closeLeftDrawer, openSuggestion, openSuggestBox, modalStatus, openSnackbar } = this.props
     const {currentUI} = this.state
-    return (
 
+    return (
       <div className="app-container">
         <div className={classes.root}>
           <AppBar position='sticky' color='primary'>
@@ -157,6 +162,7 @@ componentDidUpdate(prevProps, prevState) {
             className={classes.snackbarContent}
             message="Your suggestion was sucessfully sent!"/>
           </Snackbar>
+          {this.props.loginSnackBar.open && <CustomizedSnackbars/>}
         </div>
       </div>
     )
@@ -166,7 +172,7 @@ componentDidUpdate(prevProps, prevState) {
 const mapStateToProps = (state) => {
   const {drawerType, drawerOpen, modalStatus} = state.core
   const { openSuggestBox, openSnackbar } = state.suggestion
-  const {currentUser, accessToken, uid, client} = state.token
+  const {currentUser, accessToken, uid, client, isValidated} = state.token
   return {
     drawerType,
     drawerOpen,
@@ -176,7 +182,9 @@ const mapStateToProps = (state) => {
     currentUser,
     accessToken,
     uid,
-    client
+    client,
+    isValidated,
+    loginSnackBar: state.loginSnackBar
   }
 }
 
